@@ -1,6 +1,7 @@
 import { Router } from 'express';
 
 import { alumnosController } from '../controllers/alumnosController';
+import { indexController } from '../controllers/indexController';
 
 class AlumnosRoutes {
 
@@ -13,6 +14,7 @@ class AlumnosRoutes {
     config(): void {
         this.router.get('/', alumnosController.index); 
         this.router.get('/listar', alumnosController.listar);
+        
     }
 
 }

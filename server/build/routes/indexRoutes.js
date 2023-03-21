@@ -9,6 +9,7 @@ class IndexRoutes {
     }
     config() {
         this.router.get('/', indexController_1.indexController.index);
+        this.router.get('/validarUsuario', indexController_1.indexController.validarUsuario);
     }
 }
 const indexRoutes = new IndexRoutes();
