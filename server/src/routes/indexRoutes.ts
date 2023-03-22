@@ -12,7 +12,8 @@ class IndexRoutes {
 
     config(): void {
         this.router.get('/', indexController.index);
-        this.router.get('/validarUsuario', indexController.validarUsuario);
+        this.router.post('/validarUser', indexController.validarUser);
+        this.router.post('/registrarUser', indexController.create);
     }
 
 }

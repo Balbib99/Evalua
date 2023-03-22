@@ -18,14 +18,29 @@ class IndexController {
     index(req, res) {
         res.send('Hello');
     }
-    validarUsuario(req, res) {
+    validarUser(req, res) {
+        console.log(req.body);
+        const { correo, clave } = req.body;
+        console.log(correo + ' y ' + clave);
+        database_1.default.query('SELECT * FROM profesores WHERE Nombre = ? AND Clave = ?', [correo, clave], (err, rows, field) => {
+            if (!err) {
+                if (rows.length > 0) {
+                    let clave = rows;
+                    res.json(clave[0].Clave);
+                }
+                else {
+                    res.json('Usuario o claves incorrectos');
+                }
+            }
+            else {
+                console.log(err);
+            }
+        });
+    }
+    create(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            let query = 'SELECT Nombre FROM profesores';
-            yield database_1.default.query(query, function (err, result) {
-                if (err)
-                    throw err;
-                res.json(result);
-            });
+            yield database_1.default.query('INSERT INTO profesores set ?', [req.body]);
+            res.json({ mensaje: "usuario registrado" });
         });
     }
 }

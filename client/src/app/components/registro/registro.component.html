@@ -1,0 +1,57 @@
+<app-navigation-inicio></app-navigation-inicio>
+
+<div class="container my-4">
+    <form>
+        <fieldset>
+            <legend>REGISTRO</legend>
+            <div class="form-group">
+                *<input type="text" class="form-control" [formControl]="user" aria-describedby="emailHelp" required placeholder="Usuario">
+            </div>
+            <div class="form-group">
+                *<input type="email" class="form-control" [formControl]="email" aria-describedby="emailHelp" required placeholder="Correo">
+                <small id="emailHelp" class="form-text text-muted">Nunca utilizaremos su correo para terceros</small>
+            </div>
+            <div class="form-group">
+                *<input type="password" class="form-control" [formControl]="password" aria-describedby="emailHelp" required="true" placeholder="Contraseña">
+            </div>
+            <div class="form-group">
+                *<input type="password" class="form-control" [formControl]="verifyPassword" aria-describedby="emailHelp" required placeholder="Repita Contraseña">
+            </div>
+            <div class="form-group">
+                <input type="email" class="form-control" [formControl]="tlf" aria-describedby="emailHelp" placeholder="Telefono">
+            </div>
+            <fieldset class="form-group">
+                <legend class="mt-4">Tipo de educación</legend>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox">
+                  <label class="form-check-label" for="flexSwitchCheckDefault">E.Infantil</label>
+                </div>
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox">
+                  <label class="form-check-label" for="flexSwitchCheckChecked">E.primaria</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox">
+                    <label class="form-check-label" for="flexSwitchCheckChecked">F.P</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox">
+                    <label class="form-check-label" for="flexSwitchCheckChecked">ESO</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox">
+                    <label class="form-check-label" for="flexSwitchCheckChecked">Bachillerato</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox">
+                    <label class="form-check-label" for="flexSwitchCheckChecked">UNI</label>
+                </div>
+            </fieldset>
+            <div class="d-grid gap-2" style="margin-top: 2em;">
+                <button (click)="registrar()" class="btn btn-lg btn-primary" style="width: 100%;" type="button">Registrarme</button>
+            </div>
+        </fieldset>
+    </form>
+    
+
+</div>

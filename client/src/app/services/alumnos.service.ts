@@ -18,11 +18,15 @@ export class AlumnosService {
     return this.http.get(`${this.API_URI}/alumnos/listar`);
   }
 
-  getUsuario() {
-    return this.http.get(`${this.API_URI}/validarUsuario`);
+  getUser(user:any) {
+    return this.http.post(`${this.API_URI}/validarUser`,user);
   }
 
   logueo(){
-    return this.router.navigate(['/listar']);
+    return this.router.navigate(['/cursos']);
+  }
+
+  registarUser(user:any){
+    return this.http.post(`${this.API_URI}/registrarUser`,user);
   }
 }

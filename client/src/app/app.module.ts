@@ -16,6 +16,9 @@ import { InicioComponent } from './components/inicio/inicio.component';
 import { NavigationInicioComponent } from './components/navigation-inicio/navigation-inicio.component';
 
 import { CookieService } from 'ngx-cookie-service';
+import { MisCursosComponent } from './components/mis-cursos/mis-cursos.component';
+import { RegistroComponent } from './components/registro/registro.component';
+
 
 @NgModule({
   declarations: [
@@ -24,7 +27,9 @@ import { CookieService } from 'ngx-cookie-service';
     AlumnosFormComponent,
     AlumnosListComponent,
     InicioComponent,
-    NavigationInicioComponent
+    NavigationInicioComponent,
+    MisCursosComponent,
+    RegistroComponent
   ],
   imports: [
     BrowserModule,

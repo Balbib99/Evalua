@@ -7,7 +7,6 @@ import { CookieService } from 'ngx-cookie-service';
 
 import { AlumnosService } from '../../services/alumnos.service';
 
-
 @Component({
   selector: 'app-inicio',
   templateUrl: './inicio.component.html',
@@ -20,35 +19,37 @@ export class InicioComponent{
   email = new FormControl('');
   password = new FormControl('');
 
-  profesores:any = [];
 
   constructor(private render2: Renderer2, private alumnosService: AlumnosService, private cookies:CookieService){
 
   }
 
   iniciaSesion(){
-    const correo = this.email.value;
-    const password = this.password.value;
+    this.getUser();
+  }
 
-    this.alumnosService.getUsuario().subscribe(
+  getUser(){
+
+    const user = {
+      correo: this.email.value,
+      clave: this.password.value
+    };
+
+    this.alumnosService.getUser(user).subscribe(
       res => {
-        this.profesores = res;
-        console.log(this.profesores);
+        if(res == this.password.value){
+          
+          this.cookies.set('user', `${this.email.value}`);
 
-        for (let prof of this.profesores){
-          if(prof.Nombre == correo){
-            console.log('usuario correcto');
+          console.log('Usuario correcto');
 
-            this.cookies.set('usuario', prof.Nombre);
-
-            this.alumnosService.logueo();
-            
-          }
+          this.alumnosService.logueo();
+        }else{
+          console.log('Usuario incorrecto');
         }
 
-
       },
-      err => console.log('Usuario o contraseña introducidos no validos'),
+      err => console.log('Usuario no verificado')
     );
   }
   

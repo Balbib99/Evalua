@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS evalua;
 CREATE DATABASE IF NOT EXISTS evalua;
 
 USE evalua;
@@ -147,7 +148,9 @@ DROP TABLE IF EXISTS `profesores`;
 CREATE TABLE `profesores` (
   `Nombre` varchar(20) DEFAULT NULL,
   `Clave` varchar(15) DEFAULT NULL,
-  `ID` int(5) NOT NULL,
+  `Correo` varchar(60) DEFAULT NULL,
+  `Telefono` varchar(10) DEFAULT NULL,
+  `ID` int(5) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -158,7 +161,7 @@ CREATE TABLE `profesores` (
 
 LOCK TABLES `profesores` WRITE;
 /*!40000 ALTER TABLE `profesores` DISABLE KEYS */;
-INSERT INTO `profesores` VALUES ('Jose','Jose12',1),('Maria','Maria12',2);
+INSERT INTO `profesores` VALUES ('Jose','Jose12','jose@gmail.com','548623548'),('Maria','Maria12','maria@gmail.com','145789562');
 /*!40000 ALTER TABLE `profesores` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
