@@ -7,6 +7,8 @@ import cors from 'cors';
 import indexRoutes from './routes/indexRoutes';
 import alumnosRoutes from './routes/alumnosRoutes';
 
+import cookieParser from 'cookie-parser';
+
 class Server {
 
     public app: Application;
@@ -24,6 +26,7 @@ class Server {
         this.app.use(cors());
         this.app.use(express.json());
         this.app.use(express.urlencoded({extended: false}));
+        this.app.use(cookieParser());
     }
 
     routes(): void {

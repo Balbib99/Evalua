@@ -14,6 +14,7 @@ class IndexRoutes {
         this.router.get('/', indexController.index);
         this.router.post('/validarUser', indexController.validarUser);
         this.router.post('/registrarUser', indexController.create);
+        this.router.post('/obtenerCursos', indexController.getCourses);
     }
 
 }
