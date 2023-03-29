@@ -29,4 +29,8 @@ export class AlumnosService {
   registarUser(user:any){
     return this.http.post(`${this.API_URI}/registrarUser`,user);
   }
+
+  getCursos(user:any){
+    return this.http.post(`${this.API_URI}/obtenerCursos`,user);
+  }
 }

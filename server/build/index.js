@@ -9,6 +9,7 @@ const morgan_1 = __importDefault(require("morgan"));
 const cors_1 = __importDefault(require("cors"));
 const indexRoutes_1 = __importDefault(require("./routes/indexRoutes"));
 const alumnosRoutes_1 = __importDefault(require("./routes/alumnosRoutes"));
+const cookie_parser_1 = __importDefault(require("cookie-parser"));
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
@@ -21,6 +22,7 @@ class Server {
         this.app.use((0, cors_1.default)());
         this.app.use(express_1.default.json());
         this.app.use(express_1.default.urlencoded({ extended: false }));
+        this.app.use((0, cookie_parser_1.default)());
     }
     routes() {
         this.app.use('/', indexRoutes_1.default);
