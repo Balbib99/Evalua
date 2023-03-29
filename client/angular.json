@@ -28,7 +28,7 @@
               "src/styles.css"
             ],
             "scripts": [
-              "./node_modules/js-cookie/src/js.cookie.js"
+              "./node_modules/js-cookie/dist/js.cookie.js"
             ]
           },
           "configurations": {
