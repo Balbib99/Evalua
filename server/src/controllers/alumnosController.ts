@@ -18,6 +18,34 @@ class AlumnosController {
             res.json(result);
         });
     }
+
+    public async getAlumnosCurso (req: Request, res:Response) {
+        // await connect.query('SELECT Nombre, Apellido1 FROM alumnos WHERE dni IN (SELECT dni_alumno FROM curso WHERE nombre = ?)', [req.body.nombre],
+        // (err,rows,field) => {
+        //     if(!err){
+        //         if(rows.length > 0){
+        //             res.json(rows);
+        //         }else{
+        //             res.json('No existen cursos')
+        //         }
+        //     }else{
+        //         console.log(err);
+        //     }
+        // });
+
+        await connect.query('SELECT Nombre, Apellidos FROM alumnos WHERE curso = ? AND id_Profesor IN (SELECT id FROM Profesores WHERE nombre = ?)', [req.body.nombre, req.body.profesor],
+        (err,rows,field) => {
+            if(!err){
+                if(rows.length > 0){
+                    res.json(rows);
+                }else{
+                    res.json('No existen cursos')
+                }
+            }else{
+                console.log(err);
+            }
+        });
+    }
 }
 
 export const alumnosController = new AlumnosController();

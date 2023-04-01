@@ -10,6 +10,7 @@ class AlumnosRoutes {
     config() {
         this.router.get('/', alumnosController_1.alumnosController.index);
         this.router.get('/listar', alumnosController_1.alumnosController.listar);
+        this.router.post('/alumnos-curso', alumnosController_1.alumnosController.getAlumnosCurso);
     }
 }
 const alumnosRoutes = new AlumnosRoutes();

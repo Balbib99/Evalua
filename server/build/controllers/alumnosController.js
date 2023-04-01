@@ -30,6 +30,35 @@ class AlumnosController {
             });
         });
     }
+    getAlumnosCurso(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            // await connect.query('SELECT Nombre, Apellido1 FROM alumnos WHERE dni IN (SELECT dni_alumno FROM curso WHERE nombre = ?)', [req.body.nombre],
+            // (err,rows,field) => {
+            //     if(!err){
+            //         if(rows.length > 0){
+            //             res.json(rows);
+            //         }else{
+            //             res.json('No existen cursos')
+            //         }
+            //     }else{
+            //         console.log(err);
+            //     }
+            // });
+            yield database_1.default.query('SELECT Nombre, Apellidos FROM alumnos WHERE curso = ? AND id_Profesor IN (SELECT id FROM Profesores WHERE nombre = ?)', [req.body.nombre, req.body.profesor], (err, rows, field) => {
+                if (!err) {
+                    if (rows.length > 0) {
+                        res.json(rows);
+                    }
+                    else {
+                        res.json('No existen cursos');
+                    }
+                }
+                else {
+                    console.log(err);
+                }
+            });
+        });
+    }
 }
 exports.alumnosController = new AlumnosController();
 exports.default = exports.alumnosController;

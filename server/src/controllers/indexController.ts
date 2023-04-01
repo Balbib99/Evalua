@@ -38,7 +38,22 @@ class IndexController {
     }
 
     public async getCourses (req:Request, res:Response) {
-        await connect.query('SELECT Nombre FROM curso WHERE ID_Profesor IN (SELECT id FROM Profesores WHERE Nombre = ? )', 
+        // await connect.query('SELECT DISTINCT Nombre FROM curso WHERE ID_Profesor IN (SELECT id FROM Profesores WHERE Nombre = ? )', 
+        // [req.body.usuario],
+        // (err,rows,field) => {
+        //     if(!err){
+        //         if(rows.length > 0){
+        //             res.json(rows);
+        //         }else{
+        //             res.json('No existen cursos')
+        //         }
+        //     }else{
+        //         console.log(err);
+        //     }
+        // }
+        // );
+
+        await connect.query('SELECT DISTINCT Nombre FROM cursos WHERE ID_Profesor IN (SELECT id FROM Profesores WHERE Nombre = ? )', 
         [req.body.usuario],
         (err,rows,field) => {
             if(!err){

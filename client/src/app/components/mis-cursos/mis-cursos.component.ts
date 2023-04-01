@@ -12,6 +12,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class MisCursosComponent {
   
   cursos: any = [];
+  
 
   constructor(private alumnosService: AlumnosService,  private cookies:CookieService) {
 
@@ -32,4 +33,15 @@ export class MisCursosComponent {
       err => console.log(err)
     );
   }
+
+  cursoSeleccionado(cursoNombre:any){
+
+    
+    this.cookies.set('curso', cursoNombre);
+    this.alumnosService.irAlumnosCurso();
+
+  }
+  
 }
+
+

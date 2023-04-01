@@ -26,6 +26,15 @@ export class AlumnosService {
     return this.router.navigate(['/cursos']);
   }
 
+  irAlumnosCurso(){
+    return this.router.navigate(['/alumnos-curso']);
+  }
+
+
+  getAlumnosCurso(user:any){
+    return this.http.post(`${this.API_URI}/alumnos/alumnos-curso`,user);
+  }
+
   registarUser(user:any){
     return this.http.post(`${this.API_URI}/registrarUser`,user);
   }
