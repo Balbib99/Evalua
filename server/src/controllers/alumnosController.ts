@@ -46,6 +46,11 @@ class AlumnosController {
             }
         });
     }
+
+    public async createAlumnos (req: Request, res:Response) {
+        await connect.query('INSERT INTO alumnos set ?', [req.body]);
+        res.json({mensaje: "alumno registrado"});
+    }
 }
 
 export const alumnosController = new AlumnosController();

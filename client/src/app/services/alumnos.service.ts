@@ -42,4 +42,8 @@ export class AlumnosService {
   getCursos(user:any){
     return this.http.post(`${this.API_URI}/obtenerCursos`,user);
   }
+
+  createAlumno(user:any){
+    return this.http.post(`${this.API_URI}/alumnos/crearAlumnos`, user);
+  }
 }

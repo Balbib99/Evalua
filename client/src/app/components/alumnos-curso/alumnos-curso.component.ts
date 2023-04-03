@@ -3,6 +3,8 @@ import { AlumnosService } from 'src/app/services/alumnos.service';
 
 import { CookieService } from 'ngx-cookie-service';
 
+import { FormControl } from '@angular/forms';
+
 @Component({
   selector: 'app-alumnos-curso',
   templateUrl: './alumnos-curso.component.html',
@@ -11,13 +13,25 @@ import { CookieService } from 'ngx-cookie-service';
 
 export class AlumnosCursoComponent {
 
-  nombre:any = '';
+  // nombre:any = '';
   alumnosCurso: any = [];
+
+  nombre = new FormControl('');
+  apellidos = new FormControl('');
+  nombre_Familiar1 = new FormControl('');
+  apellidos_Familiar1 = new FormControl('');
+  nombre_Familiar2 = new FormControl('');
+  apellidos_Familiar2 = new FormControl('');
+  direccion = new FormControl('');
+  email = new FormControl('');
+  telefono1 = new FormControl('');
+  telefono2 = new FormControl('');
+  observaciones = new FormControl('');
+
+
   constructor(private alumnosService: AlumnosService,  private cookies:CookieService) {
 
   }
-
-  
   
 
   ngOnInit() {
@@ -41,13 +55,41 @@ export class AlumnosCursoComponent {
     const form = document.querySelector('.createAlumno');
 
     form?.setAttribute('style', 'visibility: visible');
+
   }
 
   sendForm(){
-    const form = document.querySelector('.createAlumno');
 
-    form?.setAttribute('style', 'visibility: hidden');
+    const newAlumno = {
+      nombre : this.nombre.value,
+      apellidos : this.apellidos.value,
+      nombre_Familiar1 : this.nombre_Familiar1.value,
+      apellidos_Familiar1 : this.apellidos_Familiar1.value,
+      nombre_Familiar2 : this.nombre_Familiar2.value,
+      apellidos_Familiar2 : this.apellidos_Familiar2.value,
+      direccion : this.direccion.value,
+      email : this.email.value,
+      telefono1 : this.telefono1.value,
+      telefono2 : this.telefono2.value,
+      observaciones : this.observaciones.value,
+      curso : this.cookies.get('curso')
+    }
 
-    window.scrollTo(scrollY, 0);
+    if( this.nombre.value == ''){
+      alert('El nombre del alumno es imprescindible');
+    }else{
+      this.alumnosService.createAlumno(newAlumno).subscribe(
+        res => {
+          alert('Alumno '+this.nombre.value+' registrado correctamente en la clase '+this.cookies.get('curso'));
+        },
+        err => console.log(err)
+      )
+
+      const form = document.querySelector('.createAlumno');
+
+      form?.setAttribute('style', 'visibility: hidden');
+
+      window.scrollTo(scrollY, 0);
+    } 
   }
 }
