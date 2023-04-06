@@ -14,36 +14,60 @@ export class AlumnosService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
+  //Redirige a la página de inicio una vez se registra un profesor
+  inicio() {
+    return this.router.navigate(['/']);
+  }
+
+  //Listamos todos los alumnos a los que da clase un determinado profesor sin tener en cuenta la clase a la
+  //que pertenencen
   getAlumnos() {
     return this.http.get(`${this.API_URI}/alumnos/listar`);
   }
 
-  getUser(user:any) {
-    return this.http.post(`${this.API_URI}/validarUser`,user);
-  }
-
-  logueo(){
-    return this.router.navigate(['/cursos']);
-  }
-
-  irAlumnosCurso(){
-    return this.router.navigate(['/alumnos-curso']);
-  }
-
-
-  getAlumnosCurso(user:any){
-    return this.http.post(`${this.API_URI}/alumnos/alumnos-curso`,user);
-  }
-
+  //Recoge los datos del profesor que se va a registrar y se los manda a la sentencia sql que hace
+  //posible ese registro
   registarUser(user:any){
     return this.http.post(`${this.API_URI}/registrarUser`,user);
   }
 
+  //Busca los datos de usuario dentro de la BBDD para comprabar que el mismo se está logueando correctamente
+  getUser(user:any) {
+    return this.http.post(`${this.API_URI}/validarUser`,user);
+  }
+
+  //Una vez el programa comprueba que el usuario se ha logueado correctamente, nos redirije a su página
+  //de cursos
+  logueo(){
+    return this.router.navigate(['/cursos']);
+  }
+
+  //Cuando seleccionamos un curso, esta función nos redirije a las asignaturas que se imparten en esa clase
+  irAlumnosCurso(){
+    return this.router.navigate(['/alumnos-curso']);
+  }
+
+  //Nos mustra los alumnos que hay en una determinada clase
+  getAlumnosCurso(user:any){
+    return this.http.post(`${this.API_URI}/alumnos/alumnos-curso`,user);
+  } 
+
+  //Se obtienen los cursos a los que da clase un determinado profesor
   getCursos(user:any){
     return this.http.post(`${this.API_URI}/obtenerCursos`,user);
   }
 
+  //Recoge los datos del alumno que queremos registrar en una determinada clase, y se los manda a la sentencia
+  //sql que hace posible ese registro
   createAlumno(user:any){
     return this.http.post(`${this.API_URI}/alumnos/crearAlumnos`, user);
+  }
+
+  getIdProfesor(user:any){
+    return this.http.post(`${this.API_URI}/getIdProfesor`, user);
+  }
+
+  crearCurso(curso:any){
+    return this.http.post(`${this.API_URI}/crearCurso`, curso);
   }
 }
