@@ -28,6 +28,8 @@ export class AlumnosCursoComponent {
   telefono2 = new FormControl('');
   observaciones = new FormControl('');
 
+  id_Profesor:any = '';
+
 
   constructor(private alumnosService: AlumnosService,  private cookies:CookieService) {
 
@@ -56,6 +58,18 @@ export class AlumnosCursoComponent {
 
     form?.setAttribute('style', 'visibility: visible');
 
+    const profesor = {
+      nombre : this.cookies.get('user')
+    }
+
+    this.alumnosService.getIdProfesor(profesor).subscribe(
+      res => {
+        this.id_Profesor = res
+        console.log(this.id_Profesor[0].id);
+      },
+      err => console.log(err)
+    )
+
   }
 
   sendForm(){
@@ -72,7 +86,8 @@ export class AlumnosCursoComponent {
       telefono1 : this.telefono1.value,
       telefono2 : this.telefono2.value,
       observaciones : this.observaciones.value,
-      curso : this.cookies.get('curso')
+      curso : this.cookies.get('curso'),
+      id_Profesor: this.id_Profesor[0].id
     }
 
     if( this.nombre.value == ''){
@@ -90,6 +105,8 @@ export class AlumnosCursoComponent {
       form?.setAttribute('style', 'visibility: hidden');
 
       window.scrollTo(scrollY, 0);
+
+      this.ngOnInit();
     } 
   }
 }

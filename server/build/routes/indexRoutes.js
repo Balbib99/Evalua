@@ -12,6 +12,8 @@ class IndexRoutes {
         this.router.post('/validarUser', indexController_1.indexController.validarUser);
         this.router.post('/registrarUser', indexController_1.indexController.create);
         this.router.post('/obtenerCursos', indexController_1.indexController.getCourses);
+        this.router.post('/getIdProfesor', indexController_1.indexController.getIdProfesor);
+        this.router.post('/crearCurso', indexController_1.indexController.crearCurso);
     }
 }
 const indexRoutes = new IndexRoutes();

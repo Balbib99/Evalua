@@ -74,5 +74,28 @@ class IndexController {
             });
         });
     }
+    getIdProfesor(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query('SELECT id FROM profesores WHERE Nombre = ?', [req.body.nombre], (err, rows, field) => {
+                if (!err) {
+                    if (rows.length > 0) {
+                        res.json(rows);
+                    }
+                    else {
+                        res.json('No existe ningun usuario con ese nombre');
+                    }
+                }
+                else {
+                    console.log(err);
+                }
+            });
+        });
+    }
+    crearCurso(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query('INSERT INTO cursos set ?', [req.body]);
+            res.json({ mensaje: "curso añadido correctamente" });
+        });
+    }
 }
 exports.indexController = new IndexController();

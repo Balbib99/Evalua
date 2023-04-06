@@ -68,6 +68,26 @@ class IndexController {
         }
         );
     }
+
+    public async getIdProfesor(req:Request, res:Response) {
+        await connect.query('SELECT id FROM profesores WHERE Nombre = ?', [req.body.nombre],
+        (err, rows, field) => {
+            if(!err){
+                if(rows.length > 0) {
+                    res.json(rows);
+                }else{
+                    res.json('No existe ningun usuario con ese nombre');
+                }
+            }else{
+                console.log(err);
+            }
+        })
+    }
+
+    public async crearCurso(req:Request, res:Response) {
+        await connect.query('INSERT INTO cursos set ?', [req.body]);
+        res.json({mensaje: "curso añadido correctamente"});
+    }
 }
 
 export const indexController = new IndexController();

@@ -32,8 +32,8 @@ export class RegistroComponent {
 
     const newProf = {
       nombre: this.user.value,
+      email: this.email.value,
       clave: this.password.value,
-      correo: this.email.value,
       telefono: this.tlf.value
     }
 
@@ -43,6 +43,8 @@ export class RegistroComponent {
       this.alumnosService.registarUser(newProf).subscribe(
         res => {
           alert('Usuario '+this.user.value+' registrado correctamente');
+
+          this.alumnosService.inicio();
         },
         err => console.log(err)
       );
