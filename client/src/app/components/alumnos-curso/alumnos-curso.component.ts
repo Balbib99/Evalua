@@ -16,6 +16,7 @@ export class AlumnosCursoComponent {
   // nombre:any = '';
   alumnosCurso: any = [];
 
+  //Variables del formulario de creación de un alumno nuevo
   nombre = new FormControl('');
   apellidos = new FormControl('');
   nombre_Familiar1 = new FormControl('');
@@ -30,6 +31,12 @@ export class AlumnosCursoComponent {
 
   id_Profesor:any = '';
 
+  //Variables del formulario de creación de una asignatura nueva
+  nombreAsignatura = new FormControl('');
+  alumnoElegido = new FormControl('');
+
+  alumnosAsignatura: any = [];
+
 
   constructor(private alumnosService: AlumnosService,  private cookies:CookieService) {
 
@@ -37,6 +44,12 @@ export class AlumnosCursoComponent {
   
 
   ngOnInit() {
+
+    const form = document.querySelector('.createAlumno');
+    form?.setAttribute('style', 'display: none');
+
+    const formAsignatura = document.querySelector('.createAsignatura');
+    formAsignatura?.setAttribute('style', 'display: none');
 
     const curso = {
       nombre: this.cookies.get('curso'),
@@ -56,7 +69,11 @@ export class AlumnosCursoComponent {
   createAlumno(){
     const form = document.querySelector('.createAlumno');
 
-    form?.setAttribute('style', 'visibility: visible');
+    if (form?.getAttribute('style') == 'display: none') {
+      form?.setAttribute('style', 'display: block');  
+    }else{
+      form?.setAttribute('style', 'display: none');  
+    }
 
     const profesor = {
       nombre : this.cookies.get('user')
@@ -102,11 +119,51 @@ export class AlumnosCursoComponent {
 
       const form = document.querySelector('.createAlumno');
 
-      form?.setAttribute('style', 'visibility: hidden');
+      form?.setAttribute('style', 'display: block');
 
       window.scrollTo(scrollY, 0);
 
       this.ngOnInit();
     } 
+  }
+
+  createAsignatura() {
+    const formAsignatura = document.querySelector('.createAsignatura');
+
+    if (formAsignatura?.getAttribute('style') == 'display: none') {
+      formAsignatura?.setAttribute('style', 'display: block');  
+    }else{
+      formAsignatura?.setAttribute('style', 'display: none');  
+    }
+  }
+
+  onChange($event:any){
+    let i = -1;
+
+    if ($event.target.checked == true) {
+      this.alumnosAsignatura.push({nombre: $event.target.name, apellidos: $event.target.value})
+    }else{
+
+      for (const alum of this.alumnosAsignatura) {
+        i++;
+
+        if(alum.nombre == $event.target.name && alum.apellidos == $event.target.value){
+          this.alumnosAsignatura.splice(i, 1);
+        }
+      }
+
+    }
+
+    console.log(this.alumnosAsignatura);
+  }
+
+
+  sendFormAsignaturas() {
+    // let alumnos = [];
+
+    // for (const alum of this.alumnosCurso) {
+    //   alumnos.push({nombre: alum.Nombre +' '+alum.Apellidos, select: false});
+    // }
+    // console.log(alumnos);
   }
 }

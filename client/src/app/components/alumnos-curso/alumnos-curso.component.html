@@ -23,7 +23,7 @@
         </tbody>
     </table>
 
-    <form class="createAlumno" style="visibility: hidden;">
+    <form class="createAlumno">
       <fieldset>
         <legend>Añade un Alumno</legend>
         
@@ -90,3 +90,40 @@
     </form>
 </div>
 
+<div class="container">
+  <div class="d-grid gap-2 asignatura">
+      <button class="btn btn-lg btn-primary m-4" style="width: 25%; height: 200px;" type="button"></button>
+      <button class="btn btn-lg btn-outline-primary m-4" style="width: 25%; height: 200px;" type="button" (click)="createAsignatura()">Añadir Asignatura &nbsp;&nbsp;<i class="bi bi-plus-circle"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+        </svg></i></button>
+  </div>
+</div>
+
+<div class="container p-4 createAsignatura">
+  <form>
+    <fieldset>
+      <legend>Añade una Asignatura</legend>
+      
+      <div class="form-group" >
+        <label for="NombreAsignatura" class="form-label mt-4">* Nombre</label>
+        <input type="text" class="form-control" [formControl]="nombreAsignatura" id="NombreAsignatura" aria-describedby="emailHelp" placeholder="Nombre">
+      </div>
+      
+      <div class="form-check" >
+        <div *ngFor="let alumno of alumnosCurso">
+          <input class="form-check-input check" type="checkbox" name="{{alumno.Nombre}}" [value]="alumno.Apellidos" (change)="onChange($event)"  [formControl]="alumnoElegido" id="flexCheckDefault" checked="">
+          <label class="form-check-label" for="flexCheckDefault">
+            {{alumno.Nombre}} {{alumno.Apellidos}}
+          </label>
+        </div>
+        
+      </div>
+
+      <div class="d-grid gap-2 my-3">
+        <button class="btn btn-lg btn-outline-success" type="button" (click)="sendFormAsignaturas()">Enviar</button>
+      </div>
+
+    </fieldset>
+  </form>
+</div>
