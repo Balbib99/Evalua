@@ -29,12 +29,15 @@ export class AlumnosCursoComponent {
   telefono2 = new FormControl('');
   observaciones = new FormControl('');
 
+  //Varaible a rellenar posteriormente con el id del profesor/usuario que haya iniciado sesión
   id_Profesor:any = '';
 
   //Variables del formulario de creación de una asignatura nueva
   nombreAsignatura = new FormControl('');
   alumnoElegido = new FormControl('');
 
+  //Array en el que guardaremos, en el apartado de creación de una nueva asignatura, los alumnos que van 
+  //a impartir una asignatura determinada
   alumnosAsignatura: any = [];
 
 
@@ -42,7 +45,8 @@ export class AlumnosCursoComponent {
 
   }
   
-
+  //Según inicia la página, esta carga una tabla con los datos de los alumnos que tiene el usuario en la clase en cestión y
+  //  con los botones para las diferentes operaciones tanto con los alumnos como con las asignaturas
   ngOnInit() {
 
     const form = document.querySelector('.createAlumno');
@@ -66,6 +70,8 @@ export class AlumnosCursoComponent {
     console.log(this.cookies.get('curso'));
   }
 
+  //Hacemos aparecer y desaparecer el formulario de creación de un nuevo alumno según el usuario clike sobre el
+  //botón
   createAlumno(){
     const form = document.querySelector('.createAlumno');
 
@@ -89,6 +95,8 @@ export class AlumnosCursoComponent {
 
   }
 
+  //Recogemos los datos sobre el nuevo alumno, y lo añadimos a la BBDD para que posteriormente latabla que contiene
+  //los alumnos se actualize
   sendForm(){
 
     const newAlumno = {
@@ -127,6 +135,8 @@ export class AlumnosCursoComponent {
     } 
   }
 
+  //Hacemos aparecer y desaparecer el formulario de creación de nueva asignatura según el usuario clike sobre el
+  //botón
   createAsignatura() {
     const formAsignatura = document.querySelector('.createAsignatura');
 
@@ -138,32 +148,109 @@ export class AlumnosCursoComponent {
   }
 
   onChange($event:any){
-    let i = -1;
+    let i = -1; //Nos inicia el indice del array de los alumnos en -1 para poder trabajar con él en la eliminación de los alumnos
 
-    if ($event.target.checked == true) {
-      this.alumnosAsignatura.push({nombre: $event.target.name, apellidos: $event.target.value})
-    }else{
+    //Controlamos mediante condiciones, si el checkbox seleccionado es el que selecciona a todos,
+    //o es uno de los que se refiere a un alumno en particular
+    if($event.target.name == 'all' && $event.target.checked == true){
 
-      for (const alum of this.alumnosAsignatura) {
-        i++;
+      //Si seleccionamos el checbox de 'SELECCIONA TODOS' todos los checkbox se mostrarán como seleccionados
+      document.querySelectorAll('.check').forEach(function(checkElement:any) {
+        checkElement.checked = true;
+      });
 
-        if(alum.nombre == $event.target.name && alum.apellidos == $event.target.value){
-          this.alumnosAsignatura.splice(i, 1);
+      let labelCheck = document.querySelectorAll('.labelCheck');
+      
+      //Una vez mostrados todos como seleccionados, pasamos a rellenar un array con los datos de todos los alumnos
+      //seleccionados
+      labelCheck.forEach(e => {
+        let array:any = e.textContent?.split(' ');
+        let nombre = array[1];
+        let apellidos = array[2]+' '+array[3];
+
+        //Si este array de alumnos se encuentra vecío, lo rellenaremos normalmente por primera vez, si no,
+        //recorreremos el array en busca de alumnos identicos que ya se hayan metido anteriormente, si encontramos
+        //algún alumno con el mismo nombre nos le saltamos, en cambio, si no existe nigún alumno llamado de esa forma,
+        //este pasa a introducirse al array en cuestión
+        if(this.alumnosAsignatura == ''){
+          this.alumnosAsignatura.push({nombre: nombre, apellidos: apellidos}) 
+        }else{
+
+          let alumnoAñadido = 0; //Limita las veces que se ha introducido un mismo alumno para no hacerlo más de una vez
+          let alumnosRecorridos = 0; //Lo utilizamos para comparar los alumnos que ya han sido comprobados, con la cantidad
+          //de alumnos que tenemos ya registrados para hacer la comprobación que explicamos anteriormente
+
+          for (const alum of this.alumnosAsignatura) {
+
+            if((alum.nombre != nombre) && (alum.apellidos != apellidos) && (alumnoAñadido == 0)){
+              
+              alumnosRecorridos++; //Se añade uno cada vez que un alumno es comprobado
+
+              if(alumnosRecorridos == this.alumnosAsignatura.length){
+
+                //Si finalmente no hay ningún alumno con el mismo nombre, este es añadido
+                this.alumnosAsignatura.push({nombre: nombre, apellidos: apellidos})
+                
+                alumnoAñadido++; //Se añade uno cada vez que metemos un alumno al array
+
+              }
+            }
+          }
         }
+      });
+    }else{ //Si las casilla de 'SELECCIONA TODOS' la estamos deseleccionando o estamos seleccionando uno de los alumnos
+      //individualmente, haremos lo siguiente
+      
+      //Si deseleccionamos la casilla de 'SELECCIONA TODOS', todas las casillas serán deseleccionadas y el array
+      //que contiene los alumnos será vaciado
+      if($event.target.name == 'all' && $event.target.checked == false){
+        document.querySelectorAll('.check').forEach(function(checkElement:any) {
+          checkElement.checked = false;
+        });
+
+        this.alumnosAsignatura = [];
       }
 
+      document.querySelectorAll('.checkTodos').forEach(function(checkElement:any) {
+        checkElement.checked = false;
+      });
+
+      //Si seleccionamos un alumno de forma individual, este pasa a introducirse direcctamente al array, ya que con las
+      //operaciones anteriores nos habremos asegurado de que el array esté vacío o de que no se pueda repetir el alumno
+      if ($event.target.checked == true) {
+        
+        this.alumnosAsignatura.push({nombre: $event.target.name, apellidos: $event.target.value})
+      
+      }else{ //Si deseleccionamos un alumno, sacamos el puesto que ocupa en el array y lo eliminamos del mismo
+  
+        for (const alum of this.alumnosAsignatura) {
+          i++;
+  
+          if(alum.nombre == $event.target.name && alum.apellidos == $event.target.value){
+            this.alumnosAsignatura.splice(i, 1);
+          }
+        }
+  
+      }
     }
 
     console.log(this.alumnosAsignatura);
   }
 
-
+  //Recogemos los datos del formulario de creación de nuevas asignaturas para instroducirlas
+  //en la BBDD con sus alumnos y clase correspondientes
   sendFormAsignaturas() {
-    // let alumnos = [];
+    const divAsignaturas:any = document.querySelector('.asignatura');
+    const createSubject:any = document.querySelector('.createSubject');
 
-    // for (const alum of this.alumnosCurso) {
-    //   alumnos.push({nombre: alum.Nombre +' '+alum.Apellidos, select: false});
-    // }
-    // console.log(alumnos);
+    let newSubject:any = document.createElement('button');
+    newSubject.className = "btn btn-lg btn-primary m-4";
+    newSubject.style.width = 25+'%';
+    newSubject.style.height = 200+'px';
+    newSubject.textContent = this.nombreAsignatura.value;
+
+    //Cada vez que creamos una asignatura, esta se ve representada con un botón para que el usuario
+    //pueda interaccionar con él
+    divAsignaturas.insertBefore(newSubject, createSubject);
   }
 }

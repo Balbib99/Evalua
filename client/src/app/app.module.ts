@@ -19,6 +19,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { MisCursosComponent } from './components/mis-cursos/mis-cursos.component';
 import { RegistroComponent } from './components/registro/registro.component';
 import { AlumnosCursoComponent } from './components/alumnos-curso/alumnos-curso.component';
+import { RubricasComponent } from './components/rubricas/rubricas.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { AlumnosCursoComponent } from './components/alumnos-curso/alumnos-curso.
     NavigationInicioComponent,
     MisCursosComponent,
     RegistroComponent,
-    AlumnosCursoComponent
+    AlumnosCursoComponent,
+    RubricasComponent
   ],
   imports: [
     BrowserModule,
