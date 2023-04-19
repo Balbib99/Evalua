@@ -1,3 +1,45 @@
 <app-navigation></app-navigation>
+<div class="body">
+    <div class="container rubricaDefault">
+        <table class="table table-hover">
+            <thead>
+              <tr class="table-active">
+                <th scope="col">Type</th>
+                <th scope="col">Column heading</th>
+                <th scope="col">Column heading</th>
+                <th scope="col">Column heading</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Active</th>
+                <td>Column content</td>
+                <td>Column content</td>
+                <td>Column content</td>
+              </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="container create" style="margin-top: 2em;">
+        <button type="button" class="btn btn-primary btn-lg" (click)="showDialog()">Añadir Rubrica</button>
+    </div>
 
-<p>rubricas works!</p>
+    <dialog>
+      <div class="container">
+        <div class="form-group">
+          <label for="columns" class="form-label mt-4">Inserta las columnas que tendrá tu rubrica</label>
+          <input type="number" class="form-control" id="columns" placeholder="columnas">
+        </div>
+        <div class="form-group">
+          <label for="rows" class="form-label mt-4">Inserta las filas que tendrá tu rubrica</label>
+          <input type="number" class="form-control" id="rows" placeholder="filas">
+        </div>
+        <small id="emailHelp" class="form-text text-muted">Podrás ir añadiendo más filas, pero no más columnas según editas tu rubrica</small>
+      </div>
+      <div class="container create" style="margin-top: 2em;">
+        <button type="button" class="btn btn-primary btn-lg" (click)="createRubrica()">Añadir Rubrica</button>
+    </div>
+    </dialog>
+
+</div>

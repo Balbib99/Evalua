@@ -22,6 +22,7 @@ import { AlumnosCursoComponent } from './components/alumnos-curso/alumnos-curso.
 import { RubricasComponent } from './components/rubricas/rubricas.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
