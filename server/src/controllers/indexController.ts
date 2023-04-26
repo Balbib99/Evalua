@@ -88,6 +88,39 @@ class IndexController {
         await connect.query('INSERT INTO cursos set ?', [req.body]);
         res.json({mensaje: "curso añadido correctamente"});
     }
+
+    public async createSubject(req:Request, res:Response){
+        await connect.query('INSERT INTO asignaturas set ?', [req.body]);
+        res.json({mensaje: "asignatura añadida correctamente"});
+    }
+
+    public async getSubjects(req:Request, res:Response){
+        await connect.query('SELECT * FROM asignaturas WHERE id_Profesor = ? AND Nombre_curso = ?', [req.body.id_Profesor, req.body.Nombre_curso],
+        (err, rows, field) => {
+            if(!err){
+                if(rows.length > 0) {
+                    res.json(rows);
+                }else{
+                    res.json('No existe ningun usuario con ese nombre');
+                }
+            }else{
+                console.log(err);
+            }
+        });
+    }
+
+    public async createTableCalifications(req:Request, res:Response){
+        const tabla = req.body.nombre_tabla
+
+        await connect.query('CREATE TABLE Calificaciones_'+tabla+' (id int(5) PRIMARY KEY AUTO_INCREMENT, Nombre_alumno varchar(40), Nombre_asignatura varchar(30));',[req.body]);
+        res.json({mensaje: "tabla añadida correctamente"});
+    }
+
+    public async writeTableCalifications(req:Request, res:Response){
+        const alumnos = req.body.Nombre_alumnos.split(',')
+        // await connect.query('INSERT INTO asignaturas VALUES (? , ?)',[req.body]);
+        res.json({mensaje: alumnos});
+    }
 }
 
 export const indexController = new IndexController();

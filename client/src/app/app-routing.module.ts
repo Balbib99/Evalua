@@ -7,6 +7,7 @@ import { InicioComponent } from './components/inicio/inicio.component';
 import { MisCursosComponent } from './components/mis-cursos/mis-cursos.component';
 import { RegistroComponent } from './components/registro/registro.component';
 import { RubricasComponent } from './components/rubricas/rubricas.component';
+import { CalificacionesComponent } from './components/calificaciones/calificaciones.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,10 @@ const routes: Routes = [
   {
     path: 'rubricas',
     component: RubricasComponent
+  },
+  {
+    path: 'calificaciones',
+    component: CalificacionesComponent
   }
 ];
 

@@ -20,6 +20,7 @@ import { MisCursosComponent } from './components/mis-cursos/mis-cursos.component
 import { RegistroComponent } from './components/registro/registro.component';
 import { AlumnosCursoComponent } from './components/alumnos-curso/alumnos-curso.component';
 import { RubricasComponent } from './components/rubricas/rubricas.component';
+import { CalificacionesComponent } from './components/calificaciones/calificaciones.component';
 
 
 
@@ -34,7 +35,8 @@ import { RubricasComponent } from './components/rubricas/rubricas.component';
     MisCursosComponent,
     RegistroComponent,
     AlumnosCursoComponent,
-    RubricasComponent
+    RubricasComponent,
+    CalificacionesComponent
   ],
   imports: [
     BrowserModule,

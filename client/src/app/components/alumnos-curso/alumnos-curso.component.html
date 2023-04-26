@@ -120,6 +120,7 @@
 
 <div class="container">
   <div class="d-grid gap-2 asignatura">
+    <button class="btn btn-lg btn-primary m-4" style="width: 25%; height: 200px;" type="button" name="{{subject.id}}" *ngFor="let subject of subjects" (click)="califications()">{{subject.Nombre}}</button>
       <!-- <button class="btn btn-lg btn-primary m-4" style="width: 25%; height: 200px;" type="button"></button> -->
       <button class="btn btn-lg btn-outline-primary m-4 createSubject" style="width: 25%; height: 200px;" type="button" (click)="createAsignatura()">Añadir Asignatura &nbsp;&nbsp;<i class="bi bi-plus-circle"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
           <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>

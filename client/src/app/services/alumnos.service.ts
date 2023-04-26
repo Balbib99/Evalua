@@ -70,4 +70,24 @@ export class AlumnosService {
   crearCurso(curso:any){
     return this.http.post(`${this.API_URI}/crearCurso`, curso);
   }
+
+  createSubject(subject:any){
+    return this.http.post(`${this.API_URI}/createSubject`, subject);
+  }
+
+  getSubjects(subject:any){
+    return this.http.post(`${this.API_URI}/getSubjects`,subject);
+  }
+
+  califications(){
+    return this.router.navigate(['/calificaciones']);
+  }
+
+  createTableCalifications(table:any){
+    return this.http.post(`${this.API_URI}/createTableCalifications`,table);
+  }
+
+  writeTableCalifications(content:any){
+    return this.http.post(`${this.API_URI}/writeTableCalifications`,content);
+  }
 }

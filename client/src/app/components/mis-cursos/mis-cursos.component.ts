@@ -36,6 +36,18 @@ export class MisCursosComponent {
       },
       err => console.log(err)
     );
+
+    const profesor = {
+      nombre : this.cookies.get('user')
+    }
+
+    this.alumnosService.getIdProfesor(profesor).subscribe(
+      res => {
+        this.id_Profesor = res
+        localStorage.setItem('id_Profesor', this.id_Profesor[0].id);
+      },
+      err => console.log(err)
+    )
   }
 
   cursoSeleccionado(cursoNombre:any){
@@ -72,6 +84,20 @@ export class MisCursosComponent {
 
     this.alumnosService.crearCurso(curso).subscribe(
       res => {
+
+        const table = {
+          nombre_tabla: this.cookies.get('curso')
+        }
+    
+        this.alumnosService.createTableCalifications(table).subscribe(
+          res => {
+            alert(res)
+          },
+          err => {
+            console.log(err);
+          }
+        )
+
         this.ngOnInit();
       },
       err => console.log(err)

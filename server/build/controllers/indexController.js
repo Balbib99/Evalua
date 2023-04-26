@@ -97,5 +97,42 @@ class IndexController {
             res.json({ mensaje: "curso añadido correctamente" });
         });
     }
+    createSubject(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query('INSERT INTO asignaturas set ?', [req.body]);
+            res.json({ mensaje: "asignatura añadida correctamente" });
+        });
+    }
+    getSubjects(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query('SELECT * FROM asignaturas WHERE id_Profesor = ? AND Nombre_curso = ?', [req.body.id_Profesor, req.body.Nombre_curso], (err, rows, field) => {
+                if (!err) {
+                    if (rows.length > 0) {
+                        res.json(rows);
+                    }
+                    else {
+                        res.json('No existe ningun usuario con ese nombre');
+                    }
+                }
+                else {
+                    console.log(err);
+                }
+            });
+        });
+    }
+    createTableCalifications(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const tabla = req.body.nombre_tabla;
+            yield database_1.default.query('CREATE TABLE Calificaciones_' + tabla + ' (id int(5) PRIMARY KEY AUTO_INCREMENT, Nombre_alumno varchar(40), Nombre_asignatura varchar(30));', [req.body]);
+            res.json({ mensaje: "tabla añadida correctamente" });
+        });
+    }
+    writeTableCalifications(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const alumnos = req.body.Nombre_alumnos.split(',');
+            // await connect.query('INSERT INTO asignaturas VALUES (? , ?)',[req.body]);
+            res.json({ mensaje: alumnos });
+        });
+    }
 }
 exports.indexController = new IndexController();

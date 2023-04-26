@@ -40,6 +40,10 @@ export class AlumnosCursoComponent {
   //a impartir una asignatura determinada
   alumnosAsignatura: any = [];
 
+  subjects: any = []
+
+  alumnosAsignaturaFormat:any = '';
+
 
   constructor(private alumnosService: AlumnosService,  private cookies:CookieService) {
 
@@ -67,7 +71,43 @@ export class AlumnosCursoComponent {
       err => console.log(err)
     );
 
-    console.log(this.cookies.get('curso'));
+
+    const profesor = {
+      nombre : this.cookies.get('user')
+    }
+
+    this.alumnosService.getIdProfesor(profesor).subscribe(
+      res => {
+        this.id_Profesor = res
+        this.listSubject()
+      },
+      err => console.log(err)
+    )
+
+    
+    console.log(this.alumnosAsignatura);
+  }
+
+  //Lista las asignaturas asignadas a un determinado curso
+  listSubject(){
+
+    const subject = {
+      id_Profesor: this.id_Profesor[0].id,
+      Nombre_curso: this.cookies.get('curso')
+    }
+    console.log(subject)
+
+    this.alumnosService.getSubjects(subject).subscribe(
+      res => {
+        this.subjects = res
+        console.log(this.subjects);
+      },
+      err => {
+        console.log(err);
+      }
+    )
+
+    
   }
 
   //Hacemos aparecer y desaparecer el formulario de creación de un nuevo alumno según el usuario clike sobre el
@@ -243,14 +283,61 @@ export class AlumnosCursoComponent {
     const divAsignaturas:any = document.querySelector('.asignatura');
     const createSubject:any = document.querySelector('.createSubject');
 
-    let newSubject:any = document.createElement('button');
-    newSubject.className = "btn btn-lg btn-primary m-4";
-    newSubject.style.width = 25+'%';
-    newSubject.style.height = 200+'px';
-    newSubject.textContent = this.nombreAsignatura.value;
+    // let newSubject:any = document.createElement('button');
+    // newSubject.className = "btn btn-lg btn-primary m-4";
+    // newSubject.style.width = 25+'%';
+    // newSubject.style.height = 200+'px';
+    // newSubject.textContent = this.nombreAsignatura.value;
+
+    this.alumnosAsignaturaFormat = '';
+    let i=0;
+    this.alumnosAsignatura.forEach((element: any) => {
+      if(i==0){
+        this.alumnosAsignaturaFormat = element.nombre+' '+element.apellidos
+      }else{
+        this.alumnosAsignaturaFormat = this.alumnosAsignaturaFormat+','+element.nombre+' '+element.apellidos
+      }
+      i++
+    });
+
+    const subject = {
+      Nombre: this.nombreAsignatura.value,
+      Nombre_alumnos: this.alumnosAsignaturaFormat,
+      Nombre_curso: this.cookies.get('curso'),
+      id_Profesor: this.id_Profesor[0].id
+    }
+
+    this.alumnosService.createSubject(subject).subscribe(
+      res => {
+        alert(JSON.stringify(res));
+
+        //------------------------------ACABAR-------------------------------------
+        const content = {
+          Nombre_alumno: this.alumnosAsignaturaFormat,
+          Nombre_asignatura: this.nombreAsignatura.value
+        }
+        this.alumnosService.writeTableCalifications(content).subscribe(
+              res=> {
+                alert(res)
+              },
+              err => {
+                console.log(err);
+              }
+            )
+      },
+      err => {
+        console.log(err);
+      }
+    )
 
     //Cada vez que creamos una asignatura, esta se ve representada con un botón para que el usuario
     //pueda interaccionar con él
-    divAsignaturas.insertBefore(newSubject, createSubject);
+    // divAsignaturas.insertBefore(newSubject, createSubject);
+    this.ngOnInit()
   }
+
+  califications(){
+    this.alumnosService.califications()
+  }
+  
 }
