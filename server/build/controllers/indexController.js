@@ -120,11 +120,22 @@ class IndexController {
             });
         });
     }
-    createTableCalifications(req, res) {
+    getStudentsSubject(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const tabla = req.body.nombre_tabla;
-            yield database_1.default.query('CREATE TABLE Calificaciones_' + tabla + ' (id int(5) PRIMARY KEY AUTO_INCREMENT, Nombre_alumno varchar(40), Nombre_asignatura varchar(30));', [req.body]);
-            res.json({ mensaje: "tabla añadida correctamente" });
+            console.log(req.body);
+            yield database_1.default.query('SELECT Nombre_alumnos FROM asignaturas WHERE id=?', [req.body.id], (err, rows, field) => {
+                if (!err) {
+                    if (rows.length > 0) {
+                        res.json(rows);
+                    }
+                    else {
+                        res.json('No existe ninguna asignatura con ese id');
+                    }
+                }
+                else {
+                    console.log(err);
+                }
+            });
         });
     }
     writeTableCalifications(req, res) {

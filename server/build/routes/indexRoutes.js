@@ -16,7 +16,7 @@ class IndexRoutes {
         this.router.post('/crearCurso', indexController_1.indexController.crearCurso);
         this.router.post('/createSubject', indexController_1.indexController.createSubject);
         this.router.post('/getSubjects', indexController_1.indexController.getSubjects);
-        this.router.post('/createTableCalifications', indexController_1.indexController.createTableCalifications);
+        this.router.post('/getStudentsSubject', indexController_1.indexController.getStudentsSubject);
         this.router.post('/writeTableCalifications', indexController_1.indexController.writeTableCalifications);
     }
 }

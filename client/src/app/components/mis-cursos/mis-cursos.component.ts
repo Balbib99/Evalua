@@ -85,18 +85,18 @@ export class MisCursosComponent {
     this.alumnosService.crearCurso(curso).subscribe(
       res => {
 
-        const table = {
-          nombre_tabla: this.cookies.get('curso')
-        }
+        // const table = {
+        //   nombre_tabla: this.cookies.get('curso')
+        // }
     
-        this.alumnosService.createTableCalifications(table).subscribe(
-          res => {
-            alert(res)
-          },
-          err => {
-            console.log(err);
-          }
-        )
+        // this.alumnosService.createTableCalifications(table).subscribe(
+        //   res => {
+        //     alert(res)
+        //   },
+        //   err => {
+        //     console.log(err);
+        //   }
+        // )
 
         this.ngOnInit();
       },

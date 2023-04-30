@@ -109,11 +109,20 @@ class IndexController {
         });
     }
 
-    public async createTableCalifications(req:Request, res:Response){
-        const tabla = req.body.nombre_tabla
-
-        await connect.query('CREATE TABLE Calificaciones_'+tabla+' (id int(5) PRIMARY KEY AUTO_INCREMENT, Nombre_alumno varchar(40), Nombre_asignatura varchar(30));',[req.body]);
-        res.json({mensaje: "tabla añadida correctamente"});
+    public async getStudentsSubject(req:Request, res:Response){
+        console.log(req.body);
+        await connect.query('SELECT Nombre_alumnos FROM asignaturas WHERE id=?',[req.body.id], 
+        (err, rows, field) => {
+            if(!err){
+                if(rows.length > 0) {
+                    res.json(rows);
+                }else{
+                    res.json('No existe ninguna asignatura con ese id');
+                }
+            }else{
+                console.log(err);
+            }
+        });
     }
 
     public async writeTableCalifications(req:Request, res:Response){

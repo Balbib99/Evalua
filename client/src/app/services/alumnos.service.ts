@@ -83,8 +83,8 @@ export class AlumnosService {
     return this.router.navigate(['/calificaciones']);
   }
 
-  createTableCalifications(table:any){
-    return this.http.post(`${this.API_URI}/createTableCalifications`,table);
+  getStudentsSubject(filtro:any){
+    return this.http.post(`${this.API_URI}/getStudentsSubject`,filtro);
   }
 
   writeTableCalifications(content:any){

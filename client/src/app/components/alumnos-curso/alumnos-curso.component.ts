@@ -311,19 +311,19 @@ export class AlumnosCursoComponent {
       res => {
         alert(JSON.stringify(res));
 
-        //------------------------------ACABAR-------------------------------------
-        const content = {
-          Nombre_alumno: this.alumnosAsignaturaFormat,
-          Nombre_asignatura: this.nombreAsignatura.value
-        }
-        this.alumnosService.writeTableCalifications(content).subscribe(
-              res=> {
-                alert(res)
-              },
-              err => {
-                console.log(err);
-              }
-            )
+        // //------------------------------ACABAR-------------------------------------
+        // const content = {
+        //   Nombre_alumno: this.alumnosAsignaturaFormat,
+        //   Nombre_asignatura: this.nombreAsignatura.value
+        // }
+        // this.alumnosService.writeTableCalifications(content).subscribe(
+        //       res=> {
+        //         alert(res)
+        //       },
+        //       err => {
+        //         console.log(err);
+        //       }
+        //     )
       },
       err => {
         console.log(err);
@@ -336,7 +336,10 @@ export class AlumnosCursoComponent {
     this.ngOnInit()
   }
 
-  califications(){
+  califications($event:any){
+    this.cookies.set('asignatura', $event.target.textContent)
+    this.cookies.set('idAsignatura', $event.target.name)
+
     this.alumnosService.califications()
   }
   
