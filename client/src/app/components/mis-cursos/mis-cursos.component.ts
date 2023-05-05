@@ -22,6 +22,7 @@ export class MisCursosComponent {
 
   }
 
+  //Carga los cursos de los que dispone un profesor y deja crear los que el usuario quiera
   ngOnInit() {
 
     const user = {
@@ -50,6 +51,7 @@ export class MisCursosComponent {
     )
   }
 
+  //Recoge el nombre del curso seleccionado y se dirije al alaprtado de ese curso en concreto
   cursoSeleccionado(cursoNombre:any){
     
     this.cookies.set('curso', cursoNombre);
@@ -57,6 +59,7 @@ export class MisCursosComponent {
 
   }
 
+  //Permite crear tantos cursos como quiera el usuario
   crearCurso(){
 
     const form = document.querySelector('.formulario');
@@ -75,6 +78,7 @@ export class MisCursosComponent {
     )
   }
 
+  //Envia el formulario de creación del curso para que los datos se guarden en la BBDD
   sendForm(){
     
     const curso = {
@@ -84,20 +88,6 @@ export class MisCursosComponent {
 
     this.alumnosService.crearCurso(curso).subscribe(
       res => {
-
-        // const table = {
-        //   nombre_tabla: this.cookies.get('curso')
-        // }
-    
-        // this.alumnosService.createTableCalifications(table).subscribe(
-        //   res => {
-        //     alert(res)
-        //   },
-        //   err => {
-        //     console.log(err);
-        //   }
-        // )
-
         this.ngOnInit();
       },
       err => console.log(err)

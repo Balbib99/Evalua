@@ -28,6 +28,7 @@ export class InicioComponent{
     this.getUser();
   }
 
+  //Hace una busqueda en la BBDD del usuario que está iniciando sesión para comprobar que existe
   getUser(){
 
     const user = {

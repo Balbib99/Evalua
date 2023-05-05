@@ -27,6 +27,7 @@ export class RegistroComponent {
 
   }
 
+  //Permite registrar nuevos usuarios
   registrar(){
     // if (this.tlf.value == '') throw this.tlf.setValue('null');
 

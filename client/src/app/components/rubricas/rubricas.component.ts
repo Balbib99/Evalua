@@ -11,11 +11,13 @@ export class RubricasComponent {
 
   constructor(){}
 
+  //Muestra un cuadro de dialogo para elegir el tamaño de la rubrica a crear
   showDialog(){
     let dialog = document.querySelector('dialog');
     dialog?.showModal();
   }
 
+  //Crea las filas y columnas de la rubrica una vez se ha elegido el tamaño de la misma
   createRubrica(){
     let dialog = document.querySelector('dialog');
     dialog?.close();
@@ -92,6 +94,7 @@ export class RubricasComponent {
     newRubrica.append(buttonRow);
   }
 
+  //Guarda la rubrica creada y la muestra por pantalla
   guardarRubrica(elegido: any){
     let casilla = -1;
 
@@ -157,6 +160,7 @@ export class RubricasComponent {
     newRubrica.append(newTable);
   }
 
+  //Permite crear más filas dinamicamente a mayores en la rubrica
   updateRow(){
     let rubrica: any = document.querySelector('.newRubrica');
     let table = document.querySelector('.newTable');

@@ -40,8 +40,10 @@ export class AlumnosCursoComponent {
   //a impartir una asignatura determinada
   alumnosAsignatura: any = [];
 
+  //Recoge las asignaturas de un determinado curso
   subjects: any = []
 
+  //Variable para formatear las asignaturas recogidas desde la BBDD
   alumnosAsignaturaFormat:any = '';
 
 
@@ -187,6 +189,7 @@ export class AlumnosCursoComponent {
     }
   }
 
+  //Se ejecuta cada vez que se selecciona un alumno
   onChange($event:any){
     let i = -1; //Nos inicia el indice del array de los alumnos en -1 para poder trabajar con él en la eliminación de los alumnos
 
@@ -310,20 +313,6 @@ export class AlumnosCursoComponent {
     this.alumnosService.createSubject(subject).subscribe(
       res => {
         alert(JSON.stringify(res));
-
-        // //------------------------------ACABAR-------------------------------------
-        // const content = {
-        //   Nombre_alumno: this.alumnosAsignaturaFormat,
-        //   Nombre_asignatura: this.nombreAsignatura.value
-        // }
-        // this.alumnosService.writeTableCalifications(content).subscribe(
-        //       res=> {
-        //         alert(res)
-        //       },
-        //       err => {
-        //         console.log(err);
-        //       }
-        //     )
       },
       err => {
         console.log(err);
@@ -336,6 +325,7 @@ export class AlumnosCursoComponent {
     this.ngOnInit()
   }
 
+  //Guarda la asignatura y su id en una cookie para posteriormente usarlo en el apartado de calificaciones
   califications($event:any){
     this.cookies.set('asignatura', $event.target.textContent)
     this.cookies.set('idAsignatura', $event.target.name)

@@ -15,6 +15,7 @@ export class AlumnosListComponent {
 
   }
 
+  //Devuelve todos los alumnos a los que da clase un profesor, independientemente de la clase
   ngOnInit() {
     this.alumnosService.getAlumnos().subscribe(
       res => {

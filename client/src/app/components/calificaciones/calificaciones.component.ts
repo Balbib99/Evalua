@@ -2,20 +2,38 @@ import { Component } from '@angular/core';
 import { AlumnosService } from 'src/app/services/alumnos.service';
 
 import { CookieService } from 'ngx-cookie-service';
-
+import { FormControl } from '@angular/forms';
 @Component({
   selector: 'app-calificaciones',
   templateUrl: './calificaciones.component.html',
   styleUrls: ['./calificaciones.component.css']
 })
 export class CalificacionesComponent {
-  constructor(private alumnosService:AlumnosService, private cookies:CookieService){
+  constructor(private alumnosService: AlumnosService, private cookies: CookieService) {
 
   }
 
-  students:any = []
+  students: any = []
 
-  ngOnInit(){
+  columnas: any = new FormControl('');
+  filas: any = new FormControl('');
+  nombreRubrica: any = new FormControl('');
+
+  //Dependiendo de las columas que elija el usuario crear, se utilizará una variable o otra para determinar los encabezados
+  threeColumns: any = ['', 'Excelente', 'Regular', 'Mal']
+  fourColumns: any = ['', 'Excelente', 'Notable', 'Regular', 'Mal']
+  fiveColumns: any = ['', 'Excelente', 'Notable', 'Regular', 'Suficiente', 'Mal']
+
+  //Dependiendo de las columnas elegidas por el usuario, se utilizará una variable u otra para determinar la puntuación de cada celda
+  threeColumnsPoint: any = [10, 6, 2]
+  fourColumnsPoint: any = [10, 7, 5, 2]
+  fiveColumnsPoint: any = [10, 7, 5, 3, 2]
+
+  //Variable que guardará la puntuación final de cada rubrica
+  finalCalification: any = 0;
+
+  //Devuelve una tabla con el nombre de los alumnos de que imparten la asignatura en esa determinada clase
+  ngOnInit() {
 
     const filtro = {
       id: this.cookies.get('idAsignatura')
@@ -27,62 +45,429 @@ export class CalificacionesComponent {
         this.students = this.students[0].Nombre_alumnos.split(',')
         console.log(this.students)
       },
-      err => {}
+      err => { }
     )
   }
 
-  createCalification(){
+  //Muestra el cuadro modal que pregunta que tipo de calificación se quiere crear
+  createCalification() {
     document.querySelector('dialog')?.showModal();
 
   }
 
-  backToCalifications(){
+  //Vuelve hacia atrás desde la anterior función
+  backToCalifications() {
     const dialogs = document.querySelectorAll('dialog')
 
     dialogs[0].close()
   }
 
-  rubricaDialogs(){
+  //Muestra el cuadro modal que pregunta si se quiere cargar una rubrica de las existentes o crear una
+  rubricaDialogs() {
     const dialogs = document.querySelectorAll('dialog')
     dialogs[0].close()
 
     dialogs[1].showModal()
   }
 
-  backToCreateCalification(){
+  //Vuelve hacia atrás desde la anterior función
+  backToCreateCalification() {
     const dialogs = document.querySelectorAll('dialog')
     dialogs[1].close()
 
     dialogs[0].showModal()
   }
 
-  rubricaDimensions(){
+  //Muestra el cuadro modal que pregunta que dimensiones se quieren para la rubrica
+  rubricaDimensions() {
     const dialogs = document.querySelectorAll('dialog')
     dialogs[1].close()
 
     dialogs[2].showModal()
   }
 
-  backToRubricaDialogs(){
+  //Vuelve hacia atrás desde la anterior función
+  backToRubricaDialogs() {
     const dialogs = document.querySelectorAll('dialog')
     dialogs[2].close()
 
     dialogs[1].showModal()
   }
 
-  createRubrica(){
+  //Crea la rubrica y comienza el proceso de cración de la misma
+  createRubrica() {
     const dialogs = document.querySelectorAll('dialog')
     dialogs[2].close()
 
+    const header: any = document.querySelector('.header');
+    const createCalifications = document.querySelector('.createCalifications');
+    const calificatios = document.querySelector('.calificatios');
+
+    let tr = document.createElement('tr');
+    calificatios?.append(tr);
+
+    for (let i = 0; i < (this.students.length + 1); i++) {
+      if (i == 0) {
+        let th = document.createElement('th');
+        th.textContent = this.nombreRubrica.value;
+        th.scope = 'col';
+        header.insertBefore(th, createCalifications);
+      }
+      for (let j = 0; j < 1; j++) {
+        let td = document.createElement('td');
+        td.className = 'calificacion' + this.nombreRubrica.value;
+        tr.append(td);
+
+      }
+    }
+
     // -------------------------- PROCESO DE CREACIÓN DE LA RUBRICA ------------------------
 
+    //Crea las filas y columnas de la rubrica una vez se ha elegido el tamaño de la misma
+    console.log(this.columnas)
+    console.log(this.filas)
 
+    let body: any = document.querySelector('body');
+
+    let newRubrica = document.createElement('div');
+    newRubrica.className = 'container newRubrica';
+
+
+    let newTable = document.createElement('table');
+    newTable.className = 'table table-hover newTable';
+
+    for (let i = 0; i < (this.columnas.value + 1); i++) {
+
+      let tr = document.createElement('tr');
+      if (i == 0) {
+        tr.className = 'table-active'
+      }
+      newTable.append(tr);
+
+      for (let j = 0; j < (this.filas.value + 1); j++) {
+
+        if (i == 0) {
+          let th = document.createElement('th');
+          th.scope = 'col';
+          tr.append(th);
+          if (j == 0) {
+            let input = document.createElement('td');
+            th.append(input);
+          } else {
+            let input;
+            //Crea los encabezados dinamicamente dependiendo de las columnas que haya elegido crear el usuario
+            switch (this.columnas.value) {
+              case 3:
+                input = document.createElement('td');
+                input.textContent = this.threeColumns[(j)]
+                th.append(input);
+                break;
+              case 4:
+                input = document.createElement('td');
+                input.textContent = this.fourColumns[(j)]
+                th.append(input);
+                break;
+              case 5:
+                input = document.createElement('td');
+                input.textContent = this.fiveColumns[(j)]
+                th.append(input);
+                break;
+
+              default:
+                break;
+            }
+          }
+        } else {
+          if (j == 0) {
+            let th = document.createElement('th');
+            th.scope = 'row';
+            tr.append(th);
+
+            let input = document.createElement('input');
+            input.placeholder = 'Titulo'
+            input.className = 'texto';
+            th.append(input);
+          } else {
+            let td;
+            let input;
+            let checkbox: any;
+            switch (this.columnas.value) {
+              case 3:
+                td = document.createElement('td');
+                tr.append(td);
+
+                input = document.createElement('input');
+                input.placeholder = 'Texto'
+                input.className = 'texto';
+
+                // let input2 = document.createElement('input');
+                // input2.type = 'number'
+                // input2.placeholder = 'Puntuacion ["," decimales]'
+
+                // checkbox = document.createElement('input');
+                // checkbox.name = this.threeColumnsPoint[(j - 1)];
+                // checkbox.type = 'checkbox';
+                // checkbox.className = 'checkbox';
+
+                td.append(input);
+                // td.append(checkbox)
+                // td.append(input2);
+                break;
+              case 4:
+                td = document.createElement('td');
+                tr.append(td);
+
+                input = document.createElement('input');
+                input.placeholder = 'Texto'
+                input.className = 'texto';
+
+                // let input2 = document.createElement('input');
+                // input2.type = 'number'
+                // input2.placeholder = 'Puntuacion ["," decimales]'
+
+                // checkbox = document.createElement('input');
+                // checkbox.name = this.fourColumnsPoint[(j - 1)];
+                // checkbox.type = 'checkbox';
+                // checkbox.className = 'checkbox';
+
+                td.append(input);
+                // td.append(checkbox)
+                // td.append(input2);
+                break;
+              case 5:
+                td = document.createElement('td');
+                tr.append(td);
+
+                input = document.createElement('input');
+                input.placeholder = 'Texto'
+                input.className = 'texto';
+
+                // let input2 = document.createElement('input');
+                // input2.type = 'number'
+                // input2.placeholder = 'Puntuacion ["," decimales]'
+
+                // checkbox = document.createElement('input');
+                // checkbox.type = 'checkbox';
+                // checkbox.className = 'checkbox';
+                // checkbox.name = this.fiveColumnsPoint[(j - 1)];
+
+                td.append(input);
+                // td.append(checkbox)
+                // td.append(input2);
+                break;
+
+              default:
+                break;
+            }
+          }
+
+        }
+
+      }
+
+    }
+
+    body.append(newRubrica);
+    newRubrica.append(newTable);
+
+    let buttonGuardar = document.createElement('button');
+    buttonGuardar.className = 'btn btn-secondary botonGuardar';
+    buttonGuardar.textContent = 'Guardar Rubrica';
+    // buttonGuardar.style.justifySelf = 'end';
+    buttonGuardar.addEventListener('click', (e) => {
+      this.guardarRubrica(e);
+    });
+
+    // let buttonRow = document.createElement('button');
+    // buttonRow.className = 'btn btn-success botonCrear';
+    // buttonRow.textContent = 'Añadir fila +'
+    // buttonRow.style.marginLeft = '50em';
+    // buttonRow.addEventListener('click', (e) => {
+    //   this.updateRow();
+    // });
+
+    newRubrica.append(buttonGuardar);
+    // newRubrica.append(buttonRow);
   }
 
-  close(){
+  //Guarda la rubrica creada y la muestra por pantalla
+  guardarRubrica(elegido: any) {
+    let casilla = -1;
+
+    let inputs: any = document.querySelectorAll('.newTable .texto');
+
+    const contenidoRubricas: any = [];
+
+    inputs.forEach((e: any) => {
+      return contenidoRubricas.push(e.value);
+    });
+
+    console.log(contenidoRubricas);
+
+    document.querySelector('.newTable')?.remove();
+    document.querySelector('.botonGuardar')?.remove();
+
+    let body: any = document.querySelector('body');
+
+    let newRubrica = document.createElement('div');
+    newRubrica.className = 'container newRubrica';
+
+
+    let newTable = document.createElement('table');
+    newTable.className = 'table table-hover';
+
+    for (let i = 0; i < (this.columnas.value + 1); i++) {
+
+      let tr = document.createElement('tr');
+      if (i == 0) {
+        tr.className = 'table-active'
+      }
+      newTable.append(tr);
+
+      for (let j = 0; j < (this.filas.value + 1); j++) {
+        
+
+        if (i == 0) {
+
+          // let th = document.createElement('th');
+          // th.scope = 'col';
+          // th.textContent = contenidoRubricas[casilla];
+          // tr.append(th);
+
+          let input;
+          //Crea los encabezados dinamicamente dependiendo de las columnas que haya elegido crear el usuario
+          switch (this.columnas.value) {
+            case 3:
+              input = document.createElement('th');
+              input.textContent = this.threeColumns[(j)]
+              tr.append(input);
+              break;
+            case 4:
+              input = document.createElement('th');
+              input.textContent = this.fourColumns[(j)]
+              tr.append(input);
+              break;
+            case 5:
+              input = document.createElement('th');
+              input.textContent = this.fiveColumns[(j)]
+              tr.append(input);
+              break;
+
+            default:
+              break;
+          }
+        } else {
+          casilla++;
+          if (j == 0) {
+            
+            //Jugamos con la posición de la 'j' para insertar los titulos de cada fila con un formato determinado
+            let th = document.createElement('th');
+            th.scope = 'row';
+            th.textContent = contenidoRubricas[casilla];
+            tr.append(th);
+
+          } else {
+            // let td = document.createElement('td');
+            // td.textContent = contenidoRubricas[casilla];
+            // tr.append(td);
+            let td;
+            let checkbox: any;
+            let br;
+
+            //Dependiendo de las columnas insertadas, insertaremos el contenido y los puntos de cada casilla
+            switch (this.columnas.value) {
+              case 3:
+                td = document.createElement('td');
+                td.textContent = contenidoRubricas[casilla];
+
+
+                checkbox = document.createElement('input');
+                checkbox.name = this.threeColumnsPoint[(j - 1)];
+                checkbox.type = 'checkbox';
+                checkbox.className = 'checkbox';
+                checkbox.addEventListener('click', ($event: any) => {
+                  this.onChange($event)
+                })
+
+                br = document.createElement('br');
+
+                tr.append(td);
+                td.append(br);
+                td.append(checkbox)
+                break;
+              case 4:
+                td = document.createElement('td');
+                td.textContent = contenidoRubricas[casilla];
+
+
+                checkbox = document.createElement('input');
+                checkbox.name = this.fourColumnsPoint[(j - 1)];
+                checkbox.type = 'checkbox';
+                checkbox.className = 'checkbox';
+
+                br = document.createElement('br');
+
+                tr.append(td);
+                td.append(br);
+                td.append(checkbox)
+                break;
+              case 5:
+                td = document.createElement('td');
+                td.textContent = contenidoRubricas[casilla];
+
+
+                checkbox = document.createElement('input');
+                checkbox.name = this.fiveColumnsPoint[(j - 1)];
+                checkbox.type = 'checkbox';
+                checkbox.className = 'checkbox';
+
+                br = document.createElement('br');
+
+                tr.append(td);
+                td.append(br);
+                td.append(checkbox)
+                
+                break;
+
+              default:
+                break;
+            }
+          }
+
+        }
+
+      }
+
+    }
+
+    let buttonCalificar = document.createElement('button');
+    buttonCalificar.textContent = 'Calificar';
+    buttonCalificar.className = 'btn btn-primary';
+    buttonCalificar.onclick = () => {
+      console.log(this.finalCalification); 
+    }
+
+    body.append(newRubrica);
+    newRubrica.append(newTable);
+    newRubrica.append(buttonCalificar)
+  }
+
+  //Cierra cualquier cuadro modal
+  close() {
     const dialogs = document.querySelectorAll('dialog')
     dialogs.forEach(element => {
       element.close()
     });
+  }
+
+  //Cada vez que detecta cambio en un checkbox, este coge su 'name' para calcular la nota del alumno, ya sea
+  //sumando porque se ha hecho click o restando porque se ha deshecho el click
+  onChange($event: any) {
+    let i = -1;
+    if ($event.target.checked == true) {
+      this.finalCalification = this.finalCalification + parseInt($event.target.name)
+    }else if ($event.target.checked == false){
+      this.finalCalification = this.finalCalification - parseInt($event.target.name)
+    }
   }
 }
