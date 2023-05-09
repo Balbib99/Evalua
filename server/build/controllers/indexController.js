@@ -145,5 +145,30 @@ class IndexController {
             res.json({ mensaje: alumnos });
         });
     }
+    saveThatRubrica(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query('INSERT INTO calificaciones SET ?', [req.body]);
+            if (res) {
+                res.json({ mensaje: "rubrica añadida correctamente" });
+            }
+        });
+    }
+    getRubricasCalifications(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query('SELECT Tabla FROM calificaciones WHERE Curso=? AND id_Profesor=? AND Asignatura=?', [req.body.id], (err, rows, field) => {
+                if (!err) {
+                    if (rows.length > 0) {
+                        res.json(rows);
+                    }
+                    else {
+                        res.json('No existe ninguna rubrica por el momento');
+                    }
+                }
+                else {
+                    console.log(err);
+                }
+            });
+        });
+    }
 }
 exports.indexController = new IndexController();

@@ -90,4 +90,12 @@
 </dialog>
 <!---------------------------------------------------------------------------------------------------------------------->
 
-
+<dialog>
+  <div>
+    <h2>Deseas guardar la rubrica para futuros usos?</h2>
+  </div>
+  <div>
+    <button class="btn btn-lg btn-primary" style="width: 30%; margin-top: 1em;" (click)="saveThatRubric($event)">Guardar</button><br>
+    <button class="btn btn-lg btn-danger" style="width: 30%; margin-top: 1em;" (click)="close()">Cancelar</button>
+  </div>
+</dialog>

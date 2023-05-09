@@ -18,6 +18,8 @@ class IndexRoutes {
         this.router.post('/getSubjects', indexController_1.indexController.getSubjects);
         this.router.post('/getStudentsSubject', indexController_1.indexController.getStudentsSubject);
         this.router.post('/writeTableCalifications', indexController_1.indexController.writeTableCalifications);
+        this.router.post('/saveThatRubrica', indexController_1.indexController.saveThatRubrica);
+        this.router.post('/getRubricasCalifications', indexController_1.indexController.getRubricasCalifications);
     }
 }
 const indexRoutes = new IndexRoutes();

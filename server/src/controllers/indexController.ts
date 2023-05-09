@@ -130,6 +130,28 @@ class IndexController {
         // await connect.query('INSERT INTO asignaturas VALUES (? , ?)',[req.body]);
         res.json({mensaje: alumnos});
     }
+
+    public async saveThatRubrica(req:Request, res:Response){
+        await connect.query('INSERT INTO calificaciones SET ?', [req.body]);
+        if(res){
+            res.json({mensaje: "rubrica añadida correctamente"});
+        }
+    }
+
+    public async getRubricasCalifications(req:Request, res:Response){
+        await connect.query('SELECT Tabla FROM calificaciones WHERE Curso=? AND id_Profesor=? AND Asignatura=?',[req.body.id], 
+        (err, rows, field) => {
+            if(!err){
+                if(rows.length > 0) {
+                    res.json(rows);
+                }else{
+                    res.json('No existe ninguna rubrica por el momento');
+                }
+            }else{
+                console.log(err);
+            }
+        });
+    }
 }
 
 export const indexController = new IndexController();

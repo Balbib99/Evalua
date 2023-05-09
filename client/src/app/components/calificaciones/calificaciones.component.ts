@@ -14,6 +14,9 @@ export class CalificacionesComponent {
   }
 
   students: any = []
+  idProfesor: any = '';
+
+  rubricas: any = [];
 
   columnas: any = new FormControl('');
   filas: any = new FormControl('');
@@ -42,10 +45,36 @@ export class CalificacionesComponent {
     this.alumnosService.getStudentsSubject(filtro).subscribe(
       res => {
         this.students = res;
+        
         this.students = this.students[0].Nombre_alumnos.split(',')
-        console.log(this.students)
+        this.students = this.students.sort()
+        console.log(this.students);
+        
       },
       err => { }
+    )
+
+    const profesor = {
+      nombre: this.cookies.get('user')
+    }
+
+    this.alumnosService.getIdProfesor(profesor).subscribe(
+      res => {
+        this.idProfesor = res;
+        this.idProfesor = this.idProfesor[0].id
+      }
+    )
+
+    const parametros = {
+      Curso: this.cookies.get('curso'),
+      id_Profesor: this.idProfesor,
+      Asignatura: this.cookies.get('asignatura')
+    }
+
+    this.alumnosService.getRubricasCalifications(parametros).subscribe(
+      res => {
+        this.rubricas = res;    
+      }
     )
   }
 
@@ -101,25 +130,36 @@ export class CalificacionesComponent {
 
     const header: any = document.querySelector('.header');
     const createCalifications = document.querySelector('.createCalifications');
-    const calificatios = document.querySelector('.calificatios');
+    const calificatios = document.querySelectorAll('.calificatios');
 
-    let tr = document.createElement('tr');
-    calificatios?.append(tr);
+    //------------------------------- Creación de la tabla de calificaciones dinámica -----------------------------
 
     for (let i = 0; i < (this.students.length + 1); i++) {
+      //Controla que sea la primera entrada para introducir el Titulo de la columna
       if (i == 0) {
+        
         let th = document.createElement('th');
         th.textContent = this.nombreRubrica.value;
         th.scope = 'col';
         header.insertBefore(th, createCalifications);
-      }
-      for (let j = 0; j < 1; j++) {
+      
+      }else{//Una vez escrito el titulo, se pasa a rellenar el resto de la columna
+        
         let td = document.createElement('td');
-        td.className = 'calificacion' + this.nombreRubrica.value;
-        tr.append(td);
-
+        td.className = this.nombreRubrica.value + ','+this.students[(i-1)]+', table-active';
+        // td.style.border = 1+'px solid #DADADA';
+        td.style.borderRadius = 10+'px';
+        td.addEventListener('click', () => {
+          let nombre = td.className.split(',')[0]
+          console.log('soy td '+nombre);
+          
+        })
+        calificatios[(i-1)].append(td);
+      
       }
     }
+
+    //-------------------------------------------------------------------------------------
 
     // -------------------------- PROCESO DE CREACIÓN DE LA RUBRICA ------------------------
 
@@ -312,9 +352,9 @@ export class CalificacionesComponent {
     let newRubrica = document.createElement('div');
     newRubrica.className = 'container newRubrica';
 
-
     let newTable = document.createElement('table');
-    newTable.className = 'table table-hover';
+    newTable.className = this.nombreRubrica.value+'Table table table-hover';
+    
 
     for (let i = 0; i < (this.columnas.value + 1); i++) {
 
@@ -442,10 +482,22 @@ export class CalificacionesComponent {
 
     let buttonCalificar = document.createElement('button');
     buttonCalificar.textContent = 'Calificar';
-    buttonCalificar.className = 'btn btn-primary';
-    buttonCalificar.onclick = () => {
+    buttonCalificar.className = this.nombreRubrica.value+', btn btn-primary';
+
+    buttonCalificar.addEventListener('click', () => {
+      
+      const dialogs = document.querySelectorAll('dialog')
+      let div: any = dialogs[3].querySelector('div')
+      div.className = buttonCalificar.className.split(',')[0];
+      dialogs[3].showModal();
+      // dialogs[3]. =  buttonCalificar.className.split(',')[0]
+      console.log(div.className);
+      
       console.log(this.finalCalification); 
-    }
+    })
+    // buttonCalificar.onclick = () => {
+      
+    // }
 
     body.append(newRubrica);
     newRubrica.append(newTable);
@@ -469,5 +521,34 @@ export class CalificacionesComponent {
     }else if ($event.target.checked == false){
       this.finalCalification = this.finalCalification - parseInt($event.target.name)
     }
+  }
+
+  saveThatRubric($event: any){
+    const dialogs = document.querySelectorAll('dialog')
+    let div: any = dialogs[3].querySelector('div')
+
+    let table = document.querySelector('.'+div.className+'Table')
+
+    console.log(div.className);
+    // const dialogs = document.querySelectorAll('dialog')
+    // dialogs[3].close();
+
+    const rubrica = {
+      Nombre: div.className,
+      Tabla: table?.innerHTML,
+      Asignatura: this.cookies.get('asignatura'),
+      Curso: this.cookies.get('curso'),
+      id_Profesor: this.idProfesor
+    }
+
+    this.alumnosService.saveThatRubrica(rubrica).subscribe(
+      res => {
+        console.log(res)
+      },
+      err => {
+        console.log(err);
+        
+      }
+    )
   }
 }

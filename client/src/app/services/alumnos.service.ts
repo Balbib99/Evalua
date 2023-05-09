@@ -90,4 +90,12 @@ export class AlumnosService {
   writeTableCalifications(content:any){
     return this.http.post(`${this.API_URI}/writeTableCalifications`,content);
   }
+
+  saveThatRubrica(rubrica: any){
+    return this.http.post(`${this.API_URI}/saveThatRubrica`,rubrica);
+  }
+  
+  getRubricasCalifications(parametros: any){
+    return this.http.post(`${this.API_URI}/getRubricasCalifications`,parametros);
+  }
 }

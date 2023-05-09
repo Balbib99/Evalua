@@ -21,6 +21,8 @@ class IndexRoutes {
         this.router.post('/getSubjects', indexController.getSubjects);
         this.router.post('/getStudentsSubject', indexController.getStudentsSubject);
         this.router.post('/writeTableCalifications', indexController.writeTableCalifications);
+        this.router.post('/saveThatRubrica', indexController.saveThatRubrica);
+        this.router.post('/getRubricasCalifications', indexController.getRubricasCalifications);
     }
 
 }
