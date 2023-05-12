@@ -35,6 +35,8 @@ export class CalificacionesComponent {
   //Variable que guardará la puntuación final de cada rubrica
   finalCalification: any = 0;
 
+  datosTable: any = [];
+
   //Devuelve una tabla con el nombre de los alumnos de que imparten la asignatura en esa determinada clase
   ngOnInit() {
 
@@ -62,18 +64,114 @@ export class CalificacionesComponent {
       res => {
         this.idProfesor = res;
         this.idProfesor = this.idProfesor[0].id
-      }
-    )
 
-    const parametros = {
-      Curso: this.cookies.get('curso'),
-      id_Profesor: this.idProfesor,
-      Asignatura: this.cookies.get('asignatura')
-    }
+        const parametros = {
+          Curso: this.cookies.get('curso'),
+          id_Profesor: this.idProfesor,
+          Asignatura: this.cookies.get('asignatura')
+        }
+        console.log(this.idProfesor);
+        
+        //Carga las rubricas asociadas a la asignatura en la que estemos
+        this.alumnosService.getRubricasCalifications(parametros).subscribe(
+          res => {
+            this.rubricas = res;
+            let rubricasSave: any = [];
+            console.log(this.rubricas);
+            
+            for(const rubrica of this.rubricas ){
+              rubricasSave.push(rubrica.Tabla.split('?!?'))
+            }
 
-    this.alumnosService.getRubricasCalifications(parametros).subscribe(
-      res => {
-        this.rubricas = res;    
+            console.log(rubricasSave);
+            let div: any = document.querySelector('#tableSave');
+
+            for(const tabla of rubricasSave){
+              let table = document.createElement('table');
+              table.className = 'table table-hover';
+              console.log(tabla);
+              
+              if((tabla[2] == 'Notable') && (tabla[4] != 'Suficiente')){
+
+                let tr = document.createElement('tr');
+                let trr: any;
+                let row: any;
+                let contador = 0;
+                let titulos = 0;
+
+                for (let i = 0; i < tabla.length; i++) {
+
+                  //Titulos calificativos
+                  if(i < 5){
+                    let th = document.createElement('th');
+                    th.textContent = tabla[i]
+                    th.className = 'table-active'
+                    tr.append(th)
+
+                    titulos++
+
+                    if(titulos == 3){
+                      table.append(tr);
+                    }
+
+                  }else{
+                    
+                    //enunciados por cada fila
+                    if(contador == 0){
+                      console.log(i+' hola');
+                      
+                      //tr por cada fila
+                      trr = document.createElement('tr');
+
+                      //th para los enunciados de cada fila
+                      let th = document.createElement('th');
+                      th.textContent = tabla[i]
+                      th.className = 'table-active'
+                      trr.append(th);
+
+                      contador++
+
+                    }else{
+                      
+                      //Casillas de contenido
+                      if(contador == 4){
+                        contador = 0;
+
+                        //ultima casilla de cada fila
+                        let td = document.createElement('td')
+                        td.textContent = tabla[i]
+                        trr.append(td);
+                      }else{
+                        contador++
+
+                        //resto de casillas
+                        let td = document.createElement('td')
+                        td.textContent = tabla[i]
+                        trr.append(td);
+                        
+                      }
+                    }
+                    table.append(trr)
+                  } 
+
+                }
+                div.append(table);
+              }
+            }
+            
+
+            // //Crea una tabla por cada reultado que obtenga la query, y la introduce en un div
+            // let div = document.querySelector('#tableSave');
+            // for (let i = 0; i < rubricasSave.length; i++) {
+            //   let contenido  = document.createElement('table');
+            //   contenido.className = 'table table-hover';
+            //   contenido.innerHTML = rubricasSave[0]
+
+            //   div?.append(contenido)
+            // }
+            
+          }
+        )
       }
     )
   }
@@ -171,12 +269,12 @@ export class CalificacionesComponent {
 
     let newRubrica = document.createElement('div');
     newRubrica.className = 'container newRubrica';
-
+    newRubrica.style.overflowX = 'auto';
 
     let newTable = document.createElement('table');
     newTable.className = 'table table-hover newTable';
 
-    for (let i = 0; i < (this.columnas.value + 1); i++) {
+    for (let i = 0; i < (this.filas.value + 1); i++) {
 
       let tr = document.createElement('tr');
       if (i == 0) {
@@ -184,7 +282,7 @@ export class CalificacionesComponent {
       }
       newTable.append(tr);
 
-      for (let j = 0; j < (this.filas.value + 1); j++) {
+      for (let j = 0; j < (this.columnas.value + 1); j++) {
 
         if (i == 0) {
           let th = document.createElement('th');
@@ -351,12 +449,15 @@ export class CalificacionesComponent {
 
     let newRubrica = document.createElement('div');
     newRubrica.className = 'container newRubrica';
+    newRubrica.style.overflowX = 'auto';
+    newRubrica.style.marginTop = 2+'em';
 
     let newTable = document.createElement('table');
     newTable.className = this.nombreRubrica.value+'Table table table-hover';
+    newTable.style.overflow = 'scroll';
     
 
-    for (let i = 0; i < (this.columnas.value + 1); i++) {
+    for (let i = 0; i < (this.filas.value + 1); i++) {
 
       let tr = document.createElement('tr');
       if (i == 0) {
@@ -364,7 +465,7 @@ export class CalificacionesComponent {
       }
       newTable.append(tr);
 
-      for (let j = 0; j < (this.filas.value + 1); j++) {
+      for (let j = 0; j < (this.columnas.value + 1); j++) {
         
 
         if (i == 0) {
@@ -528,14 +629,38 @@ export class CalificacionesComponent {
     let div: any = dialogs[3].querySelector('div')
 
     let table = document.querySelector('.'+div.className+'Table')
+    let tr: any = table?.querySelectorAll('tr');
+    let i = 0;
+    tr?.forEach((e: any) => {
+      if(i==0){
+        let th = e.querySelectorAll('th');
+        th.forEach((e: any) => {
+          console.log('value -> '+e.vale);
+          console.log('textContent -> '+e.textContent);
+          this.datosTable.push(e.textContent)
+        })
+        i++
+      }else{
+        let th = e.querySelector('th');
+        console.log('textContent -> '+th.textContent);
+        this.datosTable.push(th.textContent)
 
-    console.log(div.className);
+        let td = e.querySelectorAll('td');
+        td.forEach((e: any) => {
+          console.log('value -> '+e.vale);
+          console.log('textContent -> '+e.textContent);
+          this.datosTable.push(e.textContent)
+        })
+      }
+    })
+
+    console.log(this.datosTable.join('?!?'));
     // const dialogs = document.querySelectorAll('dialog')
-    // dialogs[3].close();
-
+    dialogs[3].close();
+    
     const rubrica = {
       Nombre: div.className,
-      Tabla: table?.innerHTML,
+      Tabla: this.datosTable.join('?!?'),
       Asignatura: this.cookies.get('asignatura'),
       Curso: this.cookies.get('curso'),
       id_Profesor: this.idProfesor

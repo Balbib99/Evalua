@@ -139,7 +139,7 @@ class IndexController {
     }
 
     public async getRubricasCalifications(req:Request, res:Response){
-        await connect.query('SELECT Tabla FROM calificaciones WHERE Curso=? AND id_Profesor=? AND Asignatura=?',[req.body.id], 
+        await connect.query('SELECT Nombre, Tabla FROM calificaciones WHERE Curso=? AND id_Profesor=? AND Asignatura=?',[req.body.Curso, req.body.id_Profesor, req.body.Asignatura], 
         (err, rows, field) => {
             if(!err){
                 if(rows.length > 0) {

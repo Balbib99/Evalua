@@ -155,7 +155,7 @@ class IndexController {
     }
     getRubricasCalifications(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield database_1.default.query('SELECT Tabla FROM calificaciones WHERE Curso=? AND id_Profesor=? AND Asignatura=?', [req.body.id], (err, rows, field) => {
+            yield database_1.default.query('SELECT Nombre, Tabla FROM calificaciones WHERE Curso=? AND id_Profesor=? AND Asignatura=?', [req.body.Curso, req.body.id_Profesor, req.body.Asignatura], (err, rows, field) => {
                 if (!err) {
                     if (rows.length > 0) {
                         res.json(rows);
