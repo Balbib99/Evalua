@@ -1,3 +1,30 @@
 #tableSave{
     overflow-x: auto;
 }
+
+.margins{
+    margin: 2em;
+}
+
+#calificar{
+    padding: 2em;
+    width: 70%; 
+    text-align: center; 
+    border-radius: 20px 20px 20px 20px; 
+    border: 2px solid #5EB69D;
+}
+#imprimir{
+    padding: 2em;
+    width: 70%; 
+    text-align: center; 
+    border-radius: 20px 20px 20px 20px; 
+    border: 2px solid #5EB69D;
+}
+
+@page {
+    size: A4;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }

@@ -170,5 +170,30 @@ class IndexController {
             });
         });
     }
+    getOnlyOneRubrica(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query('SELECT Tabla FROM calificaciones WHERE Curso=? AND id_Profesor=? AND Asignatura=? AND Nombre=?', [req.body.Curso, req.body.id_Profesor, req.body.Asignatura, req.body.Nombre], (err, rows, field) => {
+                if (!err) {
+                    if (rows.length > 0) {
+                        res.json(rows);
+                    }
+                    else {
+                        res.json('No existe ninguna rubrica por el momento');
+                    }
+                }
+                else {
+                    console.log(err);
+                }
+            });
+        });
+    }
+    createNota(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query('INSERT INTO notas SET ?', [req.body]);
+            if (res) {
+                res.json({ mensaje: "nota añadida correctamente" });
+            }
+        });
+    }
 }
 exports.indexController = new IndexController();

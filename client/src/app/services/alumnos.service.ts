@@ -98,4 +98,12 @@ export class AlumnosService {
   getRubricasCalifications(parametros: any){
     return this.http.post(`${this.API_URI}/getRubricasCalifications`,parametros);
   }
+
+  getOnlyOneRubrica(parametros: any){
+    return this.http.post(`${this.API_URI}/getOnlyOneRubrica`,parametros);
+  }
+
+  createNota(nota: any){
+    return this.http.post(`${this.API_URI}/createNota`,nota);
+  }
 }

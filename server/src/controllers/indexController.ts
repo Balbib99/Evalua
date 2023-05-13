@@ -152,6 +152,28 @@ class IndexController {
             }
         });
     }
+
+    public async getOnlyOneRubrica(req:Request, res:Response){
+        await connect.query('SELECT Tabla FROM calificaciones WHERE Curso=? AND id_Profesor=? AND Asignatura=? AND Nombre=?',[req.body.Curso, req.body.id_Profesor, req.body.Asignatura, req.body.Nombre], 
+        (err, rows, field) => {
+            if(!err){
+                if(rows.length > 0) {
+                    res.json(rows);
+                }else{
+                    res.json('No existe ninguna rubrica por el momento');
+                }
+            }else{
+                console.log(err);
+            }
+        });
+    }
+
+    public async createNota(req:Request, res:Response){
+        await connect.query('INSERT INTO notas SET ?', [req.body]);
+        if(res){
+            res.json({mensaje: "nota añadida correctamente"});
+        }
+    }
 }
 
 export const indexController = new IndexController();

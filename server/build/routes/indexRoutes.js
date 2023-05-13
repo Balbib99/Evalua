@@ -20,6 +20,8 @@ class IndexRoutes {
         this.router.post('/writeTableCalifications', indexController_1.indexController.writeTableCalifications);
         this.router.post('/saveThatRubrica', indexController_1.indexController.saveThatRubrica);
         this.router.post('/getRubricasCalifications', indexController_1.indexController.getRubricasCalifications);
+        this.router.post('/getOnlyOneRubrica', indexController_1.indexController.getOnlyOneRubrica);
+        this.router.post('/createNota', indexController_1.indexController.createNota);
     }
 }
 const indexRoutes = new IndexRoutes();
