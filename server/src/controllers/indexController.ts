@@ -174,6 +174,58 @@ class IndexController {
             res.json({mensaje: "nota añadida correctamente"});
         }
     }
+
+    public async searchNotas(req:Request, res:Response){
+        await connect.query('SELECT Nota FROM notas WHERE Curso=? AND id_Profesor=? AND Asignatura=? AND Nombre_Calificacion=? AND Nombre_Alumnos',[req.body.Curso, req.body.id_Profesor, req.body.Asignatura, req.body.Nombre_Calificacion, req.body.NombreAlumnos], 
+        (err, rows, field) => {
+            if(!err){
+                if(rows.length > 0) {
+                    res.json(rows);
+                }else{
+                    res.json('No existe ninguna rubrica por el momento');
+                }
+            }else{
+                console.log(err);
+            }
+        });
+    }
+
+    public async updateNotas(req:Request, res:Response){
+        await connect.query('UPDATE notas SET Nota=? WHERE Nombre_Alumnos=? AND Nombre_Calificacion=? AND Asignatura=? AND id_Profesor=? AND Curso=?', [req.body.Nota, req.body.Nombre_Alumnos, req.body.Nombre_Calificacion, req.body.Asignatura, req.body.id_Profesor, req.body.Curso]);
+        if(res){
+            res.json({mensaje: "nota actualizada correctamente"});
+        }
+    }
+
+    public async getNotas(req:Request, res:Response){
+        await connect.query('SELECT Nota, Nombre_Calificacion, Nombre_Alumnos FROM notas WHERE Curso=? AND id_Profesor=? AND Asignatura=?',[req.body.Curso, req.body.id_Profesor, req.body.Asignatura], 
+        (err, rows, field) => {
+            if(!err){
+                if(rows.length > 0) {
+                    res.json(rows);
+                }else{
+                    res.json('No existe ninguna rubrica por el momento');
+                }
+            }else{
+                console.log(err);
+            }
+        });
+    }
+
+    public async getRurbicasNotas(req:Request, res:Response){
+        await connect.query('SELECT Nombre_Calificacion FROM notas WHERE Nombre_Calificacion=? AND Curso=?',[req.body.Nombre_Calificacion, req.body.Curso],
+        (err, rows, field) => {
+            if(!err){
+                if(rows.length > 0) {
+                    res.json(rows);
+                }else{
+                    res.json('No existe ninguna rubrica por el momento');
+                }
+            }else{
+                console.log(err);
+            }
+        });
+    }
 }
 
 export const indexController = new IndexController();

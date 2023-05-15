@@ -67,8 +67,138 @@ export class CalificacionesComponent {
       res => {
         this.idProfesor = res;
         this.idProfesor = this.idProfesor[0].id
+
+        this.getNotas()
       }
     )
+  }
+
+  getNotas() {
+    const params = {
+      Curso: this.cookies.get('curso'),
+      Asignatura: this.cookies.get('asignatura'),
+      id_Profesor: this.idProfesor
+    }
+
+    this.alumnosService.getNotas(params).subscribe(
+      res => {
+        let notas: any = res;
+        let nota: any = [];
+        let calificacion: any = [];
+        let alumno: any = [];
+
+        notas.forEach((e: any) => {
+          nota.push(e.Nota)
+          calificacion.push(e.Nombre_Calificacion)
+          alumno.push(e.Nombre_Alumnos)
+        });
+
+        calificacion = calificacion.filter((valor: any, indice: any, arreglo: any) => {
+          return arreglo.indexOf(valor) === indice;
+        });
+        console.log(calificacion);
+
+
+        this.sendNotas(nota, calificacion, alumno, res)
+      },
+      err => {
+
+      }
+    )
+  }
+
+  sendNotas(nota: any, calificacion: any, alumno: any, res: any) {
+    const header: any = document.querySelector('.header');
+    const createCalifications = document.querySelector('.createCalifications');
+    const calificatios = document.querySelectorAll('.calificatios');
+
+    let contadorFinal = this.students.length + 1;
+    let contador = 0;
+    let contadoralumnos = 0;
+    let contadorNotas = 0;
+
+    while (contador != (res.length / this.students.length)) {
+      for (let i = 0; i < this.students.length + 1; i++) {
+        //Controla que sea la primera entrada para introducir el Titulo de la columna
+        if (i == 0) {
+          console.log('dentro');
+
+          let th = document.createElement('th');
+          th.textContent = calificacion[contador];
+          th.scope = 'col';
+          th.style.textAlign = 'center';
+          header.insertBefore(th, createCalifications);
+        } else {//Una vez escrito el titulo, se pasa a rellenar el resto de la columna
+
+          let td = document.createElement('td');
+          td.className = calificacion[contador] + ',' + alumno[contadoralumnos] + ', table-active';
+          td.style.textAlign = 'center';
+          td.textContent = nota[contadorNotas];
+          // td.style.border = 1+'px solid #DADADA';
+          td.style.borderRadius = 10 + 'px';
+          td.addEventListener('click', () => {
+
+            let actualizar = true;
+
+            this.finalCalification = 0;
+            // let nombre = td.className.split(',')[0]
+            // console.log('soy td ' + nombre);
+
+            this.selectedRubrica(td,actualizar);
+
+          })
+          calificatios[(i - 1)].append(td);
+          contadoralumnos++;
+          contadorNotas++;
+
+        }
+      }
+      contador++;
+    }
+
+    // while (contador != (res.length / this.students.length)) {
+    //   console.log('hola');
+
+    //   contadordos = 0;
+    //   contadortres = 0;
+    //   for (let i = 0; i < this.students.length + 1; i++) {
+    //     contadordos++;
+    //     contadortres++;
+    //     //Controla que sea la primera entrada para introducir el Titulo de la columna
+    //     if (i == 0) {
+    //       console.log('dentro');
+
+    //       let th = document.createElement('th');
+    //       th.textContent = res[contadordos].Nombre_Calificacion;
+    //       th.scope = 'col';
+    //       th.style.textAlign = 'center';
+    //       header.insertBefore(th, createCalifications);
+    //       contadortres = contadortres - 1;
+    //     } else {//Una vez escrito el titulo, se pasa a rellenar el resto de la columna
+
+    //       let td = document.createElement('td');
+    //       td.className = res.Nombre_Calificacion + ',' + res[(contadortres - 1)].Nombre_Alumnos + ', table-active';
+    //       td.style.textAlign = 'center';
+    //       td.textContent = res[(contadordos - 1)].Nota;
+    //       // td.style.border = 1+'px solid #DADADA';
+    //       td.style.borderRadius = 10 + 'px';
+    //       td.addEventListener('click', () => {
+    //         this.finalCalification = 0;
+    //         let nombre = td.className.split(',')[0]
+    //         console.log('soy td ' + nombre);
+
+    //         this.selectedRubrica(td);
+
+    //       })
+    //       contadoruno++
+    //       calificatios[(contadortres - 1)].append(td);
+    //     }
+    //   }
+    //   contador++;
+    //   contadoruno++;
+    // }
+
+
   }
 
   chargeTable(table: any, button: any, tabla: any, div: any, counter: number, thNumber: number, puntuación?: any, calificacionFinal?: any) {
@@ -83,8 +213,8 @@ export class CalificacionesComponent {
     let imprimir = document.createElement('button');
     imprimir.className = 'btn btn-warning';
     imprimir.textContent = 'PDF';
-    imprimir.style.marginBottom = 2+'em';
-    imprimir.style.marginLeft = 3+'em';
+    imprimir.style.marginBottom = 2 + 'em';
+    imprimir.style.marginLeft = 3 + 'em';
     imprimir.addEventListener('click', () => {
 
 
@@ -786,7 +916,25 @@ export class CalificacionesComponent {
           button.style.marginBottom = 2 + 'em';
 
           button.addEventListener('click', () => {
-            this.createTableCalifications(nombre);
+            const params = {
+              Nombre_Calificacion: button.className.split(',')[0],
+              Curso: this.cookies.get('curso')
+            }
+
+            //Hace una busqueda en la BBDD para comprobar si la rubrica elegida ya se ha utilizado
+            //si es así, no se puede utilizar más veces en la misma clase
+            this.alumnosService.getRurbicasNotas(params).subscribe(
+              res => {
+                let rubricas: any = res
+
+                if(params.Nombre_Calificacion == rubricas[0].Nombre_Calificacion){
+                  alert('Rubrica ya usada')
+                }else{
+                  this.createTableCalifications(nombre);
+                }
+              }
+            )
+            
           })
 
           console.log(tabla);
@@ -875,7 +1023,8 @@ export class CalificacionesComponent {
     )
   }
 
-  selectedRubrica(tdSelecionado: any) {
+  selectedRubrica(tdSelecionado: any, actualizar?: boolean) {
+    const notaAntigua = tdSelecionado.textContent
     let dialogs = document.querySelectorAll('dialog');
     dialogs[4].showModal()
 
@@ -896,7 +1045,7 @@ export class CalificacionesComponent {
     }
     console.log(tdSelecionado.className.split(',')[1]);
 
-
+    //Devuelve la rubrica que le hayamos asignado a cada td
     this.alumnosService.getOnlyOneRubrica(parametros).subscribe(
       res => {
         console.log(res);
@@ -918,37 +1067,69 @@ export class CalificacionesComponent {
         button.className = 'btn btn-secondary';
         button.style.marginBottom = 2 + 'em';
 
-
+        //Una vez rellenamos la rubrica, este nos recoge el resultado y lo plasma en el td que corresponda
         button.addEventListener('click', () => {
           let total = this.finalCalification / this.filas.value
           console.log(this.finalCalification);
           console.log(this.filas.value);
           console.log(total);
 
+          //Si exsite este parámetro en la función, significa que viene de la parte de actualizar la nota
+          //por lo que pasará al apartado de actualización
+          //Por el contrario, si no la contiene, redirige al aparta de creación de nota
+          if (!actualizar) {
+            tdSelecionado.textContent = total
+            dialogs[4].close()
 
-          tdSelecionado.textContent = total
-          dialogs[4].close()
+            //CREAR NOTA PARA EL ALUMNO
 
-          //CREAR NOTA PARA EL ALUMNO
-
-          const nota = {
-            Nombre_Alumnos: tdSelecionado.className.split(',')[1],
-            Nota: total,
-            Nombre_Calificacion: tdSelecionado.className.split(',')[0],
-            Asignatura: this.cookies.get('asignatura'),
-            id_Profesor: this.idProfesor
-          }
-
-          this.alumnosService.createNota(nota).subscribe(
-            res => {
-
-            },
-            err => {
-
+            const nota = {
+              Nombre_Alumnos: tdSelecionado.className.split(',')[1],
+              Nota: total,
+              Nombre_Calificacion: tdSelecionado.className.split(',')[0],
+              Asignatura: this.cookies.get('asignatura'),
+              id_Profesor: this.idProfesor,
+              Curso: this.cookies.get('curso')
             }
-          )
+
+            //Crea una nueva nota
+            this.alumnosService.createNota(nota).subscribe(
+              res => {
+                alert('Nota creada correctamente')
+              },
+              err => {
+
+              }
+            )
+          } else {
+
+            dialogs[4].close()
+
+            const nota = {
+              Nombre_Alumnos: tdSelecionado.className.split(',')[1],
+              Nota: total,
+              Nombre_Calificacion: tdSelecionado.className.split(',')[0],
+              Asignatura: this.cookies.get('asignatura'),
+              id_Profesor: this.idProfesor,
+              Curso: this.cookies.get('curso')
+            }
+
+            //Actualiza una nota ya creada
+            this.alumnosService.updateNotas(nota).subscribe(
+              res => {
+                alert('Nota actualizada correctamente')
+                //Recarga la página para que se actualicen los datos
+                window.location.reload()
+              },
+              err => {
+
+              }
+            )
+            
+          }
         })
 
+        //Depende del formato que tenga la rubrica, se rellenará dinámicamente de una forma u otra
         if ((rubrica[0][2] == 'Notable') && (rubrica[0][4] != 'Suficiente')) {
           this.chargeTable(table, button, rubrica[0], div, 4, 5, this.fourColumnsPoint);
         } else if ((rubrica[0][4] == 'Suficiente')) {

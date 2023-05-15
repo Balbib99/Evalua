@@ -106,4 +106,21 @@ export class AlumnosService {
   createNota(nota: any){
     return this.http.post(`${this.API_URI}/createNota`,nota);
   }
+
+  searchNotas(nota: any){
+    return this.http.post(`${this.API_URI}/searchNotas`,nota);
+  }
+
+  updateNotas(nota: any){
+    return this.http.post(`${this.API_URI}/updateNotas`,nota);
+  }
+
+  //Obtiene las notas puestas en un determinado curso
+  getNotas(params: any){
+    return this.http.post(`${this.API_URI}/getNotas`,params);
+  }
+
+  getRurbicasNotas(params: any){
+    return this.http.post(`${this.API_URI}/getRurbicasNotas`,params);
+  }
 }

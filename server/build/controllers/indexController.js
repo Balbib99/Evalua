@@ -195,5 +195,64 @@ class IndexController {
             }
         });
     }
+    searchNotas(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query('SELECT Nota FROM notas WHERE Curso=? AND id_Profesor=? AND Asignatura=? AND Nombre_Calificacion=? AND Nombre_Alumnos', [req.body.Curso, req.body.id_Profesor, req.body.Asignatura, req.body.Nombre_Calificacion, req.body.NombreAlumnos], (err, rows, field) => {
+                if (!err) {
+                    if (rows.length > 0) {
+                        res.json(rows);
+                    }
+                    else {
+                        res.json('No existe ninguna rubrica por el momento');
+                    }
+                }
+                else {
+                    console.log(err);
+                }
+            });
+        });
+    }
+    updateNotas(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query('UPDATE notas SET Nota=? WHERE Nombre_Alumnos=? AND Nombre_Calificacion=? AND Asignatura=? AND id_Profesor=? AND Curso=?', [req.body.Nota, req.body.Nombre_Alumnos, req.body.Nombre_Calificacion, req.body.Asignatura, req.body.id_Profesor, req.body.Curso]);
+            if (res) {
+                res.json({ mensaje: "nota actualizada correctamente" });
+            }
+        });
+    }
+    getNotas(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query('SELECT Nota, Nombre_Calificacion, Nombre_Alumnos FROM notas WHERE Curso=? AND id_Profesor=? AND Asignatura=?', [req.body.Curso, req.body.id_Profesor, req.body.Asignatura], (err, rows, field) => {
+                if (!err) {
+                    if (rows.length > 0) {
+                        res.json(rows);
+                    }
+                    else {
+                        res.json('No existe ninguna rubrica por el momento');
+                    }
+                }
+                else {
+                    console.log(err);
+                }
+            });
+        });
+    }
+    getRurbicasNotas(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query('SELECT Nombre_Calificacion FROM notas WHERE Nombre_Calificacion=? AND Curso=?', [req.body.Nombre_Calificacion, req.body.Curso], (err, rows, field) => {
+                if (!err) {
+                    if (rows.length > 0) {
+                        res.json(rows);
+                    }
+                    else {
+                        res.json('No existe ninguna rubrica por el momento');
+                    }
+                }
+                else {
+                    console.log(err);
+                }
+            });
+        });
+    }
 }
 exports.indexController = new IndexController();

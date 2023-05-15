@@ -69,6 +69,8 @@ export class AlumnosCursoComponent {
     this.alumnosService.getAlumnosCurso(curso).subscribe(
       res => {
         this.alumnosCurso = res;
+        console.log(this.alumnosCurso);
+        
       },
       err => console.log(err)
     );

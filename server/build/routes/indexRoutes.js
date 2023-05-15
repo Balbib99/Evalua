@@ -22,6 +22,10 @@ class IndexRoutes {
         this.router.post('/getRubricasCalifications', indexController_1.indexController.getRubricasCalifications);
         this.router.post('/getOnlyOneRubrica', indexController_1.indexController.getOnlyOneRubrica);
         this.router.post('/createNota', indexController_1.indexController.createNota);
+        this.router.post('/searchNotas', indexController_1.indexController.searchNotas);
+        this.router.post('/getNotas', indexController_1.indexController.getNotas);
+        this.router.post('/updateNotas', indexController_1.indexController.updateNotas);
+        this.router.post('/getRurbicasNotas', indexController_1.indexController.getRurbicasNotas);
     }
 }
 const indexRoutes = new IndexRoutes();
