@@ -12,6 +12,8 @@ class AlumnosRoutes {
         this.router.get('/listar', alumnosController_1.alumnosController.listar);
         this.router.post('/alumnos-curso', alumnosController_1.alumnosController.getAlumnosCurso);
         this.router.post('/crearAlumnos', alumnosController_1.alumnosController.createAlumnos);
+        this.router.post('/getAlumnos', alumnosController_1.alumnosController.getAlumnos);
+        this.router.post('/updateStudent', alumnosController_1.alumnosController.updateStudent);
     }
 }
 const alumnosRoutes = new AlumnosRoutes();

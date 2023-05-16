@@ -63,6 +63,14 @@ export class AlumnosService {
     return this.http.post(`${this.API_URI}/alumnos/crearAlumnos`, user);
   }
 
+  updateStudent(params: any){
+    return this.http.post(`${this.API_URI}/alumnos/updateStudent`, params);
+  }
+
+  getAlumno(params: any){
+    return this.http.post(`${this.API_URI}/alumnos/getAlumnos`, params);
+  }
+
   getIdProfesor(user:any){
     return this.http.post(`${this.API_URI}/getIdProfesor`, user);
   }
@@ -122,5 +130,9 @@ export class AlumnosService {
 
   getRurbicasNotas(params: any){
     return this.http.post(`${this.API_URI}/getRurbicasNotas`,params);
+  }
+
+  getRubricas(params: any){
+    return this.http.post(`${this.API_URI}/getRubricas`,params);
   }
 }

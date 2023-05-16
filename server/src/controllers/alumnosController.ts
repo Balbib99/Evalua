@@ -33,7 +33,7 @@ class AlumnosController {
         //     }
         // });
 
-        await connect.query('SELECT Nombre, Apellidos FROM alumnos WHERE curso = ? AND id_Profesor IN (SELECT id FROM Profesores WHERE nombre = ?)', [req.body.nombre, req.body.profesor],
+        await connect.query('SELECT Nombre, Apellidos, id FROM alumnos WHERE curso = ? AND id_Profesor IN (SELECT id FROM Profesores WHERE nombre = ?)', [req.body.nombre, req.body.profesor],
         (err,rows,field) => {
             if(!err){
                 if(rows.length > 0){
@@ -50,6 +50,25 @@ class AlumnosController {
     public async createAlumnos (req: Request, res:Response) {
         await connect.query('INSERT INTO alumnos set ?', [req.body]);
         res.json({mensaje: "alumno registrado"});
+    }
+
+    public async getAlumnos (req: Request, res:Response) {
+        await connect.query('SELECT * FROM alumnos WHERE id=?',[req.body.id], (err, rows, field) =>{
+            if(!err){
+                if(rows.length > 0){
+                    res.json(rows);
+                }else{
+                    res.json('No existen alumnos')
+                }
+            }else{
+                console.log(err);
+            }
+        });
+    }
+
+    public async updateStudent (req: Request, res:Response) {
+        await connect.query('UPDATE alumnos SET ? WHERE id=?', [req.body, req.body.id]);
+        res.json({mensaje: "alumno actualizado"});
     }
 }
 

@@ -29,6 +29,7 @@ class IndexRoutes {
         this.router.post('/getNotas', indexController.getNotas);
         this.router.post('/updateNotas', indexController.updateNotas);
         this.router.post('/getRurbicasNotas', indexController.getRurbicasNotas);
+        this.router.post('/getRubricas', indexController.getRubricas);
     }
 
 }

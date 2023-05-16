@@ -144,7 +144,7 @@ export class CalificacionesComponent {
             // let nombre = td.className.split(',')[0]
             // console.log('soy td ' + nombre);
 
-            this.selectedRubrica(td,actualizar);
+            this.selectedRubrica(td, actualizar);
 
           })
           calificatios[(i - 1)].append(td);
@@ -281,7 +281,21 @@ export class CalificacionesComponent {
             if (puntuación) {
               let checkbox: any = document.createElement('input')
               checkbox.type = 'checkbox';
-              checkbox.setAttribute('name', puntuación[3])
+
+              switch (thNumber) {
+                case 5:
+                  checkbox.setAttribute('name', puntuación[3])
+                  break;
+                case 4:
+                  checkbox.setAttribute('name', puntuación[2])
+                  break;
+                case 6:
+                  checkbox.setAttribute('name', puntuación[4])
+                  break;
+                default:
+                  break;
+              }
+
               puntos = 0;
               checkbox.addEventListener('click', ($event: any) => {
                 this.onChange($event)
@@ -304,6 +318,7 @@ export class CalificacionesComponent {
               switch (puntos) {
                 case 0:
                   checkbox.setAttribute('name', puntuación[0])
+                  console.log('hola');
                   puntos++
                   break;
                 case 1:
@@ -318,10 +333,10 @@ export class CalificacionesComponent {
                   checkbox.setAttribute('name', puntuación[3])
                   puntos++
                   break;
-                case 4:
-                  checkbox.setAttribute('name', puntuación[4])
-                  puntos++
-                  break;
+                // case 4:
+                //   checkbox.setAttribute('name', puntuación[4])
+                //   puntos++
+                //   break;
                 default:
                   break;
               }
@@ -492,18 +507,8 @@ export class CalificacionesComponent {
                   input.placeholder = 'Texto'
                   input.className = 'texto';
 
-                  // let input2 = document.createElement('input');
-                  // input2.type = 'number'
-                  // input2.placeholder = 'Puntuacion ["," decimales]'
-
-                  // checkbox = document.createElement('input');
-                  // checkbox.name = this.threeColumnsPoint[(j - 1)];
-                  // checkbox.type = 'checkbox';
-                  // checkbox.className = 'checkbox';
 
                   td.append(input);
-                  // td.append(checkbox)
-                  // td.append(input2);
                   break;
                 case 4:
                   td = document.createElement('td');
@@ -513,18 +518,7 @@ export class CalificacionesComponent {
                   input.placeholder = 'Texto'
                   input.className = 'texto';
 
-                  // let input2 = document.createElement('input');
-                  // input2.type = 'number'
-                  // input2.placeholder = 'Puntuacion ["," decimales]'
-
-                  // checkbox = document.createElement('input');
-                  // checkbox.name = this.fourColumnsPoint[(j - 1)];
-                  // checkbox.type = 'checkbox';
-                  // checkbox.className = 'checkbox';
-
                   td.append(input);
-                  // td.append(checkbox)
-                  // td.append(input2);
                   break;
                 case 5:
                   td = document.createElement('td');
@@ -534,18 +528,8 @@ export class CalificacionesComponent {
                   input.placeholder = 'Texto'
                   input.className = 'texto';
 
-                  // let input2 = document.createElement('input');
-                  // input2.type = 'number'
-                  // input2.placeholder = 'Puntuacion ["," decimales]'
-
-                  // checkbox = document.createElement('input');
-                  // checkbox.type = 'checkbox';
-                  // checkbox.className = 'checkbox';
-                  // checkbox.name = this.fiveColumnsPoint[(j - 1)];
 
                   td.append(input);
-                  // td.append(checkbox)
-                  // td.append(input2);
                   break;
 
                 default:
@@ -680,51 +664,51 @@ export class CalificacionesComponent {
                 td.textContent = contenidoRubricas[casilla];
 
 
-                checkbox = document.createElement('input');
-                checkbox.name = this.threeColumnsPoint[(j - 1)];
-                checkbox.type = 'checkbox';
-                checkbox.className = 'checkbox';
-                checkbox.addEventListener('click', ($event: any) => {
-                  this.onChange($event)
-                })
+                // checkbox = document.createElement('input');
+                // checkbox.name = this.threeColumnsPoint[(j - 1)];
+                // checkbox.type = 'checkbox';
+                // checkbox.className = 'checkbox';
+                // checkbox.addEventListener('click', ($event: any) => {
+                //   this.onChange($event)
+                // })
 
                 br = document.createElement('br');
 
                 tr.append(td);
                 td.append(br);
-                td.append(checkbox)
+                // td.append(checkbox)
                 break;
               case 4:
                 td = document.createElement('td');
                 td.textContent = contenidoRubricas[casilla];
 
 
-                checkbox = document.createElement('input');
-                checkbox.name = this.fourColumnsPoint[(j - 1)];
-                checkbox.type = 'checkbox';
-                checkbox.className = 'checkbox';
+                // checkbox = document.createElement('input');
+                // checkbox.name = this.fourColumnsPoint[(j - 1)];
+                // checkbox.type = 'checkbox';
+                // checkbox.className = 'checkbox';
 
                 br = document.createElement('br');
 
                 tr.append(td);
                 td.append(br);
-                td.append(checkbox)
+                // td.append(checkbox)
                 break;
               case 5:
                 td = document.createElement('td');
                 td.textContent = contenidoRubricas[casilla];
 
 
-                checkbox = document.createElement('input');
-                checkbox.name = this.fiveColumnsPoint[(j - 1)];
-                checkbox.type = 'checkbox';
-                checkbox.className = 'checkbox';
+                // checkbox = document.createElement('input');
+                // checkbox.name = this.fiveColumnsPoint[(j - 1)];
+                // checkbox.type = 'checkbox';
+                // checkbox.className = 'checkbox';
 
                 br = document.createElement('br');
 
                 tr.append(td);
                 td.append(br);
-                td.append(checkbox)
+                // td.append(checkbox)
 
                 break;
 
@@ -927,14 +911,14 @@ export class CalificacionesComponent {
               res => {
                 let rubricas: any = res
 
-                if(params.Nombre_Calificacion == rubricas[0].Nombre_Calificacion){
+                if (params.Nombre_Calificacion == rubricas[0].Nombre_Calificacion) {
                   alert('Rubrica ya usada')
-                }else{
+                } else {
                   this.createTableCalifications(nombre);
                 }
               }
             )
-            
+
           })
 
           console.log(tabla);
@@ -963,6 +947,10 @@ export class CalificacionesComponent {
     if ($event.target.checked == true) {
       this.finalCalification = this.finalCalification + parseInt($event.target.name)
       console.log(this.finalCalification);
+      console.log($event.target.name);
+      console.log(parseInt($event.target.name));
+
+
 
     } else if ($event.target.checked == false) {
       this.finalCalification = this.finalCalification - parseInt($event.target.name)
@@ -1125,7 +1113,7 @@ export class CalificacionesComponent {
 
               }
             )
-            
+
           }
         })
 

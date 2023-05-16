@@ -44,7 +44,7 @@ class AlumnosController {
             //         console.log(err);
             //     }
             // });
-            yield database_1.default.query('SELECT Nombre, Apellidos FROM alumnos WHERE curso = ? AND id_Profesor IN (SELECT id FROM Profesores WHERE nombre = ?)', [req.body.nombre, req.body.profesor], (err, rows, field) => {
+            yield database_1.default.query('SELECT Nombre, Apellidos, id FROM alumnos WHERE curso = ? AND id_Profesor IN (SELECT id FROM Profesores WHERE nombre = ?)', [req.body.nombre, req.body.profesor], (err, rows, field) => {
                 if (!err) {
                     if (rows.length > 0) {
                         res.json(rows);
@@ -63,6 +63,29 @@ class AlumnosController {
         return __awaiter(this, void 0, void 0, function* () {
             yield database_1.default.query('INSERT INTO alumnos set ?', [req.body]);
             res.json({ mensaje: "alumno registrado" });
+        });
+    }
+    getAlumnos(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query('SELECT * FROM alumnos WHERE id=?', [req.body.id], (err, rows, field) => {
+                if (!err) {
+                    if (rows.length > 0) {
+                        res.json(rows);
+                    }
+                    else {
+                        res.json('No existen alumnos');
+                    }
+                }
+                else {
+                    console.log(err);
+                }
+            });
+        });
+    }
+    updateStudent(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query('UPDATE alumnos SET ? WHERE id=?', [req.body, req.body.id]);
+            res.json({ mensaje: "alumno actualizado" });
         });
     }
 }

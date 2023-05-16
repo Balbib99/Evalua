@@ -16,6 +16,8 @@ class AlumnosRoutes {
         this.router.get('/listar', alumnosController.listar);
         this.router.post('/alumnos-curso', alumnosController.getAlumnosCurso);
         this.router.post('/crearAlumnos', alumnosController.createAlumnos);
+        this.router.post('/getAlumnos', alumnosController.getAlumnos);
+        this.router.post('/updateStudent', alumnosController.updateStudent);
         
     }
 

@@ -254,5 +254,22 @@ class IndexController {
             });
         });
     }
+    getRubricas(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query('SELECT Nombre, Tabla FROM calificaciones WHERE id_Profesor=?', [req.body.id_Profesor], (err, rows, field) => {
+                if (!err) {
+                    if (rows.length > 0) {
+                        res.json(rows);
+                    }
+                    else {
+                        res.json('No existe ninguna rubrica por el momento');
+                    }
+                }
+                else {
+                    console.log(err);
+                }
+            });
+        });
+    }
 }
 exports.indexController = new IndexController();
