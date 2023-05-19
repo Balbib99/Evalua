@@ -24,6 +24,12 @@ export class InicioComponent{
 
   }
 
+  ngOnInit(){
+    this.cookies.deleteAll()
+    localStorage.removeItem('id_Profesor')
+    localStorage.removeItem('activeLink')
+  }
+
   iniciaSesion(){
     this.getUser();
   }

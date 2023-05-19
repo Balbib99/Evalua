@@ -1,0 +1,37 @@
+.containerPrincipal{
+    margin-left: 15%; 
+    padding: 1px;
+}
+
+.titulo{
+    text-align: center;
+    margin-top: 2em;
+}
+
+.body{
+    margin-top: 5em;
+}
+
+.backgroundButtons{
+    background-color: #fca577;
+}
+
+.backgroundButtons:hover{
+    box-shadow: 0px 1px 10px #fca577;
+}
+
+.btnCreate{
+    width: 100%;
+    height: 50px;
+}
+
+.btn-lg{
+    width: 100%;
+    height: auto;
+}
+
+dialog{
+    width: 50%;
+    border-color: #0ea8a1;
+    border-radius: 10px 10px 10px 10px;
+}

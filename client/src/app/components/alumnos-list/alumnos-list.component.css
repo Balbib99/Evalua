@@ -1,0 +1,21 @@
+.contenedorPrincipal{
+    margin-left: 12%; 
+    margin-right: 2em;
+    padding: 1px;
+}
+
+.alumnos{
+    margin-top: 5em;
+}
+
+.header{
+    background-color: #fca577;
+    color: white;
+}
+
+.trAlumnos:hover{
+    background-color: rgb(198, 201, 201);
+}
+.trAlumnos{
+    background-color: rgb(232, 236, 236);
+}

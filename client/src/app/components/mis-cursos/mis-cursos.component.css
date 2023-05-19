@@ -1,0 +1,31 @@
+.curso{
+    background-color: #fca577;
+    margin-left: 1em;
+}
+.curso:hover{
+    box-shadow: 0px 1px 15px #fca577;
+}
+.cursoDotted{
+    border-color: #fca577;
+    color: #fca577;
+}
+.cursoDotted:hover{
+    background-color: #fca577;
+    color: white;
+}
+
+
+.containerPrincipal{
+    margin-left: 10%;
+    padding: 1px;
+}
+
+.containerCursos{
+    gap: 5em;
+}
+
+.titulo{
+    text-align: center;
+    margin-top: 2em;
+    margin-bottom: 3em;
+}

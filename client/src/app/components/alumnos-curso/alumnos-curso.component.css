@@ -1,0 +1,53 @@
+.table{
+    background-color: #fca577;
+    text-align: center;
+}
+
+th{
+    color: white;
+}
+
+.curso{
+    background-color: #fca577;
+    
+    width: 25%;
+    height: 150px;
+}
+
+.curso:hover{
+    box-shadow: 0px 10px 15px #fca577;
+    background-color: #fca577;
+}
+
+.cursoDotted{
+    border-color: #fca577;
+    color: #fca577;
+
+    width: 25%;
+    height: 150px;
+
+    font-size: 20px;
+}
+
+.cursoDotted:hover{
+    background-color: #fca577;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    div{
+        font-size: 14px;
+    }
+
+    .curso{
+        position: static;
+        font-size: 15px;
+        height: 100px;
+    }
+
+    .cursoDotted{
+        font-size: 15px;
+        height: 100px;
+    }
+    
+}

@@ -439,6 +439,8 @@ export class CalificacionesComponent {
       newRubrica.className = 'newRubrica';
       newRubrica.style.margin = 2 + 'em'
       newRubrica.style.overflowX = 'auto';
+      newRubrica.style.marginLeft = 15+'%';
+      newRubrica.style.padding = 1+'px';
 
       let newTable = document.createElement('table');
       newTable.className = 'table table-hover newTable';
@@ -593,6 +595,8 @@ export class CalificacionesComponent {
     newRubrica.className = 'newRubrica';
     newRubrica.style.overflowX = 'auto';
     newRubrica.style.margin = 2 + 'em';
+    newRubrica.style.marginLeft = 15+'%';
+    newRubrica.style.padding = 1+'px';
 
     let newTable = document.createElement('table');
     newTable.className = this.nombreRubrica.value + 'Table table table-hover';

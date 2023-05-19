@@ -1,39 +1,42 @@
 <app-navigation></app-navigation>
-
-<div class="container p-4">
+<div style="margin-left: 15%; padding: 1px;">
+  <div class="container p-4">
     <table class="table table-hover">
-        <thead>
-          <tr class="table-primary">
-            <th scope="col"></th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Apellidos</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="table-light" *ngFor="let alumno of alumnosCurso">
-            <td style="width: 10%;">
-              <button class="btn btn-lg btn-outline-warning" type="button" id="{{alumno.id}}" (click)="editAlumno($event)">
-                <!-- <i class="bi bi-pen">
+      <thead>
+        <tr class="table">
+          <th scope="col"></th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Apellidos</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="table-light" *ngFor="let alumno of alumnosCurso">
+          <td style="width: 10%;">
+            <button class="btn btn-lg btn-outline-warning" type="button" id="{{alumno.id}}"
+              (click)="editAlumno($event)">
+              <!-- <i class="bi bi-pen">
                   <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
                     <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
                   </svg>
                 </i> -->Editar
-              </button>
-            </td>
-            <td>{{alumno.Nombre}}</td>
-            <!-- <td>{{alumno.Apellido1}}</td> -->
-            <td>{{alumno.Apellidos}}</td>
-          </tr>
+            </button>
+          </td>
+          <td>{{alumno.Nombre}}</td>
+          <!-- <td>{{alumno.Apellido1}}</td> -->
+          <td>{{alumno.Apellidos}}</td>
+        </tr>
 
-        </tbody>
+      </tbody>
     </table>
 
     <button class="btn btn-lg btn-outline-info" type="button" (click)="createAlumno()">
       Añadir Alumno
       <i class="bi bi-plus-circle" style="margin-left: 1em;">
-        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/> 
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-circle"
+          viewBox="0 0 16 16">
+          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+          <path
+            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
         </svg>
       </i>
     </button>
@@ -51,35 +54,41 @@
     <form class="createAlumno">
       <fieldset>
         <legend>Añade un Alumno</legend>
-        
+
         <div class="form-group">
           <label for="NombreAlumno" class="form-label mt-4">* Nombre</label>
-          <input type="text" class="form-control" [formControl]="nombre" id="NombreAlumno" aria-describedby="emailHelp" placeholder="Nombre" >
+          <input type="text" class="form-control" [formControl]="nombre" id="NombreAlumno" aria-describedby="emailHelp"
+            placeholder="Nombre">
         </div>
-        
+
         <div class="form-group">
           <label for="ApellidosAlumno" class="form-label mt-4">Apellidos</label>
-          <input type="text" class="form-control" [formControl]="apellidos" id="ApellidosAlumno" placeholder="Apellidos">
+          <input type="text" class="form-control" [formControl]="apellidos" id="ApellidosAlumno"
+            placeholder="Apellidos">
         </div>
-        
+
         <div class="form-group">
           <label for="NombrePrimerFamiliar" class="form-label mt-4">Nombre Familiar 1</label>
-          <input type="text" class="form-control" [formControl]="nombre_Familiar1" id="NombrePrimerFamiliar" placeholder="Nombre">
+          <input type="text" class="form-control" [formControl]="nombre_Familiar1" id="NombrePrimerFamiliar"
+            placeholder="Nombre">
         </div>
 
         <div class="form-group">
           <label for="ApellidosPrimerFamiliar" class="form-label mt-4">Apellidos Familiar 1</label>
-          <input type="text" class="form-control" [formControl]="apellidos_Familiar1" id="ApellidosPrimerFamiliar" placeholder="Apellidos">
+          <input type="text" class="form-control" [formControl]="apellidos_Familiar1" id="ApellidosPrimerFamiliar"
+            placeholder="Apellidos">
         </div>
 
         <div class="form-group">
           <label for="NombreSegundoFamiliar" class="form-label mt-4">Nombre Familiar 2</label>
-          <input type="text" class="form-control" [formControl]="nombre_Familiar2" id="NombreSegundoFamiliar" placeholder="Nombre">
+          <input type="text" class="form-control" [formControl]="nombre_Familiar2" id="NombreSegundoFamiliar"
+            placeholder="Nombre">
         </div>
 
         <div class="form-group">
           <label for="ApellidosSegunddoFamiliar" class="form-label mt-4">Apellidos Familiar 2</label>
-          <input type="text" class="form-control" [formControl]="apellidos_Familiar2" id="ApellidosSegundoFamiliar" placeholder="Apellidos">
+          <input type="text" class="form-control" [formControl]="apellidos_Familiar2" id="ApellidosSegundoFamiliar"
+            placeholder="Apellidos">
         </div>
 
         <div class="form-group">
@@ -108,57 +117,69 @@
         </div>
 
         <div class="d-grid gap-2">
-          <button class="btn btn-lg btn-outline-success buttonEnviar" style="display: none;" type="button" (click)="sendForm()">Enviar</button>
+          <button class="btn btn-lg btn-outline-success buttonEnviar" style="display: none;" type="button"
+            (click)="sendForm()">Enviar</button>
         </div>
         <div class="d-grid gap-2 buttonEnviar">
-          <button class="btn btn-lg btn-outline-success buttonGuardar" style="display: none;" type="button" (click)="sendFormEditar()">Guardar</button>
+          <button class="btn btn-lg btn-outline-success buttonGuardar" style="display: none;" type="button"
+            (click)="sendFormEditar()">Guardar</button>
         </div>
 
       </fieldset>
     </form>
-</div>
-
-<div class="container">
-  <div class="d-grid gap-2 asignatura">
-    <button class="btn btn-lg btn-primary m-4" style="width: 25%; height: 200px;" type="button" name="{{subject.id}}" *ngFor="let subject of subjects" (click)="califications($event)">{{subject.Nombre}}</button>
-      <!-- <button class="btn btn-lg btn-primary m-4" style="width: 25%; height: 200px;" type="button"></button> -->
-      <button class="btn btn-lg btn-outline-primary m-4 createSubject" style="width: 25%; height: 200px;" type="button" (click)="createAsignatura()">Añadir Asignatura &nbsp;&nbsp;<i class="bi bi-plus-circle"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-        </svg></i></button>
   </div>
-</div>
 
-<div class="container p-4 createAsignatura">
-  <form>
-    <fieldset>
-      <legend>Añade una Asignatura</legend>
-      
-      <div class="form-group" >
-        <label for="NombreAsignatura" class="form-label mt-4">* Nombre</label>
-        <input type="text" class="form-control" [formControl]="nombreAsignatura" id="NombreAsignatura" aria-describedby="emailHelp" placeholder="Nombre">
-      </div>
-      
-      <div class="form-check" >
-        <div>
-          <input class="form-check-input checkTodos" type="checkbox" name="all" (change)="onChange($event)" id="flexCheckDefault">
-          <label class="form-check-label" for="flexCheckDefault">
-            <b>SELECCIONA TODOS</b>
-          </label>
+  <div class="container">
+    <div class="d-grid gap-2 asignatura">
+      <button class="btn curso m-2" type="button" name="{{subject.id}}"
+        *ngFor="let subject of subjects" (click)="califications($event)">{{subject.Nombre}}</button>
+      <!-- <button class="btn btn-lg btn-primary m-4" style="width: 25%; height: 200px;" type="button"></button> -->
+      <button class="btn cursoDotted m-4 createSubject" type="button"
+        (click)="createAsignatura()">Añadir Asignatura &nbsp;&nbsp;<i class="bi bi-plus-circle"><svg
+            xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-circle"
+            viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+            <path
+              d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+          </svg></i></button>
+    </div>
+  </div>
+
+  <div class="container p-4 createAsignatura">
+    <form>
+      <fieldset>
+        <legend>Añade una Asignatura</legend>
+
+        <div class="form-group">
+          <label for="NombreAsignatura" class="form-label mt-4">* Nombre</label>
+          <input type="text" class="form-control" [formControl]="nombreAsignatura" id="NombreAsignatura"
+            aria-describedby="emailHelp" placeholder="Nombre">
         </div>
-        <div *ngFor="let alumno of alumnosCurso">
-          <input class="form-check-input check" type="checkbox" name="{{alumno.Nombre}}" [value]="alumno.Apellidos" (change)="onChange($event)"  [formControl]="alumnoElegido" id="flexCheckDefault" checked="">
-          <label class="form-check-label labelCheck" for="flexCheckDefault">
-            {{alumno.Nombre}} {{alumno.Apellidos}}
-          </label>
+
+        <div class="form-check">
+          <div>
+            <input class="form-check-input checkTodos" type="checkbox" name="all" (change)="onChange($event)"
+              id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              <b>SELECCIONA TODOS</b>
+            </label>
+          </div>
+          <div *ngFor="let alumno of alumnosCurso">
+            <input class="form-check-input check" type="checkbox" name="{{alumno.Nombre}}" [value]="alumno.Apellidos"
+              (change)="onChange($event)" [formControl]="alumnoElegido" id="flexCheckDefault" checked="">
+            <label class="form-check-label labelCheck" for="flexCheckDefault">
+              {{alumno.Nombre}} {{alumno.Apellidos}}
+            </label>
+          </div>
+
         </div>
-        
-      </div>
 
-      <div class="d-grid gap-2 my-3">
-        <button class="btn btn-lg btn-outline-success" type="button" (click)="sendFormAsignaturas()">Enviar</button>
-      </div>
+        <div class="d-grid gap-2 my-3">
+          <button class="btn btn-lg btn-outline-success" type="button" (click)="sendFormAsignaturas()">Enviar</button>
+        </div>
 
-    </fieldset>
-  </form>
+      </fieldset>
+    </form>
+  </div>
+
 </div>

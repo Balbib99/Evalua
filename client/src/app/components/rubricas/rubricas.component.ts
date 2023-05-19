@@ -3,6 +3,7 @@ import { AlumnosService } from 'src/app/services/alumnos.service';
 
 import { CookieService } from 'ngx-cookie-service';
 import html2pdf from 'html2pdf.js';
+import { FormControl } from '@angular/forms';
 @Component({
   selector: 'app-rubricas',
   templateUrl: './rubricas.component.html',
@@ -12,8 +13,8 @@ export class RubricasComponent {
   
   idProfesor:any = '';
   rubricas: any = [];
-  filas = '';
-  columnas = '';
+  filas: any = new FormControl('');
+  columnas: any = new FormControl('');
 
   constructor(private alumnosService: AlumnosService, private cookies: CookieService){}
 
@@ -27,192 +28,193 @@ export class RubricasComponent {
         this.idProfesor = res;
         this.idProfesor = this.idProfesor[0].id
         console.log(this.idProfesor);
-        
+        this.chargeRubrica()   
       }
     )
-
-    this.chargeRubrica()
   }
 
-  //Muestra un cuadro de dialogo para elegir el tamaño de la rubrica a crear
-  showDialog(){
-    let dialog = document.querySelector('dialog');
-    dialog?.showModal();
-  }
+  // ------------------ PROXIMA ACTUALIZACIÓN DE LA PÁGINA WEB --------------------------------
 
-  //Crea las filas y columnas de la rubrica una vez se ha elegido el tamaño de la misma
-  createRubrica(){
-    let dialog = document.querySelector('dialog');
-    dialog?.close();
+  // //Muestra un cuadro de dialogo para elegir el tamaño de la rubrica a crear
+  // showDialog(){
+  //   let dialog = document.querySelector('dialog');
+  //   dialog?.showModal();
+  // }
 
-    let body:any = document.querySelector('.body');
-    let button = document.querySelector('.create');
+  // //Crea las filas y columnas de la rubrica una vez se ha elegido el tamaño de la misma
+  // createRubrica(){
+  //   let dialog = document.querySelector('dialog');
+  //   dialog?.close();
 
-    let newRubrica = document.createElement('div');
-    newRubrica.className = 'container newRubrica';
+  //   let body:any = document.querySelector('.body');
+  //   let button = document.querySelector('.create');
+
+  //   let newRubrica = document.createElement('div');
+  //   newRubrica.className = 'container newRubrica';
     
 
-    let newTable = document.createElement('table');
-    newTable.className = 'table table-hover newTable';
+  //   let newTable = document.createElement('table');
+  //   newTable.className = 'table table-hover newTable';
 
-    for (let i = 0; i < 6; i++) {
+  //   for (let i = 0; i < this.filas.value ; i++) {
       
-      let tr = document.createElement('tr');
-      if(i == 0){
-        tr.className = 'table-active'
-      }
-      newTable.append(tr);
+  //     let tr = document.createElement('tr');
+  //     if(i == 0){
+  //       tr.className = 'table-active'
+  //     }
+  //     newTable.append(tr);
       
-      for (let j = 0; j < 6; j++) {
+  //     for (let j = 0; j < this.columnas.value; j++) {
         
-        if(i == 0){
-          let th = document.createElement('th');
-          th.scope = 'col';
-          tr.append(th);
+  //       if(i == 0){
+  //         let th = document.createElement('th');
+  //         th.scope = 'col';
+  //         tr.append(th);
 
-          let input = document.createElement('input');
-          th.append(input);
-        }else{
-          if(j == 0){
-            let th = document.createElement('th');
-            th.scope = 'row';
-            tr.append(th);
+  //         let input = document.createElement('input');
+  //         th.append(input);
+  //       }else{
+  //         if(j == 0){
+  //           let th = document.createElement('th');
+  //           th.scope = 'row';
+  //           tr.append(th);
 
-            let input = document.createElement('input');
-            th.append(input);
-          }else{
-            let td = document.createElement('td');
-            tr.append(td);
+  //           let input = document.createElement('input');
+  //           th.append(input);
+  //         }else{
+  //           let td = document.createElement('td');
+  //           tr.append(td);
 
-            let input = document.createElement('input');
-            td.append(input);
-          }
+  //           let input = document.createElement('input');
+  //           td.append(input);
+  //         }
           
-        }
+  //       }
 
-      }
+  //     }
       
-    }
+  //   }
 
-    body.insertBefore(newRubrica, button);
-    newRubrica.append(newTable);
+  //   body.append(newRubrica);
+  //   newRubrica.append(newTable);
 
-    let buttonGuardar = document.createElement('button');
-    buttonGuardar.className ='btn btn-secondary botonGuardar';
-    buttonGuardar.textContent = 'Guardar Rubrica';
-    // buttonGuardar.style.justifySelf = 'end';
-    buttonGuardar.addEventListener('click', (e) => {
-      this.guardarRubrica(e);
-    });
+  //   let buttonGuardar = document.createElement('button');
+  //   buttonGuardar.className ='btn btn-secondary botonGuardar';
+  //   buttonGuardar.textContent = 'Guardar Rubrica';
+  //   // buttonGuardar.style.justifySelf = 'end';
+  //   buttonGuardar.addEventListener('click', (e) => {
+  //     this.guardarRubrica(e);
+  //   });
 
-    let buttonRow = document.createElement('button');
-    buttonRow.className = 'btn btn-success botonCrear';
-    buttonRow.textContent = 'Añadir fila +'
-    buttonRow.style.marginLeft = '50em';
-    buttonRow.addEventListener('click', (e) => {
-      this.updateRow();
-    });
+  //   let buttonRow = document.createElement('button');
+  //   buttonRow.className = 'btn btn-success botonCrear';
+  //   buttonRow.textContent = 'Añadir fila +'
+  //   buttonRow.style.marginLeft = '50em';
+  //   buttonRow.addEventListener('click', (e) => {
+  //     this.updateRow();
+  //   });
 
-    newRubrica.append(buttonGuardar);
-    newRubrica.append(buttonRow);
-  }
+  //   newRubrica.append(buttonGuardar);
+  //   newRubrica.append(buttonRow);
+  // }
 
-  //Guarda la rubrica creada y la muestra por pantalla
-  guardarRubrica(elegido: any){
-    let casilla = -1;
+  // //Guarda la rubrica creada y la muestra por pantalla
+  // guardarRubrica(elegido: any){
+  //   let casilla = -1;
 
-    let inputs = document.querySelectorAll('input');
+  //   let inputs = document.querySelectorAll('input');
 
-    const contenidoRubricas: any = [];
+  //   const contenidoRubricas: any = [];
     
-    inputs.forEach(e=> {
-      return contenidoRubricas.push(e.value);
-    });
+  //   inputs.forEach(e=> {
+  //     return contenidoRubricas.push(e.value);
+  //   });
 
-    console.log(contenidoRubricas);
+  //   console.log(contenidoRubricas);
     
-    document.querySelector('.newTable')?.remove();
-    document.querySelector('.botonGuardar')?.remove();
+  //   document.querySelector('.newTable')?.remove();
+  //   document.querySelector('.botonGuardar')?.remove();
 
-    let body:any = document.querySelector('.body');
-    let button = document.querySelector('.create');
+  //   let body:any = document.querySelector('.body');
+  //   let button = document.querySelector('.create');
 
-    let newRubrica = document.createElement('div');
-    newRubrica.className = 'container newRubrica';
+  //   let newRubrica = document.createElement('div');
+  //   newRubrica.className = 'container newRubrica';
     
 
-    let newTable = document.createElement('table');
-    newTable.className = 'table table-hover';
+  //   let newTable = document.createElement('table');
+  //   newTable.className = 'table table-hover';
 
-    for (let i = 0; i < 6; i++) {
+  //   for (let i = 0; i < this.filas.value; i++) {
       
-      let tr = document.createElement('tr');
-      if(i == 0){
-        tr.className = 'table-active'
-      }
-      newTable.append(tr);
+  //     let tr = document.createElement('tr');
+  //     if(i == 0){
+  //       tr.className = 'table-active'
+  //     }
+  //     newTable.append(tr);
       
-      for (let j = 0; j < 6; j++) {
-        casilla++;
+  //     for (let j = 0; j < this.columnas.value; j++) {
+  //       casilla++;
 
-        if(i == 0){
-          let th = document.createElement('th');
-          th.scope = 'col';
-          th.textContent = contenidoRubricas[casilla];
-          tr.append(th);
-        }else{
-          if(j == 0){
-            let th = document.createElement('th');
-            th.scope = 'row';
-            th.textContent = contenidoRubricas[casilla];
-            tr.append(th);
+  //       if(i == 0){
+  //         let th = document.createElement('th');
+  //         th.scope = 'col';
+  //         th.textContent = contenidoRubricas[casilla];
+  //         tr.append(th);
+  //       }else{
+  //         if(j == 0){
+  //           let th = document.createElement('th');
+  //           th.scope = 'row';
+  //           th.textContent = contenidoRubricas[casilla];
+  //           tr.append(th);
 
-          }else{
-            let td = document.createElement('td');
-            td.textContent = contenidoRubricas[casilla];
-            tr.append(td);
-          }
+  //         }else{
+  //           let td = document.createElement('td');
+  //           td.textContent = contenidoRubricas[casilla];
+  //           tr.append(td);
+  //         }
           
-        }
+  //       }
 
-      }
+  //     }
       
-    }
+  //   }
 
-    body.insertBefore(newRubrica, button);
-    newRubrica.append(newTable);
-  }
+  //   body.append(newRubrica);
+  //   newRubrica.append(newTable);
+  // }
 
-  //Permite crear más filas dinamicamente a mayores en la rubrica
-  updateRow(){
-    let rubrica: any = document.querySelector('.newRubrica');
-    let table = document.querySelector('.newTable');
-    let button = document.querySelector('.botonGuardar');
+  // //Permite crear más filas dinamicamente a mayores en la rubrica
+  // updateRow(){
+  //   let rubrica: any = document.querySelector('.newRubrica');
+  //   let table = document.querySelector('.newTable');
+  //   let button = document.querySelector('.botonGuardar');
 
-    for (let i = 0; i < 1; i++) {
-      let tr = document.createElement('tr');
-      table?.append(tr);
-      for (let j = 0; j < 6; j++) {
-        if(j == 0){
-          let th = document.createElement('th');
-          th.scope = 'row';
-          tr.append(th);
+  //   for (let i = 0; i < 1; i++) {
+  //     let tr = document.createElement('tr');
+  //     table?.append(tr);
+  //     for (let j = 0; j < 6; j++) {
+  //       if(j == 0){
+  //         let th = document.createElement('th');
+  //         th.scope = 'row';
+  //         tr.append(th);
 
-          let input = document.createElement('input');
-          th.append(input);
-        }else{
-          let td = document.createElement('td');
-          tr.append(td);
+  //         let input = document.createElement('input');
+  //         th.append(input);
+  //       }else{
+  //         let td = document.createElement('td');
+  //         tr.append(td);
 
-          let input = document.createElement('input');
-          td.append(input);
-        }
-      }
+  //         let input = document.createElement('input');
+  //         td.append(input);
+  //       }
+  //     }
       
-    }
+  //   }
 
-    rubrica.insertBefore(table,button);
-  }
+  //   rubrica.insertBefore(table,button);
+  //   document.querySelector('.botonCrear')?.remove()
+  // }
 
   chargeRubrica() {
 
@@ -226,7 +228,7 @@ export class RubricasComponent {
     const parametros = {
       id_Profesor: this.idProfesor
     }
-    console.log(parametros);
+    console.log('hola'+parametros.id_Profesor);
 
     //Carga las rubricas asociadas a la asignatura en la que estemos
     this.alumnosService.getRubricas(parametros).subscribe(
@@ -242,7 +244,7 @@ export class RubricasComponent {
         }
 
         console.log(rubricasSave);
-        let div: any = document.querySelector('#tableSave');
+        let div: any = document.querySelector('.body');
         while (div.firstChild) {
           div.removeChild(div.firstChild);
         }
@@ -290,7 +292,6 @@ export class RubricasComponent {
     imprimir.className = 'btn btn-warning';
     imprimir.textContent = 'PDF';
     imprimir.style.marginBottom = 2 + 'em';
-    imprimir.style.marginLeft = 3 + 'em';
     imprimir.addEventListener('click', () => {
 
 
