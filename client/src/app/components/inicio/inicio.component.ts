@@ -52,7 +52,7 @@ export class InicioComponent{
 
           this.alumnosService.logueo();
         }else{
-          console.log('Usuario incorrecto');
+          alert('Usuario no valido')
         }
 
       },

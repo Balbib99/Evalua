@@ -34,6 +34,15 @@ th{
     color: white;
 }
 
+.formularioDotted{
+    border-color: #0ea8a1;
+    color: #0ea8a1;
+}
+.formularioDotted:hover{
+    background-color: #0ea8a1;
+    color: white;
+}
+
 @media (max-width: 768px) {
     div{
         font-size: 14px;

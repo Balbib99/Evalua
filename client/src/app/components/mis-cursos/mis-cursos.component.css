@@ -14,6 +14,15 @@
     color: white;
 }
 
+.formularioDotted{
+    border-color: #0ea8a1;
+    color: #0ea8a1;
+}
+.formularioDotted:hover{
+    background-color: #0ea8a1;
+    color: white;
+}
+
 
 .containerPrincipal{
     margin-left: 10%;

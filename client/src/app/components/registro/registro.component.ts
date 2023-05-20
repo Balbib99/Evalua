@@ -39,7 +39,12 @@ export class RegistroComponent {
     }
 
     if( !(this.password.value === this.verifyPassword.value)){
+      let password = document.querySelectorAll('input[type="password"]');
+      password.forEach((e: any) => {
+        e.style.borderColor = 'red';
+      })
       alert('Los campos de contraseña no son iguales');
+      
     }else{
       this.alumnosService.registarUser(newProf).subscribe(
         res => {

@@ -21,8 +21,8 @@ export class AlumnosService {
 
   //Listamos todos los alumnos a los que da clase un determinado profesor sin tener en cuenta la clase a la
   //que pertenencen
-  getAlumnos() {
-    return this.http.get(`${this.API_URI}/alumnos/listar`);
+  getAlumnos(params: any) {
+    return this.http.post(`${this.API_URI}/alumnos/listar`, params);
   }
 
   //Recoge los datos del profesor que se va a registrar y se los manda a la sentencia sql que hace

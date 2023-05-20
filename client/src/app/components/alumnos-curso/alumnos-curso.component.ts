@@ -112,7 +112,7 @@ export class AlumnosCursoComponent {
         console.log(this.subjects);
       },
       err => {
-        console.log(err);
+        // console.log(err);
       }
     )
 
@@ -246,7 +246,7 @@ export class AlumnosCursoComponent {
 
       window.scrollTo(scrollY, 0);
 
-      this.ngOnInit();
+      window.location.reload()
     }
   }
 
@@ -413,7 +413,7 @@ export class AlumnosCursoComponent {
         alert(JSON.stringify(res));
       },
       err => {
-        console.log(err);
+        // console.log(err);
       }
     )
 

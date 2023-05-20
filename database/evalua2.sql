@@ -1,3 +1,7 @@
+DROP DATABASE IF EXISTS evalua2;
+CREATE DATABASE IF NOT EXISTS evalua2;
+USE evalua2;
+
 -- phpMyAdmin SQL Dump
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
@@ -55,8 +59,6 @@ INSERT INTO `alumnos` (`Nombre`, `Apellidos`, `Nombre_Familiar1`, `Apellidos_Fam
 ('Balbino', 'Martinez Rodriguez', 'Balbino', 'NULL', 'NULL', 'NULL', 'C/Gregorio Marañon Nº15 Atico B', 'Balbino@gmail.com', '471256895', 'NULL', 'NULL', '2ºB', 4, 1),
 ('Alfonso', 'Miguel de la torre', 'Navarro', 'NULL', 'NULL', 'NULL', 'C/Guadalajara Nº13 2ºB', 'Erminio@gmail.com', '256481543', 'NULL', 'NULL', '2ºB', 5, 1),
 ('Alvaro', 'Manzano', 'Sergio', 'NULL', 'NULL', 'NULL', 'C/Acero Nº6 2ºB', 'Ministro@gmail.com', '897456213', 'NULL', 'NULL', '2ºB', 6, 1),
-('Eusebio', '', '', '', '', '', '', '', '', '', '', '2ºA', 7, NULL),
-('Hernesto', 'Gomez Gutierrez', 'Paco', 'Gomez', '', '', 'C/ Vidal Nº4', 'paquito@gmail.com', '489561247', '', '', '2ºA', 8, NULL),
 ('Hernesto', 'Gomez Gutierrez', 'Paco', 'Gomez', '', '', 'C/ Vidal Nº4', 'paquito@gmail.com', '478451258', '', '', '2ºA', 9, 1);
 
 -- --------------------------------------------------------
@@ -142,6 +144,7 @@ CREATE TABLE `notas` (
   `Nota` int(4) NOT NULL,
   `Nombre_Calificacion` varchar(50) NOT NULL,
   `Asignatura` varchar(20) NOT NULL,
+  `Curso` varchar(5) NOT NULL,
   `ID` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

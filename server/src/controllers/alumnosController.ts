@@ -13,9 +13,16 @@ class AlumnosController {
     }
 
     public async listar (req: Request, res: Response) {
-        await connect.query('SELECT * FROM alumnos', function(err, result){
-            if (err) throw err;
-            res.json(result);
+        await connect.query('SELECT * FROM alumnos WHERE id_Profesor=?',[req.body.id_Profesor], (err,rows,field) => {
+            if(!err){
+                if(rows.length > 0){
+                    res.json(rows);
+                }else{
+                    res.json('No existen alumnos')
+                }
+            }else{
+                console.log(err);
+            }
         });
     }
 

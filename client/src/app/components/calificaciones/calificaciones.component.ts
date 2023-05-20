@@ -82,24 +82,30 @@ export class CalificacionesComponent {
 
     this.alumnosService.getNotas(params).subscribe(
       res => {
-        let notas: any = res;
-        let nota: any = [];
-        let calificacion: any = [];
-        let alumno: any = [];
+        if (res == 'No existe ninguna nota por el momento') {
+          alert(res);
+        } else {
+          console.log(res);
 
-        notas.forEach((e: any) => {
-          nota.push(e.Nota)
-          calificacion.push(e.Nombre_Calificacion)
-          alumno.push(e.Nombre_Alumnos)
-        });
+          let notas: any = res;
+          let nota: any = [];
+          let calificacion: any = [];
+          let alumno: any = [];
 
-        calificacion = calificacion.filter((valor: any, indice: any, arreglo: any) => {
-          return arreglo.indexOf(valor) === indice;
-        });
-        console.log(calificacion);
+          notas.forEach((e: any) => {
+            nota.push(e.Nota)
+            calificacion.push(e.Nombre_Calificacion)
+            alumno.push(e.Nombre_Alumnos)
+          });
+
+          calificacion = calificacion.filter((valor: any, indice: any, arreglo: any) => {
+            return arreglo.indexOf(valor) === indice;
+          });
+          console.log(calificacion);
 
 
-        this.sendNotas(nota, calificacion, alumno, res)
+          this.sendNotas(nota, calificacion, alumno, res)
+        }
       },
       err => {
 
@@ -418,6 +424,10 @@ export class CalificacionesComponent {
   //Crea la rubrica y comienza el proceso de cración de la misma
   createRubrica() {
     if ((parseInt(this.columnas.value) > 2) && (parseInt(this.columnas.value) < 6) && (parseInt(this.filas.value) > 0)) {
+      if (this.nombreRubrica.value.includes(' ')) {
+        this.nombreRubrica.setValue(this.nombreRubrica.value.replace(/ /g, '_'))
+      }
+
       const dialogs = document.querySelectorAll('dialog')
       dialogs[2].close()
 
@@ -439,8 +449,8 @@ export class CalificacionesComponent {
       newRubrica.className = 'newRubrica';
       newRubrica.style.margin = 2 + 'em'
       newRubrica.style.overflowX = 'auto';
-      newRubrica.style.marginLeft = 15+'%';
-      newRubrica.style.padding = 1+'px';
+      newRubrica.style.marginLeft = 15 + '%';
+      newRubrica.style.padding = 1 + 'px';
 
       let newTable = document.createElement('table');
       newTable.className = 'table table-hover newTable';
@@ -556,6 +566,15 @@ export class CalificacionesComponent {
         this.guardarRubrica(e);
       });
 
+      let buttonCancelar = document.createElement('button');
+      buttonCancelar.className = 'botonCancelar btn btn-danger';
+      buttonCancelar.textContent = 'Cancelar';
+      buttonCancelar.style.marginLeft = 2 + 'em';
+      // buttonGuardar.style.justifySelf = 'end';
+      buttonCancelar.addEventListener('click', (e) => {
+        window.location.reload()
+      });
+
       // let buttonRow = document.createElement('button');
       // buttonRow.className = 'btn btn-success botonCrear';
       // buttonRow.textContent = 'Añadir fila +'
@@ -565,7 +584,7 @@ export class CalificacionesComponent {
       // });
 
       newRubrica.append(buttonGuardar);
-      // newRubrica.append(buttonRow);
+      newRubrica.append(buttonCancelar);
     } else {
       alert('Numero de columnas entre de 3 a 5 y numero de filas mas de 0')
     }
@@ -588,6 +607,7 @@ export class CalificacionesComponent {
 
     document.querySelector('.newTable')?.remove();
     document.querySelector('.botonGuardar')?.remove();
+    document.querySelector('.botonCancelar')?.remove();
 
     let body: any = document.querySelector('body');
 
@@ -595,8 +615,8 @@ export class CalificacionesComponent {
     newRubrica.className = 'newRubrica';
     newRubrica.style.overflowX = 'auto';
     newRubrica.style.margin = 2 + 'em';
-    newRubrica.style.marginLeft = 15+'%';
-    newRubrica.style.padding = 1+'px';
+    newRubrica.style.marginLeft = 15 + '%';
+    newRubrica.style.padding = 1 + 'px';
 
     let newTable = document.createElement('table');
     newTable.className = this.nombreRubrica.value + 'Table table table-hover';
@@ -735,6 +755,7 @@ export class CalificacionesComponent {
 
       const dialogs = document.querySelectorAll('dialog')
       let div: any = dialogs[3].querySelector('div')
+
       div.className = buttonCalificar.className.split(',')[0];
       dialogs[3].showModal();
       // dialogs[3]. =  buttonCalificar.className.split(',')[0]
@@ -742,6 +763,15 @@ export class CalificacionesComponent {
 
       console.log(this.finalCalification);
     })
+
+    let buttonCancelar = document.createElement('button');
+      buttonCancelar.className = 'botonCancelar btn btn-danger';
+      buttonCancelar.textContent = 'Cancelar';
+      buttonCancelar.style.marginLeft = 2 + 'em';
+      // buttonGuardar.style.justifySelf = 'end';
+      buttonCancelar.addEventListener('click', (e) => {
+        window.location.reload()
+      });
     // buttonCalificar.onclick = () => {
 
     // }
@@ -749,6 +779,7 @@ export class CalificacionesComponent {
     body.append(newRubrica);
     newRubrica.append(newTable);
     newRubrica.append(buttonCalificar)
+    newRubrica.append(buttonCancelar);
   }
 
   // PROBAR CREACIÓN SEGUN ABRE LA PÁGINA
@@ -868,72 +899,76 @@ export class CalificacionesComponent {
     //Carga las rubricas asociadas a la asignatura en la que estemos
     this.alumnosService.getRubricasCalifications(parametros).subscribe(
       res => {
-        this.rubricas = res;
-        let rubricasSave: any = [];
-        let nombreRubricas: any = [];
-        console.log(this.rubricas);
+        if (res == 'No existe ninguna rubrica para este curso por el momento') {
+          alert(res)
+        } else {
+          this.rubricas = res;
+          let rubricasSave: any = [];
+          let nombreRubricas: any = [];
+          console.log(this.rubricas);
 
-        for (const rubrica of this.rubricas) {
-          rubricasSave.push(rubrica.Tabla.split('?!?'))
-          nombreRubricas.push(rubrica.Nombre)
-        }
+          for (const rubrica of this.rubricas) {
+            rubricasSave.push(rubrica.Tabla.split('?!?'))
+            nombreRubricas.push(rubrica.Nombre)
+          }
 
-        console.log(rubricasSave);
-        let div: any = document.querySelector('#tableSave');
-        while (div.firstChild) {
-          div.removeChild(div.firstChild);
-        }
+          console.log(rubricasSave);
+          let div: any = document.querySelector('#tableSave');
+          while (div.firstChild) {
+            div.removeChild(div.firstChild);
+          }
 
-        let contadorNombres = 0;
-        for (const tabla of rubricasSave) {
+          let contadorNombres = 0;
+          for (const tabla of rubricasSave) {
 
-          //se convierte en variable para poder unsarlo en la función 'this.createTableCalifications(nombre);'
-          let nombre = nombreRubricas[contadorNombres];
+            //se convierte en variable para poder unsarlo en la función 'this.createTableCalifications(nombre);'
+            let nombre = nombreRubricas[contadorNombres];
 
-          let h2 = document.createElement('h2');
-          h2.textContent = nombreRubricas[contadorNombres];
-          div.append(h2);
+            let h2 = document.createElement('h2');
+            h2.textContent = nombreRubricas[contadorNombres];
+            div.append(h2);
 
-          let table = document.createElement('table');
-          table.style.textAlign = 'center';
-          table.className = 'table table-hover';
+            let table = document.createElement('table');
+            table.style.textAlign = 'center';
+            table.className = 'table table-hover';
 
-          let button = document.createElement('button');
-          button.textContent = 'Usar';
-          button.className = nombreRubricas[contadorNombres] + ', btn btn-secondary';
-          button.style.marginBottom = 2 + 'em';
+            let button = document.createElement('button');
+            button.textContent = 'Usar';
+            button.className = nombreRubricas[contadorNombres] + ', btn btn-secondary';
+            button.style.marginBottom = 2 + 'em';
 
-          button.addEventListener('click', () => {
-            const params = {
-              Nombre_Calificacion: button.className.split(',')[0],
-              Curso: this.cookies.get('curso')
-            }
-
-            //Hace una busqueda en la BBDD para comprobar si la rubrica elegida ya se ha utilizado
-            //si es así, no se puede utilizar más veces en la misma clase
-            this.alumnosService.getRurbicasNotas(params).subscribe(
-              res => {
-                let rubricas: any = res
-
-                if (params.Nombre_Calificacion == rubricas[0].Nombre_Calificacion) {
-                  alert('Rubrica ya usada')
-                } else {
-                  this.createTableCalifications(nombre);
-                }
+            button.addEventListener('click', () => {
+              const params = {
+                Nombre_Calificacion: button.className.split(',')[0],
+                Curso: this.cookies.get('curso')
               }
-            )
 
-          })
+              //Hace una busqueda en la BBDD para comprobar si la rubrica elegida ya se ha utilizado
+              //si es así, no se puede utilizar más veces en la misma clase
+              this.alumnosService.getRurbicasNotas(params).subscribe(
+                res => {
+                  let rubricas: any = res
 
-          console.log(tabla);
-          contadorNombres++;
+                  if (params.Nombre_Calificacion == rubricas[0].Nombre_Calificacion) {
+                    alert('Rubrica ya usada')
+                  } else {
+                    this.createTableCalifications(nombre);
+                  }
+                }
+              )
 
-          if ((tabla[2] == 'Notable') && (tabla[4] != 'Suficiente')) {
-            this.chargeTable(table, button, tabla, div, 4, 5);
-          } else if ((tabla[4] == 'Suficiente')) {
-            this.chargeTable(table, button, tabla, div, 5, 6);
-          } else {
-            this.chargeTable(table, button, tabla, div, 3, 4);
+            })
+
+            console.log(tabla);
+            contadorNombres++;
+
+            if ((tabla[2] == 'Notable') && (tabla[4] != 'Suficiente')) {
+              this.chargeTable(table, button, tabla, div, 4, 5);
+            } else if ((tabla[4] == 'Suficiente')) {
+              this.chargeTable(table, button, tabla, div, 5, 6);
+            } else {
+              this.chargeTable(table, button, tabla, div, 3, 4);
+            }
           }
         }
 
@@ -1017,13 +1052,7 @@ export class CalificacionesComponent {
 
   selectedRubrica(tdSelecionado: any, actualizar?: boolean) {
     const notaAntigua = tdSelecionado.textContent
-    let dialogs = document.querySelectorAll('dialog');
-    dialogs[4].showModal()
 
-    let div: any = dialogs[4].querySelector('div');
-    while (div.firstChild) {
-      div.removeChild(div.firstChild);
-    }
 
     // let tabla: any = document.createElement('table');
     // tabla.className = 'table table-hover'
@@ -1040,94 +1069,107 @@ export class CalificacionesComponent {
     //Devuelve la rubrica que le hayamos asignado a cada td
     this.alumnosService.getOnlyOneRubrica(parametros).subscribe(
       res => {
-        console.log(res);
-        let respuesta: any = '';
-        respuesta = res;
-        console.log(respuesta);
-
-        let rubrica: any = []
-        rubrica.push(respuesta[0].Tabla.split('?!?'))
-        console.log(rubrica);
-
-
-        let table = document.createElement('table');
-        table.style.textAlign = 'center';
-        table.className = 'table table-hover';
-
-        let button = document.createElement('button');
-        button.textContent = 'Calificar';
-        button.className = 'btn btn-secondary';
-        button.style.marginBottom = 2 + 'em';
-
-        //Una vez rellenamos la rubrica, este nos recoge el resultado y lo plasma en el td que corresponda
-        button.addEventListener('click', () => {
-          let total = this.finalCalification / this.filas.value
-          console.log(this.finalCalification);
-          console.log(this.filas.value);
-          console.log(total);
-
-          //Si exsite este parámetro en la función, significa que viene de la parte de actualizar la nota
-          //por lo que pasará al apartado de actualización
-          //Por el contrario, si no la contiene, redirige al aparta de creación de nota
-          if (!actualizar) {
-            tdSelecionado.textContent = total
-            dialogs[4].close()
-
-            //CREAR NOTA PARA EL ALUMNO
-
-            const nota = {
-              Nombre_Alumnos: tdSelecionado.className.split(',')[1],
-              Nota: total,
-              Nombre_Calificacion: tdSelecionado.className.split(',')[0],
-              Asignatura: this.cookies.get('asignatura'),
-              id_Profesor: this.idProfesor,
-              Curso: this.cookies.get('curso')
-            }
-
-            //Crea una nueva nota
-            this.alumnosService.createNota(nota).subscribe(
-              res => {
-                alert('Nota creada correctamente')
-              },
-              err => {
-
-              }
-            )
-          } else {
-
-            dialogs[4].close()
-
-            const nota = {
-              Nombre_Alumnos: tdSelecionado.className.split(',')[1],
-              Nota: total,
-              Nombre_Calificacion: tdSelecionado.className.split(',')[0],
-              Asignatura: this.cookies.get('asignatura'),
-              id_Profesor: this.idProfesor,
-              Curso: this.cookies.get('curso')
-            }
-
-            //Actualiza una nota ya creada
-            this.alumnosService.updateNotas(nota).subscribe(
-              res => {
-                alert('Nota actualizada correctamente')
-                //Recarga la página para que se actualicen los datos
-                window.location.reload()
-              },
-              err => {
-
-              }
-            )
-
-          }
-        })
-
-        //Depende del formato que tenga la rubrica, se rellenará dinámicamente de una forma u otra
-        if ((rubrica[0][2] == 'Notable') && (rubrica[0][4] != 'Suficiente')) {
-          this.chargeTable(table, button, rubrica[0], div, 4, 5, this.fourColumnsPoint);
-        } else if ((rubrica[0][4] == 'Suficiente')) {
-          this.chargeTable(table, button, rubrica[0], div, 5, 6, this.fiveColumnsPoint);
+        if (res == 'No existe ninguna rubrica por el momento') {
+          alert('Debes guardar la rubrica antes de usarla')
         } else {
-          this.chargeTable(table, button, rubrica[0], div, 3, 4, this.threeColumnsPoint);
+
+          let dialogs = document.querySelectorAll('dialog');
+          dialogs[4].showModal()
+
+          let div: any = dialogs[4].querySelector('div');
+          while (div.firstChild) {
+            div.removeChild(div.firstChild);
+          }
+
+          console.log(res);
+          let respuesta: any = '';
+          respuesta = res;
+          console.log(respuesta);
+
+          let rubrica: any = []
+          rubrica.push(respuesta[0].Tabla.split('?!?'))
+          console.log(rubrica);
+
+
+          let table = document.createElement('table');
+          table.style.textAlign = 'center';
+          table.className = 'table table-hover';
+
+          let button = document.createElement('button');
+          button.textContent = 'Calificar';
+          button.className = 'btn btn-secondary';
+          button.style.marginBottom = 2 + 'em';
+
+          //Una vez rellenamos la rubrica, este nos recoge el resultado y lo plasma en el td que corresponda
+          button.addEventListener('click', () => {
+            let total = this.finalCalification / this.filas.value
+            console.log(this.finalCalification);
+            console.log(this.filas.value);
+            console.log(total);
+
+            //Si exsite este parámetro en la función, significa que viene de la parte de actualizar la nota
+            //por lo que pasará al apartado de actualización
+            //Por el contrario, si no la contiene, redirige al aparta de creación de nota
+            if (!actualizar) {
+              tdSelecionado.textContent = total
+              dialogs[4].close()
+
+              //CREAR NOTA PARA EL ALUMNO
+
+              const nota = {
+                Nombre_Alumnos: tdSelecionado.className.split(',')[1],
+                Nota: total,
+                Nombre_Calificacion: tdSelecionado.className.split(',')[0],
+                Asignatura: this.cookies.get('asignatura'),
+                id_Profesor: this.idProfesor,
+                Curso: this.cookies.get('curso')
+              }
+
+              //Crea una nueva nota
+              this.alumnosService.createNota(nota).subscribe(
+                res => {
+                  alert('Nota creada correctamente')
+                },
+                err => {
+
+                }
+              )
+            } else {
+
+              dialogs[4].close()
+
+              const nota = {
+                Nombre_Alumnos: tdSelecionado.className.split(',')[1],
+                Nota: total,
+                Nombre_Calificacion: tdSelecionado.className.split(',')[0],
+                Asignatura: this.cookies.get('asignatura'),
+                id_Profesor: this.idProfesor,
+                Curso: this.cookies.get('curso')
+              }
+
+              //Actualiza una nota ya creada
+              this.alumnosService.updateNotas(nota).subscribe(
+                res => {
+                  alert('Nota actualizada correctamente')
+                  //Recarga la página para que se actualicen los datos
+                  window.location.reload()
+                },
+                err => {
+
+                }
+              )
+
+            }
+          })
+
+          //Depende del formato que tenga la rubrica, se rellenará dinámicamente de una forma u otra
+          if ((rubrica[0][2] == 'Notable') && (rubrica[0][4] != 'Suficiente')) {
+            this.chargeTable(table, button, rubrica[0], div, 4, 5, this.fourColumnsPoint);
+          } else if ((rubrica[0][4] == 'Suficiente')) {
+            this.chargeTable(table, button, rubrica[0], div, 5, 6, this.fiveColumnsPoint);
+          } else {
+            this.chargeTable(table, button, rubrica[0], div, 3, 4, this.threeColumnsPoint);
+          }
         }
       },
       err => {
@@ -1139,5 +1181,7 @@ export class CalificacionesComponent {
 
   finalizarCalculo() {
     this.createTableCalifications('Total', true)
+
+    document.querySelectorAll('dialog')[0].close()
   }
 }

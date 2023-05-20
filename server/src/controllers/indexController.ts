@@ -145,7 +145,7 @@ class IndexController {
                 if(rows.length > 0) {
                     res.json(rows);
                 }else{
-                    res.json('No existe ninguna rubrica por el momento');
+                    res.json('No existe ninguna rubrica para este curso por el momento');
                 }
             }else{
                 console.log(err);
@@ -204,7 +204,7 @@ class IndexController {
                 if(rows.length > 0) {
                     res.json(rows);
                 }else{
-                    res.json('No existe ninguna rubrica por el momento');
+                    res.json('No existe ninguna nota por el momento');
                 }
             }else{
                 console.log(err);

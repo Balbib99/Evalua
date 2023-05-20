@@ -161,7 +161,7 @@ class IndexController {
                         res.json(rows);
                     }
                     else {
-                        res.json('No existe ninguna rubrica por el momento');
+                        res.json('No existe ninguna rubrica para este curso por el momento');
                     }
                 }
                 else {
@@ -228,7 +228,7 @@ class IndexController {
                         res.json(rows);
                     }
                     else {
-                        res.json('No existe ninguna rubrica por el momento');
+                        res.json('No existe ninguna nota por el momento');
                     }
                 }
                 else {

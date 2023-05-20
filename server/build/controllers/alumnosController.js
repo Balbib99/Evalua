@@ -23,10 +23,18 @@ class AlumnosController {
     }
     listar(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield database_1.default.query('SELECT * FROM alumnos', function (err, result) {
-                if (err)
-                    throw err;
-                res.json(result);
+            yield database_1.default.query('SELECT * FROM alumnos WHERE id_Profesor=?', [req.body.id_Profesor], (err, rows, field) => {
+                if (!err) {
+                    if (rows.length > 0) {
+                        res.json(rows);
+                    }
+                    else {
+                        res.json('No existen alumnos');
+                    }
+                }
+                else {
+                    console.log(err);
+                }
             });
         });
     }

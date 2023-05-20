@@ -12,18 +12,21 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./mis-cursos.component.css']
 })
 export class MisCursosComponent {
-  
-  cursos: any = [];
-  id_Profesor:any = '';
-  curso = new FormControl('');
-  
 
-  constructor(private alumnosService: AlumnosService,  private cookies:CookieService) {
+  cursos: any = [];
+  id_Profesor: any = '';
+  curso = new FormControl('');
+
+
+  constructor(private alumnosService: AlumnosService, private cookies: CookieService) {
 
   }
 
   //Carga los cursos de los que dispone un profesor y deja crear los que el usuario quiera
   ngOnInit() {
+
+    const form = document.querySelector('.formulario');
+    form?.setAttribute('style', 'display: none');
 
     const user = {
       usuario: this.cookies.get('user')
@@ -39,7 +42,7 @@ export class MisCursosComponent {
     );
 
     const profesor = {
-      nombre : this.cookies.get('user')
+      nombre: this.cookies.get('user')
     }
 
     this.alumnosService.getIdProfesor(profesor).subscribe(
@@ -52,22 +55,27 @@ export class MisCursosComponent {
   }
 
   //Recoge el nombre del curso seleccionado y se dirije al alaprtado de ese curso en concreto
-  cursoSeleccionado(cursoNombre:any){
-    
+  cursoSeleccionado(cursoNombre: any) {
+
     this.cookies.set('curso', cursoNombre);
     this.alumnosService.irAlumnosCurso();
 
   }
 
   //Permite crear tantos cursos como quiera el usuario
-  crearCurso(){
+  crearCurso() {
 
     const form = document.querySelector('.formulario');
+    if (form?.getAttribute('style') == 'display: none') {
+      form?.setAttribute('style', 'display: block');
+    } else {
+      form?.setAttribute('style', 'display: none');
+    }
 
-    form?.setAttribute('style', 'visibility: visible');
+
 
     const profesor = {
-      nombre : this.cookies.get('user')
+      nombre: this.cookies.get('user')
     }
 
     this.alumnosService.getIdProfesor(profesor).subscribe(
@@ -79,8 +87,8 @@ export class MisCursosComponent {
   }
 
   //Envia el formulario de creación del curso para que los datos se guarden en la BBDD
-  sendForm(){
-    
+  sendForm() {
+
     const curso = {
       nombre: this.curso.value,
       id_Profesor: this.id_Profesor[0].id
@@ -88,12 +96,15 @@ export class MisCursosComponent {
 
     this.alumnosService.crearCurso(curso).subscribe(
       res => {
+        const form = document.querySelector('.formulario');
+
+        form?.setAttribute('style', 'display: none');
         this.ngOnInit();
       },
       err => console.log(err)
     )
   }
-  
+
 }
 
 

@@ -13,7 +13,7 @@ class AlumnosRoutes {
 
     config(): void {
         this.router.get('/', alumnosController.index); 
-        this.router.get('/listar', alumnosController.listar);
+        this.router.post('/listar', alumnosController.listar);
         this.router.post('/alumnos-curso', alumnosController.getAlumnosCurso);
         this.router.post('/crearAlumnos', alumnosController.createAlumnos);
         this.router.post('/getAlumnos', alumnosController.getAlumnos);
