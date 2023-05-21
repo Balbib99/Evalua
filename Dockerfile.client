@@ -1,0 +1,31 @@
+# Etapa de compilación
+FROM node:14 as build
+
+WORKDIR /app
+
+# Copiar el archivo package.json y package-lock.json (si existe)
+COPY ./client/package*.json ./
+
+# Instalar las dependencias
+RUN npm ci
+
+# Copiar el resto de los archivos del proyecto
+COPY ./client .
+
+# Compilar la aplicación Angular
+RUN npm run build
+
+# Etapa de producción
+FROM nginx:latest
+
+# Copiar los archivos compilados de la aplicación Angular en el directorio del servidor Nginx
+COPY --from=build /app/dist/client /usr/share/nginx/html
+
+# Opcional: Copiar una configuración personalizada de Nginx (por ejemplo, nginx.conf)
+# COPY nginx.conf /etc/nginx/nginx.conf
+
+# Exponer el puerto 80 para las solicitudes HTTP
+EXPOSE 80
+
+# Comando para iniciar el servidor Nginx en primer plano
+CMD ["nginx", "-g", "daemon off;"]

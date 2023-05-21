@@ -1,0 +1,15 @@
+# Imagen base
+FROM mysql:latest
+
+# Variables de entorno para configurar la base de datos
+ENV MYSQL_DATABASE evalua2
+ENV MYSQL_ROOT_PASSWORD root
+
+# Copiar el script SQL de importación a la carpeta /docker-entrypoint-initdb.d/
+COPY ./database/evalua2.sql /docker-entrypoint-initdb.d/
+
+# Cambiar permisos del script SQL
+RUN chmod 755 /docker-entrypoint-initdb.d/evalua2.sql
+
+
+CMD ["mysqld"]

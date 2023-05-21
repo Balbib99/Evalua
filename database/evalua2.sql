@@ -7,7 +7,7 @@ USE evalua2;
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-05-2023 a las 16:57:28
+-- Tiempo de generación: 20-05-2023 a las 16:48:02
 -- Versión del servidor: 10.4.25-MariaDB
 -- Versión de PHP: 8.1.10
 
@@ -59,7 +59,9 @@ INSERT INTO `alumnos` (`Nombre`, `Apellidos`, `Nombre_Familiar1`, `Apellidos_Fam
 ('Balbino', 'Martinez Rodriguez', 'Balbino', 'NULL', 'NULL', 'NULL', 'C/Gregorio Marañon Nº15 Atico B', 'Balbino@gmail.com', '471256895', 'NULL', 'NULL', '2ºB', 4, 1),
 ('Alfonso', 'Miguel de la torre', 'Navarro', 'NULL', 'NULL', 'NULL', 'C/Guadalajara Nº13 2ºB', 'Erminio@gmail.com', '256481543', 'NULL', 'NULL', '2ºB', 5, 1),
 ('Alvaro', 'Manzano', 'Sergio', 'NULL', 'NULL', 'NULL', 'C/Acero Nº6 2ºB', 'Ministro@gmail.com', '897456213', 'NULL', 'NULL', '2ºB', 6, 1),
-('Hernesto', 'Gomez Gutierrez', 'Paco', 'Gomez', '', '', 'C/ Vidal Nº4', 'paquito@gmail.com', '478451258', '', '', '2ºA', 9, 1);
+('Hernesto', 'Gomez Gutierrez', 'Paco', 'Gomez', '', '', 'C/ Vidal Nº4', 'paquito@gmail.com', '478451258', '', '', '2ºA', 9, 1),
+('Alonso', 'Furioso', '', '', '', '', '', '', '', '', '', '3ºB', 10, 3),
+('Ernesto', 'Mejide', '', '', '', '', '', '', '', '', '', '3ºB', 11, 3);
 
 -- --------------------------------------------------------
 
@@ -88,7 +90,8 @@ INSERT INTO `asignaturas` (`Nombre`, `Nombre_alumnos`, `Nombre_curso`, `id_Profe
 ('Lengua', 'Raul Bragado Sanz,Adrian Cano Martin,Miguel Cañibano Centeno,Hernesto Gomez Gutierrez', '2ºA', 1, 9),
 ('Matematicas', 'Raul Bragado Sanz,Adrian Cano Martin,Miguel Cañibano Centeno,Hernesto Gomez Gutierrez', '2ºA', 1, 15),
 ('Mates2', 'Raul Bragado Sanz,Adrian Cano Martin,Miguel Cañibano Centeno,Hernesto Gomez Gutierrez', '2ºA', 1, 16),
-('Lengua2', 'Adrian Cano Martin,Miguel Cañibano Centeno,Raul Bragado Sanz', '2ºA', 1, 17);
+('Lengua2', 'Adrian Cano Martin,Miguel Cañibano Centeno,Raul Bragado Sanz', '2ºA', 1, 17),
+('Quimica Avanzada', 'Alonso Furioso ,Ernesto Mejide ', '3ºB', 3, 18);
 
 -- --------------------------------------------------------
 
@@ -110,8 +113,12 @@ CREATE TABLE `calificaciones` (
 --
 
 INSERT INTO `calificaciones` (`Nombre`, `Tabla`, `Asignatura`, `Curso`, `id_Profesor`, `id`) VALUES
-('Prueba', '<tr class=\"table-active\"><th></th><th>Excelente</th><th>Regular</th><th>Mal</th></tr><tr><th scope=\"row\">ASDFBG</th><td>1<br><input name=\"10\" type=\"checkbox\" class=\"checkbox\"></td><td>2<br><input name=\"6\" type=\"checkbox\" class=\"checkbox\"></td><td>3<br><input name=\"2\" type=\"checkbox\" class=\"checkbox\"></td></tr><tr><th scope=\"row\">dfb</th><td>4<br><input name=\"10\" type=\"checkbox\" class=\"checkbox\"></td><td>5<br><input name=\"6\" type=\"checkbox\" class=\"checkbox\"></td><td>6<br><input name=\"2\" type=\"checkbox\" class=\"checkbox\"></td></tr><tr><th scope=\"row\">qaesdfv</th><td>7<br><input name=\"10\" type=\"checkbox\" class=\"checkbox\"></td><td>8<br><input name=\"6\" type=\"checkbox\" class=\"checkbox\"></td><td>9<br><input name=\"2\" type=\"checkbox\" class=\"checkbox\"></td></tr>', 'Lengua', '', NULL, 4),
-('Prueba', '<tr class=\"table-active\"><th></th><th>Excelente</th><th>Regular</th><th>Mal</th></tr><tr><th scope=\"row\"></th><td><br><input name=\"10\" type=\"checkbox\" class=\"checkbox\"></td><td><br><input name=\"6\" type=\"checkbox\" class=\"checkbox\"></td><td><br><input name=\"2\" type=\"checkbox\" class=\"checkbox\"></td></tr><tr><th scope=\"row\"></th><td><br><input name=\"10\" type=\"checkbox\" class=\"checkbox\"></td><td><br><input name=\"6\" type=\"checkbox\" class=\"checkbox\"></td><td><br><input name=\"2\" type=\"checkbox\" class=\"checkbox\"></td></tr><tr><th scope=\"row\"></th><td><br><input name=\"10\" type=\"checkbox\" class=\"checkbox\"></td><td><br><input name=\"6\" type=\"checkbox\" class=\"checkbox\"></td><td><br><input name=\"2\" type=\"checkbox\" class=\"checkbox\"></td></tr>', 'Lengua', '', 1, 5);
+('PruebaLengua', '?!?Excelente?!?Regular?!?Mal?!?aaaaaaaaaaaaaaaaaaaa?!?aaaaaaaaaaaaaaaaaaaa?!?aaaaaaaaaaaaaaaaaaaa?!?aaaaaaaaaaaaaaaaaaaa?!?aaaaaaaaaaaaaaaaaaaa?!?aaaaaaaaaaaaaaaaaaaa?!?aaaaaaaaaaaaaaaaaaaa?!?aaaaaaaaaaaaaaaaaaaa?!?aaaaaaaaaaaaaaaaaaaa?!?aaaaaaaaaaaaaaaaaaaa?!?aaaaaaaaaaaaaaaaaaaa?!?aaaaaaaaaaaaaaaaaaaa', 'Lengua', '2ºA', 1, 6),
+('Prueba_Sin_Espacios', '?!?Excelente?!?Regular?!?Mal?!?eeeeeeeeeeeeeeeeeee?!?eeeeeeeeeeeeeeeeeee?!?eeeeeeeeeeeeeeeeeee?!?eeeeeeeeeeeeeeeeeee?!?eeeeeeeeeeeeeeeeeee?!?eeeeeeeeeeeeeeeeeee?!?eeeeeeeeeeeeeeeeeee?!?eeeeeeeeeeeeeeeeeee?!?eeeeeeeeeeeeeeeeeee?!?eeeeeeeeeeeeeeeeeee?!?eeeeeeeeeeeeeeeeeee?!?eeeeeeeeeeeeeeeeeee?!?eeeeeeeeeeeeeeeeeee?!?eeeeeeeeeeeeeeeeeee?!?eeeeeeeeeeeeeeeeeee?!?eeeeeeeeeeeeeeeeeee', 'Lengua', '2ºA', 1, 8),
+('SinEspacio', '?!?Excelente?!?Regular?!?Mal?!?eeeeeeeeeeeeeeee?!?eeeeeeeeeeeeeeee?!?eeeeeeeeeeeeeeee?!?eeeeeeeeeeeeeeee?!?eeeeeeeeeeeeeeee?!?eeeeeeeeeeeeeeee?!?eeeeeeeeeeeeeeee?!?eeeeeeeeeeeeeeee?!?eeeeeeeeeeeeeeee?!?eeeeeeeeeeeeeeee?!?eeeeeeeeeeeeeeee?!?eeeeeeeeeeeeeeee?!?eeeeeeeeeeeeeeee?!?eeeeeeeeeeeeeeee?!?eeeeeeeeeeeeeeee?!?eeeeeeeeeeeeeeee', 'Lengua', '2ºA', 1, 10),
+('Con_Espacios', '?!?Excelente?!?Regular?!?Mal?!?rrrrrrrrrrrrrrrrrrr?!?rrrrrrrrrrrrrrrrrrr?!?rrrrrrrrrrrrrrrrrrr?!?rrrrrrrrrrrrrrrrrrr?!?rrrrrrrrrrrrrrrrrrr?!?rrrrrrrrrrrrrrrrrrr?!?rrrrrrrrrrrrrrrrrrr?!?rrrrrrrrrrrrrrrrrrr?!?rrrrrrrrrrrrrrrrrrr?!?rrrrrrrrrrrrrrrrrrr?!?rrrrrrrrrrrrrrrrrrr?!?rrrrrrrrrrrrrrrrrrr', 'Lengua', '2ºA', 1, 12),
+('Nuriafernandeztoribio', '?!?Excelente?!?Notable?!?Regular?!?Mal?!?ttttttttttttttttttttt?!?ttttttttttttttttttttt?!?ttttttttttttttttttttt?!?ttttttttttttttttttttt?!?ttttttttttttttttttttt?!?ttttttttttttttttttttt?!?ttttttttttttttttttttt?!?ttttttttttttttttttttt?!?ttttttttttttttttttttt?!?ttttttttttttttttttttt?!?ttttttttttttttttttttt?!?ttttttttttttttttttttt?!?ttttttttttttttttttttt?!?ttttttttttttttttttttt?!?ttttttttttttttttttttt?!?ttttttttttttttttttttt?!?ttttttttttttttttttttt?!?ttttttttttttttttttttt?!?ttttttttttttttttttttt?!?ttttttttttttttttttttt', 'Lengua', '2ºA', 1, 13),
+('Avanzadilla', '?!?Excelente?!?Regular?!?Mal?!?rrrrrrrrrrrrrrrrrrrrrrr?!?rrrrrrrrrrrrrrrrrrrrrrr?!?rrrrrrrrrrrrrrrrrrrrrrr?!?rrrrrrrrrrrrrrrrrrrrrrr?!?rrrrrrrrrrrrrrrrrrrrrrr?!?rrrrrrrrrrrrrrrrrrrrrrr?!?rrrrrrrrrrrrrrrrrrrrrrr?!?rrrrrrrrrrrrrrrrrrrrrrr?!?rrrrrrrrrrrrrrrrrrrrrrr?!?rrrrrrrrrrrrrrrrrrrrrrr?!?rrrrrrrrrrrrrrrrrrrrrrr?!?rrrrrrrrrrrrrrrrrrrrrrr', 'Quimica Avanzada', '3ºB', 3, 14);
 
 -- --------------------------------------------------------
 
@@ -131,7 +138,8 @@ CREATE TABLE `cursos` (
 
 INSERT INTO `cursos` (`Nombre`, `id`, `id_Profesor`) VALUES
 ('2ºA', 1, 1),
-('2ºB', 2, 1);
+('2ºB', 2, 1),
+('3ºB', 3, 3);
 
 -- --------------------------------------------------------
 
@@ -145,8 +153,33 @@ CREATE TABLE `notas` (
   `Nombre_Calificacion` varchar(50) NOT NULL,
   `Asignatura` varchar(20) NOT NULL,
   `Curso` varchar(5) NOT NULL,
+  `id_Profesor` int(5) NOT NULL,
   `ID` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `notas`
+--
+
+INSERT INTO `notas` (`Nombre_Alumnos`, `Nota`, `Nombre_Calificacion`, `Asignatura`, `Curso`, `id_Profesor`, `ID`) VALUES
+('Adrian Cano Martin', 10, 'PruebaLengua', 'Lengua', '2ºA', 1, 2),
+('Hernesto Gomez Gutie', 2, 'PruebaLengua', 'Lengua', '2ºA', 1, 3),
+('Miguel Cañibano Cent', 6, 'PruebaLengua', 'Lengua', '2ºA', 1, 4),
+('Raul Bragado Sanz', 6, 'PruebaLengua', 'Lengua', '2ºA', 1, 5),
+('Adrian Cano Martin', 10, 'Prueba_Sin_Espacios', 'Lengua', '2ºA', 1, 6),
+('Hernesto Gomez Gutie', 4, 'Prueba_Sin_Espacios', 'Lengua', '2ºA', 1, 7),
+('Miguel Cañibano Cent', 6, 'Prueba_Sin_Espacios', 'Lengua', '2ºA', 1, 8),
+('Raul Bragado Sanz', 0, 'Prueba_Sin_Espacios', 'Lengua', '2ºA', 1, 9),
+('Adrian Cano Martin', 0, 'Con_Espacios', 'Lengua', '2ºA', 1, 13),
+('Hernesto Gomez Gutie', 10, 'Con_Espacios', 'Lengua', '2ºA', 1, 14),
+('Miguel Cañibano Cent', 0, 'Con_Espacios', 'Lengua', '2ºA', 1, 15),
+('Raul Bragado Sanz', 0, 'Con_Espacios', 'Lengua', '2ºA', 1, 16),
+('Adrian Cano Martin', 7, 'Nuriafernandeztoribio', 'Lengua', '2ºA', 1, 17),
+('Hernesto Gomez Gutie', 0, 'Nuriafernandeztoribio', 'Lengua', '2ºA', 1, 18),
+('Miguel Cañibano Cent', 0, 'Nuriafernandeztoribio', 'Lengua', '2ºA', 1, 19),
+('Raul Bragado Sanz', 0, 'Nuriafernandeztoribio', 'Lengua', '2ºA', 1, 20),
+('Alonso Furioso ', 10, 'Avanzadilla', 'Quimica Avanzada', '3ºB', 3, 21),
+('Ernesto Mejide ', 2, 'Avanzadilla', 'Quimica Avanzada', '3ºB', 3, 22);
 
 -- --------------------------------------------------------
 
@@ -168,7 +201,8 @@ CREATE TABLE `profesores` (
 
 INSERT INTO `profesores` (`Nombre`, `Email`, `Clave`, `Telefono`, `id`) VALUES
 ('pepe', 'pepe@gmail.com', 'pepe', '458762315', 1),
-('mar', 'mar@gmail.com', 'mar', '478516243', 2);
+('mar', 'mar@gmail.com', 'mar', '478516243', 2),
+('Balbi', 'balbin@gmail.com', 'balbin', '475812635', 3);
 
 -- --------------------------------------------------------
 
@@ -242,31 +276,37 @@ ALTER TABLE `rubricas_generales`
 -- AUTO_INCREMENT de la tabla `alumnos`
 --
 ALTER TABLE `alumnos`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `asignaturas`
 --
 ALTER TABLE `asignaturas`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `calificaciones`
 --
 ALTER TABLE `calificaciones`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `cursos`
 --
 ALTER TABLE `cursos`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `notas`
+--
+ALTER TABLE `notas`
+  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de la tabla `profesores`
 --
 ALTER TABLE `profesores`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `rubricas_generales`
