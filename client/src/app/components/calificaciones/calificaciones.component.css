@@ -22,14 +22,15 @@
 }
 
 .backgronfColorButton{
-    background-color: #0ea8a1;
+    background-color: #fca577;
 }
 
 .botonCurso{
-    background-color: #0ea8a1;
+    background-color: #ECECEC;
+    color: black;
 }
 .botonCurso:hover{
-    box-shadow: 0px 1px 5px #0ea8a1;
+    box-shadow: 0px 1px 5px #ECECEC;
 }
 
 .btn-danger{

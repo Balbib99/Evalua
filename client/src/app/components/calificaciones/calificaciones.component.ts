@@ -765,13 +765,13 @@ export class CalificacionesComponent {
     })
 
     let buttonCancelar = document.createElement('button');
-      buttonCancelar.className = 'botonCancelar btn btn-danger';
-      buttonCancelar.textContent = 'Cancelar';
-      buttonCancelar.style.marginLeft = 2 + 'em';
-      // buttonGuardar.style.justifySelf = 'end';
-      buttonCancelar.addEventListener('click', (e) => {
-        window.location.reload()
-      });
+    buttonCancelar.className = 'botonCancelar btn btn-danger';
+    buttonCancelar.textContent = 'Cancelar';
+    buttonCancelar.style.marginLeft = 2 + 'em';
+    // buttonGuardar.style.justifySelf = 'end';
+    buttonCancelar.addEventListener('click', (e) => {
+      window.location.reload()
+    });
     // buttonCalificar.onclick = () => {
 
     // }
@@ -812,6 +812,7 @@ export class CalificacionesComponent {
             console.log('soy td ' + nombre);
 
             this.selectedRubrica(td);
+
 
           })
           calificatios[(i - 1)].append(td);
@@ -948,9 +949,87 @@ export class CalificacionesComponent {
               this.alumnosService.getRurbicasNotas(params).subscribe(
                 res => {
                   let rubricas: any = res
+                  console.log(rubricas);
+
+                  // this.createTableCalifications(nombre);
 
                   if (params.Nombre_Calificacion == rubricas[0].Nombre_Calificacion) {
-                    alert('Rubrica ya usada')
+                    let NewNameRubrica: any = '';
+                    let rubricasUsadas: any = [];
+                    let rubricasUsadasDos: any = [];
+                    do {
+                      NewNameRubrica = prompt("Introduce un nombre diferente: ");
+
+                      if (NewNameRubrica === null) {
+                        break; // Salir del bucle si el usuario cancela
+                      }
+
+                      const parametros = {
+                        Curso: this.cookies.get('curso'),
+                        id_Profesor: this.idProfesor,
+                        Asignatura: this.cookies.get('asignatura'),
+                      }
+                      this.alumnosService.getRubricasCalifications(parametros).subscribe(
+                        res => {
+                          rubricasUsadas = res;
+                          for (const iterator of rubricasUsadas) {
+                            rubricasUsadasDos.push(iterator.Nombre)
+                          }
+                          console.log(rubricasUsadasDos);
+                        },
+                        err => {
+
+                        }
+                      )
+                    } while (!rubricasUsadasDos.includes(NewNameRubrica));
+
+                    if (NewNameRubrica === null) {
+                      window.location.reload()
+                    } else {
+
+                      const param = {
+                        Curso: this.cookies.get('curso'),
+                        id_Profesor: this.idProfesor,
+                        Asignatura: this.cookies.get('asignatura'),
+                        Nombre: params.Nombre_Calificacion
+                      }
+
+                      this.alumnosService.getOnlyOneRubrica(param).subscribe(
+                        res => {
+                          let contenidoRubrica: any = res;
+                          console.log(contenidoRubrica[0].Tabla);
+
+                          if (NewNameRubrica.includes(' ')) {
+                            NewNameRubrica = NewNameRubrica.replace(/ /g, '_')
+                          }
+
+                          const rubrica = {
+                            Nombre: NewNameRubrica,
+                            Tabla: contenidoRubrica[0].Tabla,
+                            Asignatura: this.cookies.get('asignatura'),
+                            Curso: this.cookies.get('curso'),
+                            id_Profesor: this.idProfesor
+                          }
+
+                          this.alumnosService.saveThatRubrica(rubrica).subscribe(
+                            res => {
+                              console.log(res)
+
+                              this.createTableCalifications(NewNameRubrica);
+                            },
+                            err => {
+                              console.log(err);
+
+                            }
+                          )
+                        },
+                        err => {
+
+                        }
+                      )
+
+                    }
+
                   } else {
                     this.createTableCalifications(nombre);
                   }
@@ -1089,7 +1168,6 @@ export class CalificacionesComponent {
           let rubrica: any = []
           rubrica.push(respuesta[0].Tabla.split('?!?'))
           console.log(rubrica);
-
 
           let table = document.createElement('table');
           table.style.textAlign = 'center';

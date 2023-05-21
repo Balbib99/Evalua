@@ -12,11 +12,11 @@
 }
 
 .bienvenida{
-    margin-left: 3em;
+    justify-self: center; padding: 3em;
 }
 
 .card{
-    background-color: #0ea8a1;
+    background-color: #fca577;
 }
 
 

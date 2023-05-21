@@ -35,11 +35,11 @@ th{
 }
 
 .formularioDotted{
-    border-color: #0ea8a1;
-    color: #0ea8a1;
+    border-color: #f36038;
+    color: #f36038;
 }
 .formularioDotted:hover{
-    background-color: #0ea8a1;
+    background-color: #f36038;
     color: white;
 }
 

@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS evalua;
-CREATE DATABASE IF NOT EXISTS evalua;
-USE evalua;
+DROP DATABASE IF EXISTS evalua2;
+CREATE DATABASE IF NOT EXISTS evalua2;
+USE evalua2;
 
 -- phpMyAdmin SQL Dump
 -- version 5.2.0
