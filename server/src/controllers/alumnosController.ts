@@ -40,7 +40,7 @@ class AlumnosController {
         //     }
         // });
 
-        await connect.query('SELECT Nombre, Apellidos, id FROM alumnos WHERE curso = ? AND id_Profesor IN (SELECT id FROM Profesores WHERE nombre = ?)', [req.body.nombre, req.body.profesor],
+        await connect.query('SELECT Nombre, Apellidos, id FROM alumnos WHERE curso = ? AND id_Profesor IN (SELECT id FROM profesores WHERE nombre = ?)', [req.body.nombre, req.body.profesor],
         (err,rows,field) => {
             if(!err){
                 if(rows.length > 0){

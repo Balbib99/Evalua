@@ -53,7 +53,7 @@ class IndexController {
         // }
         // );
 
-        await connect.query('SELECT DISTINCT Nombre FROM cursos WHERE ID_Profesor IN (SELECT id FROM Profesores WHERE Nombre = ? )', 
+        await connect.query('SELECT DISTINCT Nombre FROM cursos WHERE ID_Profesor IN (SELECT id FROM profesores WHERE Nombre = ? )', 
         [req.body.usuario],
         (err,rows,field) => {
             if(!err){
